@@ -1,0 +1,454 @@
+Accounting
+	All Accounting 4,064
+	Accounts Officers/Clerks 359
+	Accounts Payable 150
+	Accounts Receivable/Credit Control 184
+	Analysis & Reporting 159
+	Assistant Accountants 160
+	Audit - External 78
+	Audit - Internal 69
+	Bookkeeping & Small Practice Accounting 254
+	Business Services & Corporate Advisory 687
+	Company Secretaries 11
+	Compliance & Risk 33
+	Cost Accounting 21
+	Financial Accounting & Reporting 548
+	Financial Managers & Controllers 306
+	Forensic Accounting & Investigation 11
+	Insolvency & Corporate Recovery 14
+	Inventory & Fixed Assets 9
+	Management 75
+	Management Accounting & Budgeting 185
+	Payroll 363
+	Strategy & Planning 17
+	Systems Accounting & IT Audit 19
+	Taxation 297
+	Treasury 10
+	Other 45
+Administration & Office Support
+	All Administration & Office Support 4,255
+	Administrative Assistants 2,055
+	Client & Sales Administration 572
+	Contracts Administration 104
+	Data Entry & Word Processing 78
+	Office Management 284
+	PA, EA & Secretarial 335
+	Receptionists 562
+	Records Management & Document Control 75
+	Other 190
+Advertising, Arts & Media
+	All Advertising, Arts & Media 383
+	Agency Account Management 66
+	Art Direction 19
+	Editing & Publishing 44
+	Event Management 16
+	Journalism & Writing 73
+	Management 17
+	Media Strategy, Planning & Buying 26
+	Performing Arts 17
+	Photography 36
+	Programming & Production 32
+	Promotions 12
+	Other 25
+Banking & Financial Services
+	All Banking & Financial Services 2,187
+	Account & Relationship Management 75
+	Analysis & Reporting 132
+	Banking - Business 109
+	Banking - Corporate & Institutional 45
+	Banking - Retail/Branch 258
+	Client Services 100
+	Compliance & Risk 476
+	Corporate Finance & Investment Banking 22
+	Credit 88
+	Financial Planning 287
+	Funds Management 93
+	Management 52
+	Mortgages 242
+	Settlements 20
+	Stockbroking & Trading 34
+	Treasury 14
+	Other 140
+Call Centre & Customer Service
+	All Call Centre & Customer Service 1,748
+	Collections 40
+	Customer Service - Call Centre 834
+	Customer Service - Customer Facing 303
+	Management & Support 100
+	Sales - Inbound 120
+	Sales - Outbound 181
+	Supervisors/Team Leaders 82
+	Other 88
+CEO & General Management
+	All CEO & General Management 400
+	Board Appointments 44
+	CEO 80
+	COO & MD 26
+	General/Business Unit Manager 205
+	Other 45
+	Community Services & Development
+	All Community Services & Development 5,512
+	Aged & Disability Support 2,917
+	Child Welfare, Youth & Family Services 1,005
+	Community Development 391
+	Employment Services 528
+	Fundraising 54
+	Housing & Homelessness Services 127
+	Indigenous & Multicultural Services 153
+	Management 208
+	Volunteer Coordination & Support 10
+	Other 119
+Construction
+	All Construction 4,490
+	Contracts Management 258
+	Estimating 568
+	Foreperson/Supervisors 705
+	Health, Safety & Environment 232
+	Management 161
+	Planning & Scheduling 101
+	Plant & Machinery Operators 1,055
+	Project Management 544
+	Quality Assurance & Control 55
+	Surveying 240
+	Other 571
+	Consulting & Strategy
+	All Consulting & Strategy 487
+	Analysts 79
+	Corporate Development 20
+	Environment & Sustainability Consulting 53
+	Management & Change Consulting 131
+	Policy 38
+	Strategy & Planning 122
+	Other 44
+Design & Architecture
+	All Design & Architecture 887
+	Architectural Drafting 191
+	Architecture 142
+	Fashion & Textile Design 56
+	Graphic Design 146
+	Illustration & Animation 14
+	Industrial Design 18
+	Interior Design 68
+	Landscape Architecture 30
+	Urban Design & Planning 78
+	Web & Interaction Design 112
+	Other 32
+Education & Training
+	All Education & Training 5,848
+	Childcare & Outside School Hours Care 2,117
+	Library Services & Information Management 48
+	Management - Schools 161
+	Management - Universities 26
+	Management - Vocational 97
+	Research & Fellowships 101
+	Student Services 143
+	Teaching - Early Childhood 791
+	Teaching - Primary 248
+	Teaching - Secondary 699
+	Teaching - Tertiary 92
+	Teaching - Vocational 411
+	Teaching Aides & Special Needs 62
+	Tutoring 47
+	Workplace Training & Assessment 225
+	Other 580
+Engineering
+	All Engineering 2,913
+	Aerospace Engineering 44
+	Automotive Engineering 21
+	Building Services Engineering 113
+	Chemical Engineering 31
+	Civil/Structural Engineering 719
+	Electrical/Electronic Engineering 436
+	Engineering Drafting 182
+	Environmental Engineering 61
+	Field Engineering 33
+	Industrial Engineering 34
+	Maintenance 108
+	Management 84
+	Materials Handling Engineering 6
+	Mechanical Engineering 263
+	Process Engineering 40
+	Project Engineering 186
+	Project Management 170
+	Supervisors 15
+	Systems Engineering 146
+	Water & Waste Engineering 82
+	Other 139
+Farming, Animals & Conservation
+	All Farming, Animals & Conservation 1,041
+	Agronomy & Farm Services 96
+	Conservation, Parks & Wildlife 71
+	Farm Labour 231
+	Farm Management 114
+	Fishing & Aquaculture 40
+	Horticulture 182
+	Veterinary Services & Animal Welfare 212
+	Winery & Viticulture 38
+	Other 57
+Government & Defence
+	All Government & Defence 4,551
+	Air Force 9
+	Army 10
+	Emergency Services 27
+	Navy 15
+	Police & Corrections 43
+	Policy, Planning & Regulation 134
+	Government - Federal 1,163
+	Government - Local 1,233
+	Government - State 1,806
+	Other 87
+Healthcare & Medical
+	All Healthcare & Medical 13,828
+	Ambulance/Paramedics 46
+	Chiropractic & Osteopathic 26
+	Clinical/Medical Research 178
+	Dental 1,219
+	Dieticians 30
+	Environmental Services 43
+	General Practitioners 476
+	Management 330
+	Medical Administration 762
+	Medical Imaging 275
+	Medical Specialists 292
+	Natural Therapies & Alternative Medicine 109
+	Nursing - A&E, Critical Care & ICU 219
+	Nursing - Aged Care 2,027
+	Nursing - Community, Maternal & Child Health 289
+	Nursing - Educators & Facilitators 98
+	Nursing - General Medical & Surgical 835
+	Nursing - High Acuity 40
+	Nursing - Management 226
+	Nursing - Midwifery, Neo-Natal, SCN & NICU 101
+	Nursing - Paediatric & PICU 12
+	Nursing - Psych, Forensic & Correctional Health 246
+	Nursing - Theatre & Recovery 188
+	Optical 82
+	Pathology 124
+	Pharmaceuticals & Medical Devices 218
+	Pharmacy 501
+	Physiotherapy, OT & Rehabilitation 2,301
+	Psychology, Counselling & Social Work 1,387
+	Residents & Registrars 117
+	Sales 127
+	Speech Therapy 403
+	Other 501
+Hospitality & Tourism
+	All Hospitality & Tourism 7,051
+	Airlines 23
+	Bar & Beverage Staff 993
+	Chefs/Cooks 2,384
+	Front Office & Guest Services 295
+	Gaming 71
+	Housekeeping 397
+	Kitchen & Sandwich Hands 519
+	Management 1,139
+	Reservations 17
+	Tour Guides 20
+	Travel Agents/Consultants 18
+	Waiting Staff 950
+	Other 225
+Human Resources & Recruitment
+	All Human Resources & Recruitment 1,943
+	Consulting & Generalist HR 522
+	Industrial & Employee Relations 72
+	Management - Agency 18
+	Management - Internal 87
+	Occupational Health & Safety 259
+	Organisational Development 60
+	Recruitment - Agency 438
+	Recruitment - Internal 218
+	Remuneration & Benefits 38
+	Training & Development 147
+	Other 84
+Information & Communication Technology
+	All Information & Communication Technology 9,151
+	Architects 443
+	Business/Systems Analysts 881
+	Computer Operators 8
+	Consultants 413
+	Database Development & Administration 294
+	Developers/Programmers 1,908
+	Engineering - Hardware 46
+	Engineering - Network 228
+	Engineering - Software 913
+	Help Desk & IT Support 729
+	Management 244
+	Networks & Systems Administration 557
+	Product Management & Development 170
+	Programme & Project Management 623
+	Sales - Pre & Post 128
+	Security 410
+	Team Leaders 66
+	Technical Writing 53
+	Telecommunications 201
+	Testing & Quality Assurance 259
+	Web Development & Production 175
+	Other 402
+Insurance & Superannuation
+	All Insurance & Superannuation 596
+	Actuarial 40
+	Assessment 11
+	Brokerage 112
+	Claims 174
+	Fund Administration 8
+	Management 23
+	Risk Consulting 20
+	Superannuation 26
+	Underwriting 43
+	Workers' Compensation 73
+	Other 66
+Legal
+	All Legal 1,712
+	Banking & Finance Law 22
+	Construction Law 55
+	Corporate & Commercial Law 128
+	Criminal & Civil Law 43
+	Environment & Planning Law 17
+	Family Law 121
+	Generalists - In-house 140
+	Generalists - Law Firm 76
+	Industrial Relations & Employment Law 89
+	Insurance & Superannuation Law 99
+	Intellectual Property Law 12
+	Law Clerks & Paralegals 162
+	Legal Practice Management 8
+	Legal Secretaries 249
+	Litigation & Dispute Resolution 172
+	Personal Injury Law 84
+	Property Law 109
+	Tax Law 1
+	Other 125
+Manufacturing, Transport & Logistics
+	All Manufacturing, Transport & Logistics 9,607
+	Analysis & Reporting 57
+	Assembly & Process Work 883
+	Aviation Services 57
+	Couriers, Drivers & Postal Services 446
+	Fleet Management 94
+	Freight/Cargo Forwarding 141
+	Import/Export & Customs 64
+	Machine Operators 704
+	Management 319
+	Pattern Makers & Garment Technicians 31
+	Pickers & Packers 373
+	Production, Planning & Scheduling 397
+	Public Transport & Taxi Services 54
+	Purchasing, Procurement & Inventory 416
+	Quality Assurance & Control 157
+	Rail & Maritime Transport 117
+	Road Transport 1,699
+	Team Leaders/Supervisors 294
+	Warehousing, Storage & Distribution 3,025
+	Other 279
+Marketing & Communications
+	All Marketing & Communications 2,191
+	Brand Management 105
+	Digital & Search Marketing 571
+	Direct Marketing & CRM 89
+	Event Management 51
+	Internal Communications 59
+	Management 198
+	Market Research & Analysis 73
+	Marketing Assistants/Coordinators 334
+	Marketing Communications 391
+	Product Management & Development 112
+	Public Relations & Corporate Affairs 106
+	Trade Marketing 17
+	Other 85
+Mining, Resources & Energy
+	All Mining, Resources & Energy 3,664
+	Analysis & Reporting 50
+	Health, Safety & Environment 199
+	Management 93
+	Mining - Drill & Blast 133
+	Mining - Engineering & Maintenance 1,397
+	Mining - Exploration & Geoscience 251
+	Mining - Operations 908
+	Mining - Processing 99
+	Natural Resources & Water 32
+	Oil & Gas - Drilling 10
+	Oil & Gas - Engineering & Maintenance 69
+	Oil & Gas - Exploration & Geoscience 6
+	Oil & Gas - Operations 57
+	Oil & Gas - Production & Refinement 6
+	Power Generation & Distribution 98
+	Surveying 36
+	Other 220
+Real Estate & Property
+	All Real Estate & Property 1,893
+	Administration 197
+	Analysts 13
+	Body Corporate & Facilities Management 260
+	Commercial Sales, Leasing & Property Mgmt 160
+	Residential Leasing & Property Management 764
+	Residential Sales 321
+	Retail & Property Development 75
+	Valuation 47
+	Other 56
+Retail & Consumer Products
+	All Retail & Consumer Products 4,816
+	Buying 73
+	Management - Area/Multi-site 111
+	Management - Department/Assistant 400
+	Management - Store 1,073
+	Merchandisers 373
+	Planning 62
+	Retail Assistants 2,544
+	Other 180
+Sales
+	All Sales 4,715
+	Account & Relationship Management 742
+	Analysis & Reporting 38
+	Management 334
+	New Business Development 928
+	Sales Coordinators 169
+	Sales Representatives/Consultants 2,427
+	Other 77
+Science & Technology
+	All Science & Technology 611
+	Biological & Biomedical Sciences 73
+	Biotechnology & Genetics 17
+	Chemistry & Physics 30
+	Environmental, Earth & Geosciences 106
+	Food Technology & Safety 63
+	Laboratory & Technical Services 150
+	Materials Sciences 9
+	Mathematics, Statistics & Information Sciences 73
+	Modelling & Simulation 6
+	Quality Assurance & Control 38
+	Other 46
+Self Employment
+	All Self Employment 71
+	Self Employment 71
+Sport & Recreation
+	All Sport & Recreation 811
+	Coaching & Instruction 219
+	Fitness & Personal Training 352
+	Management 136
+	Other 104
+Trades & Services
+	All Trades & Services 16,514
+	Air Conditioning & Refrigeration 474
+	Automotive Trades 2,731
+	Bakers & Pastry Chefs 142
+	Building Trades 869
+	Butchers 149
+	Carpentry & Cabinet Making 1,025
+	Cleaning Services 630
+	Electricians 1,328
+	Fitters, Turners & Machinists 902
+	Floristry 38
+	Gardening & Landscaping 931
+	Hair & Beauty Services 1,249
+	Labourers 1,497
+	Locksmiths 17
+	Maintenance & Handyperson Services 374
+	Nannies & Babysitters 10
+	Painters & Sign Writers 342
+	Plumbers 593
+	Printing & Publishing Services 99
+	Security Services 360
+	Tailors & Dressmakers 14
+	Technicians 1,035
+	Welders & Boilermakers 1,143
+	Other 562
