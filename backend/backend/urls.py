@@ -19,6 +19,6 @@ from seekr import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', views.hello),
-    # path('', views.indexpage)
+    
+    path('user/register/', views.CreateUser.as_view()),
 ]
