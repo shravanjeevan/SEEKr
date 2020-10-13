@@ -21,4 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     path('user/register/', views.CreateUser.as_view()),
+
+    path('jobseeker/details/', views.JobSeekerDetailsViewSet.as_view())
 ]
