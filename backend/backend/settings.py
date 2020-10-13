@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'seekr'
+    'rest_framework',
+    'seekr.apps.SeekrConfig'
 ]
 
 MIDDLEWARE = [
