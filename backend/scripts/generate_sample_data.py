@@ -3,6 +3,7 @@ import random
 import json
 import os
 import math
+from string import punctuation
 
 types = ['casual', 'full time', 'part time', 'internship', 'apprenticeship']
 
@@ -15,7 +16,7 @@ with open('backend\scripts\category.json') as f:
   categories = json.load(f)
   for field in categories:
       fields.append(field['name'])
-      skills.extend(field['children'])
+      skills.extend(skill.strip(punctuation) for skill in field['children'])
 
 def generate_candidate(i):
     # Candidates have: first name, last name, email, password, group (cluster), education and skills
@@ -26,7 +27,7 @@ def generate_candidate(i):
     candidate.append('password')
     candidate.append(0)
     candidate.append(random.sample(education, k=1))
-    candidate.append(random.sample(skills, k=random.randint(1, 5)))
+    candidate.append(random.sample(skills, k=random.randint(1, 10)))
     return candidate
 
 
