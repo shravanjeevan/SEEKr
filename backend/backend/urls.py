@@ -18,7 +18,24 @@ from django.urls import path
 from seekr import views
 
 urlpatterns = [
+
     path('admin/', admin.site.urls),
     
     path('user/register/', views.CreateUser.as_view()),
+
+    path('company/register/', views.CreateCompany.as_view()),
+
+    path('industry/add/', views.AddIndustry.as_view()),
+
+    path('sub_industry/add/', views.AddSubIndustry.as_view()),
+
+    path('job_seeker/details/', views.JobSeekerDetailsViewSet.as_view()),
+
+    path('skills/add/', views.AddSkill.as_view()),
+
+    path('job_list/add/', views.AddJob.as_view()),
+    path('match_status/add/', views.AddMatchStatus.as_view()),
+    path('seeker_skill/add/', views.AddSeekerSkill.as_view()),
+    path('job_skill/add/', views.AddJobSkill.as_view()),
+
 ]
