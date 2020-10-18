@@ -98,7 +98,6 @@ class AddSkill(APIView):
         filter_backends = (filters.SearchFilter,)
         skill_list = Skills.objects.all()
         serializer = SkillsSerializer(skill_list,many=True)
-        print(serializer)
         return Response(serializer.data)
 
     def post(self, request):
