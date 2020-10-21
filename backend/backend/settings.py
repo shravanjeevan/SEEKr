@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'seekr.apps.SeekrConfig'
+    'seekr.apps.SeekrConfig',
+    'knox'
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,8 @@ STATIC_URL = '/static/'
 CORS_ORIGIN_WHITELIST = [
      'https://localhost:3000'
 ]
+
+# Rest framework setting
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+}

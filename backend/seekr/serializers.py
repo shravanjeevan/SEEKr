@@ -1,11 +1,11 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-
+from django.contrib.auth import authenticate
 from .models import Company, Industry, Skills, SubIndustry, JobListing, JobMatch, JobListingSkills, JobSeekerSkills
 from .models import JobSeekerDetails
 
 
-class UserSerializer(serializers.ModelSerializer):
+class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'password', 'email', 'first_name', 'last_name')
@@ -14,6 +14,12 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username')
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -68,3 +74,14 @@ class SeekerSkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobSeekerSkills
         fields = ('id', "UserId", "SkillsId")
+
+
+class LoginUserSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+    def validate(self, data):
+        user = authenticate(**data)
+        if user and user.is_active:
+            return user
+        raise serializers.ValidationError("Unable to log in with provided credentials")
