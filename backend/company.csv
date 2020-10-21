@@ -1,0 +1,101 @@
+name,location,industry
+company 0,company 0 location,['Real Estate & Property']
+company 1,company 1 location,['Sport & Recreation']
+company 2,company 2 location,['Self Employment']
+company 3,company 3 location,['Real Estate & Property']
+company 4,company 4 location,['Real Estate & Property']
+company 5,company 5 location,['Hospitality & Tourism']
+company 6,company 6 location,['Trades & Services']
+company 7,company 7 location,['Sales']
+company 8,company 8 location,['Self Employment']
+company 9,company 9 location,['Retail & Consumer Products']
+company 10,company 10 location,['Human Resources & Recruitment']
+company 11,company 11 location,['Banking & Financial Services']
+company 12,company 12 location,['Insurance & Superannuation']
+company 13,company 13 location,['Real Estate & Property']
+company 14,company 14 location,['Government & Defence']
+company 15,company 15 location,['Healthcare & Medical']
+company 16,company 16 location,['Government & Defence']
+company 17,company 17 location,"['Farming, Animals & Conservation']"
+company 18,company 18 location,['Trades & Services']
+company 19,company 19 location,['Healthcare & Medical']
+company 20,company 20 location,['Education & Training']
+company 21,company 21 location,['Engineering']
+company 22,company 22 location,['Call Centre & Customer Service']
+company 23,company 23 location,['Call Centre & Customer Service']
+company 24,company 24 location,['Science & Technology']
+company 25,company 25 location,['CEO & General Management']
+company 26,company 26 location,['Retail & Consumer Products']
+company 27,company 27 location,['Sport & Recreation']
+company 28,company 28 location,['Real Estate & Property']
+company 29,company 29 location,['Information & Communication Technology']
+company 30,company 30 location,['Banking & Financial Services']
+company 31,company 31 location,"['Mining, Resources & Energy']"
+company 32,company 32 location,['Engineering']
+company 33,company 33 location,['Engineering']
+company 34,company 34 location,['Construction']
+company 35,company 35 location,"['Advertising, Arts & Media']"
+company 36,company 36 location,['Government & Defence']
+company 37,company 37 location,"['Advertising, Arts & Media']"
+company 38,company 38 location,"['Manufacturing, Transport & Logistics']"
+company 39,company 39 location,['Healthcare & Medical']
+company 40,company 40 location,"['Mining, Resources & Energy']"
+company 41,company 41 location,['Information & Communication Technology']
+company 42,company 42 location,['Legal']
+company 43,company 43 location,"['Mining, Resources & Energy']"
+company 44,company 44 location,['Information & Communication Technology']
+company 45,company 45 location,['Insurance & Superannuation']
+company 46,company 46 location,['Self Employment']
+company 47,company 47 location,['Healthcare & Medical']
+company 48,company 48 location,"['Advertising, Arts & Media']"
+company 49,company 49 location,['Education & Training']
+company 50,company 50 location,['Education & Training']
+company 51,company 51 location,"['Manufacturing, Transport & Logistics']"
+company 52,company 52 location,"['Manufacturing, Transport & Logistics']"
+company 53,company 53 location,['Education & Training']
+company 54,company 54 location,"['Farming, Animals & Conservation']"
+company 55,company 55 location,['Retail & Consumer Products']
+company 56,company 56 location,['Administration & Office Support']
+company 57,company 57 location,"['Advertising, Arts & Media']"
+company 58,company 58 location,"['Mining, Resources & Energy']"
+company 59,company 59 location,['CEO & General Management']
+company 60,company 60 location,['Engineering']
+company 61,company 61 location,['Hospitality & Tourism']
+company 62,company 62 location,['Trades & Services']
+company 63,company 63 location,['Science & Technology']
+company 64,company 64 location,['Real Estate & Property']
+company 65,company 65 location,['Legal']
+company 66,company 66 location,['Retail & Consumer Products']
+company 67,company 67 location,['Hospitality & Tourism']
+company 68,company 68 location,['Government & Defence']
+company 69,company 69 location,['Engineering']
+company 70,company 70 location,"['Farming, Animals & Conservation']"
+company 71,company 71 location,['Legal']
+company 72,company 72 location,['Education & Training']
+company 73,company 73 location,['Banking & Financial Services']
+company 74,company 74 location,['Insurance & Superannuation']
+company 75,company 75 location,['Human Resources & Recruitment']
+company 76,company 76 location,"['Farming, Animals & Conservation']"
+company 77,company 77 location,['Banking & Financial Services']
+company 78,company 78 location,['Insurance & Superannuation']
+company 79,company 79 location,['Real Estate & Property']
+company 80,company 80 location,['Accounting']
+company 81,company 81 location,['Real Estate & Property']
+company 82,company 82 location,['Marketing & Communications']
+company 83,company 83 location,"['Farming, Animals & Conservation']"
+company 84,company 84 location,['Accounting']
+company 85,company 85 location,['Design & Architecture']
+company 86,company 86 location,['Legal']
+company 87,company 87 location,"['Mining, Resources & Energy']"
+company 88,company 88 location,"['Manufacturing, Transport & Logistics']"
+company 89,company 89 location,['Accounting']
+company 90,company 90 location,['Legal']
+company 91,company 91 location,['Hospitality & Tourism']
+company 92,company 92 location,['Banking & Financial Services']
+company 93,company 93 location,['Information & Communication Technology']
+company 94,company 94 location,['Information & Communication Technology']
+company 95,company 95 location,['Call Centre & Customer Service']
+company 96,company 96 location,"['Advertising, Arts & Media']"
+company 97,company 97 location,['Retail & Consumer Products']
+company 98,company 98 location,['Trades & Services']
+company 99,company 99 location,['Insurance & Superannuation']

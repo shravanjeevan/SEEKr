@@ -4,8 +4,8 @@ import pandas as pd
 import os
 import ast
 
-jobs = pd.read_csv('jobs.csv')
-candidates = pd.read_csv('candidates.csv')
+jobs = pd.read_csv('backend/jobs.csv')
+candidates = pd.read_csv('backend/candidates.csv')
 
 # Retrieve random seeker
 seeker = candidates.sample()

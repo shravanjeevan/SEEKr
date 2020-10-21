@@ -12,7 +12,7 @@ education = ['none', 'secondary', 'tertiary',
 
 fields = []
 skills = []
-with open('backend\scripts\category.json') as f:
+with open('scripts\category.json') as f:
   categories = json.load(f)
   for field in categories:
       fields.append(field['name'])
@@ -65,7 +65,7 @@ for i in range(0, n):
         companies.append(generate_company(i))
 
 job_df = pd.DataFrame(
-    jobs, columns=['company', 'name', 'salary_top', 'salary_bottom', 'field', 'education', 'skills'])
+    jobs, columns=['company', 'name', 'salary_top', 'salary_bottom', 'type', 'education', 'skills'])
 
 candidate_df = pd.DataFrame(
     candidates, columns=['first_name', 'last_name', 'email', 'password', 'group','education', 'skills'])
