@@ -69,12 +69,9 @@ function ProfileCard({ profile: { images } }) {
           </button>
         </div>
       </div>
-
     </>
   );
 }
-
-
 
 export default function App() {
   return (
