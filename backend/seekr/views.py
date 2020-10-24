@@ -56,12 +56,12 @@ class JobSeekerDetailsViewSet(APIView):
 class AddSkill(APIView):
     queryset = Skills.objects.all()
     serializer_class = SkillsSerializer
-    search_fields = ['SkillName']
+    search_fields = ['Name']
     filter_backends = (filters.SearchFilter,)
 
     def get(self, request):
 
-        search_fields = ['SkillName']
+        search_fields = ['Name']
         filter_backends = (filters.SearchFilter,)
         skill_list = Skills.objects.all()
         serializer = SkillsSerializer(skill_list,many=True)
@@ -118,3 +118,6 @@ class AddJobSkill(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class MatchList(APIView):
+    serializer_class = MatchbListSerializer
