@@ -61,10 +61,10 @@ class SeekerSkillSerializer(serializers.ModelSerializer):
 
 
 class MatchListSerializer (serializers.ModelSerializer):
+    class Meta:
+        job_skill_mat = generateJobSkillMat()
 
-    def generateList(self, User):
-        seeker_skills = list(JobSeekerSkills.objects.get(UserId=User).values_list('SkillsId_id', flat=True))
-        
+    def generateJobSkillMat(self):
         incidence = pd.DataFrame.from_records(JobListingSkills.objects.values_list('SkillsId_id', 'JobListingId_id'), columns=['skills', 'jobs'])
         incidence['weight'] = 1
         skill_ids = np.unique(incidence[['skills']])
@@ -73,17 +73,37 @@ class MatchListSerializer (serializers.ModelSerializer):
         f = job_skill_mat.index.get_indexer
         job_skill_mat.values[f(incidence.jobs), f(incidence.skills)] = incidence.weight.values
         job_skill_mat['sum'] = job_skill_mat.sum(axis=1)
-
-        # Sum only skills shared with the seeker
-        job_skill_mat['matching'] = job_skill_mat[seeker_skills].sum(axis=1)
-        # Calculate % Match
-        job_skill_mat['percentage'] = job_skill_mat['matching']/job_skill_mat['sum']
-        # Calculate difference (for feedback)
-        job_skill_mat['difference'] = job_skill_mat['sum'] - job_skill_mat['matching']
-
         return job_skill_mat
-
-
+    
+    def generateMatchList(self, User):
+        # Function should take user id as input and return dataframe of job listings annotated with % match
+        seeker_skills = list(JobSeekerSkills.objects.get(UserId=User).values_list('SkillsId_id', flat=True))
+        # Sum only skills shared with the seeker
+        mat = self.job_skill_mat
+        mat['matching'] = mat[seeker_skills].sum(axis=1)
+        # Calculate % Match
+        mat['percentage'] = mat['matching']/mat['sum']
+        mat['job_id'] = mat.index
+        return mat['job_id','percentage'].sort_values(by='percentage', ascending=False)
+    
+    def getFeedbackData(self, User):
+        # Function should take user id as input and return dataframe of job_id, difference in skills, matching skills and total skills
+        # To be used by different function to generate feedback
+        seeker_skills = list(JobSeekerSkills.objects.get(UserId=User).values_list('SkillsId_id', flat=True))
+        # Sum only skills shared with the seeker
+        mat = self.job_skill_mat
+        mat['matching'] = mat[seeker_skills].sum(axis=1)
+        # Calculate difference (for feedback)
+        mat['difference'] = mat['sum']/mat['matching']
+        mat['job_id'] = mat.index
+        return mat['job_id', 'difference', 'matching', 'sum']
+    
+    def generateFeedback(self, User, JobListing):
+        mat = getFeedBackData(User)
+        JobListingId = set(JobListingSkills.objects.get(JobListing=JobListing).values_list('JobListingId_id', flat=True))
+        user_skills = len(list(JobSeekerSkills.objects.get(UserId=User).values_list('SkillsId_id', flat=True)))
+        feedback = "%s has %d skills, %s has %d skills. That's %d matched, and %d skills missing." % (User.first_name, user_skills, JobListing.Name, mat.loc[JobListingId, 'sum'], mat.loc[JobListingId, 'matching'], mat.loc[JobListingId, 'difference'])
+        return feedback
 
 
 
