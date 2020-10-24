@@ -1,4 +1,5 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState,useEffect } from 'react';
+import cookie from 'react-cookies'
 
 
 function Signup(){
@@ -10,6 +11,9 @@ function Signup(){
     const [confirmation,setconfirmation] = useState()
 
     function submit(){
+        if(cookie.load("t")!="yo"){
+            return(<></>)
+        }
         if(confirmation != password){
             alert("confirmation should be same as password")
             return 1
@@ -75,6 +79,7 @@ function Signup(){
             <button onClick={submit}>
                 Sign Up
             </button>
+            
         </div>
         </>
     );

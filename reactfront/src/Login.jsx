@@ -1,11 +1,19 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState,useEffect } from 'react';
+import { render } from 'react-dom';
+import cookie from 'react-cookies'
 
 
-function Login(){
+function Login(t){
     const [username,setusername] = useState()
     const [password,setpassword] = useState()
     const [token,settoken] = useState()
+    var show = "visible"
 
+    useEffect(() =>{        
+        console.log(cookie.load("t"))
+    }
+
+    )
     function submit(){
         var re={
             "username": username,
@@ -21,7 +29,8 @@ function Login(){
             console.log(data)
             if(data.token ){
                 settoken(data.token)
-                alert("Successful sign in")
+                cookie.remove("t",token,{path:"/"})
+                cookie.save("t",data.token,{path:"/"})
             }
         })).
         catch(error => {
@@ -32,18 +41,21 @@ function Login(){
             }
         })
     }
+
     return(
-            <>
-            <h1>Sign in</h1>
-                        <label>User Name</label>
-            <input onChange={event =>setusername(event.target.value)}></input>
-            <label>Password</label>
-            <input onChange={event => setpassword(event.target.value)}></input>
-            <button onClick={submit}>
-                Sign in
-            </button>
-            {token}
-            </>
+        <>
+        <div id="loginbox" >        
+        <h1>Sign in</h1>
+        <label>User Name</label>
+        <input onChange={event =>setusername(event.target.value)}></input>
+        <label>Password</label>
+        <input onChange={event => setpassword(event.target.value)}></input>
+        <button onClick={submit}>
+            Sign in
+        </button>
+        {token}</div>
+
+        </>
     )
 
 
