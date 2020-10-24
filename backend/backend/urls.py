@@ -25,10 +25,6 @@ urlpatterns = [
 
     path('company/register/', views.CreateCompany.as_view()),
 
-    path('industry/add/', views.AddIndustry.as_view()),
-
-    path('sub_industry/add/', views.AddSubIndustry.as_view()),
-
     path('job_seeker/details/', views.JobSeekerDetailsViewSet.as_view()),
 
     path('skills/add/', views.AddSkill.as_view()),

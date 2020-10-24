@@ -5,11 +5,12 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .serializers import UserSerializer, JobSeekerDetailsSerializer, CompanySerializer, IndustrySerializer, SkillsSerializer, SubIndustrySerializer, JobListSerializer, JobMatchSerializer, SeekerSkillSerializer, JobSkillSerializer
+# serializers
+from .serializers import *
 
 # Models
 from django.contrib.auth.models import User
-from .models import JobSeekerDetails,Industry,Company, Skills,SubIndustry
+from .models import JobSeekerDetails,Company, Skills
 
 
 class CreateUser(generics.GenericAPIView):
@@ -46,40 +47,6 @@ class JobSeekerDetailsViewSet(APIView):
  
     def post(self, request):
         serializer = JobSeekerDetailsSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class AddIndustry(APIView):
-    queryset = Industry.objects.all()
-    serializer_class = IndustrySerializer
-
-    def get(self,request):
-        industry_list = Industry.objects.all()
-        serializer = IndustrySerializer(industry_list,many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = IndustrySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class AddSubIndustry(APIView):
-    queryset = SubIndustry.objects.all()
-    serializer_class = SubIndustrySerializer
-
-    def get(self,request):
-        subindustry_list = SubIndustry.objects.all()
-        serializer = SubIndustrySerializer(subindustry_list,many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = SubIndustrySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

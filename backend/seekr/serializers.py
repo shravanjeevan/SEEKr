@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
-from .models import Company, Industry, Skills, SubIndustry, JobListing, JobMatch, JobListingSkills, JobSeekerSkills
+from .models import Company, Skills, JobListing, JobMatch, JobListingSkills, JobSeekerSkills
 from .models import JobSeekerDetails
 
 
@@ -19,43 +19,31 @@ class UserSerializer(serializers.ModelSerializer):
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = ('id', 'CompanyName', 'Location', "Description", 'IndustryId')
+        fields = ('id', 'Name', "Description", 'Industry')
 
 
 class JobSeekerDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobSeekerDetails
-        fields = ('id', 'UserId', 'Description', 'Education')
-
-
-class IndustrySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Industry
-        fields = ('id', 'IndustryName')
-
-
-class SubIndustrySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SubIndustry
-        fields = ('id', "IndustryId", 'SubIndustryName')
+        fields = ('id', 'UserId', 'Description', 'Education', 'Longitutde', 'Latitude')
 
 
 class SkillsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skills
-        fields = ('id', 'SkillName')
+        fields = ('id', 'Name')
 
 
 class JobListSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobListing
-        fields = ('id', 'CompanyId', 'Description', 'JobTypeId', 'SalaryUp', 'SalaryDown')
+        fields = ('id', 'Name', 'CompanyId', 'Description', 'Type', 'Education', 'SalaryUp', 'SalaryDown', 'Longitude', 'Latitude')
 
 
 class JobMatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobMatch
-        fields = ('id', "JobListingId", "UserId", "MatchStatus", "SubIndustryID")
+        fields = ('id', "JobListingId", "UserId", "Status")
 
 
 class JobSkillSerializer(serializers.ModelSerializer):
