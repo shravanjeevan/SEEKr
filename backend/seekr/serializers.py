@@ -66,8 +66,7 @@ class SeekerSkillSerializer(serializers.ModelSerializer):
         fields = ('id', "UserId", "SkillsId")
 
 class MatchListSerializer (serializers.ModelSerializer):
-    class Meta:
-        job_skill_mat = generateJobSkillMat()
+    username = serializers.CharField()
 
     def generateJobSkillMat(self):
         incidence = pd.DataFrame.from_records(JobListingSkills.objects.values_list('SkillsId_id', 'JobListingId_id'), columns=['skills', 'jobs'])
