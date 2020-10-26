@@ -1,34 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import initialize from './assets/js/main.js';
 
-import App from "./App";
-import Signup from "./Register";
-import Login from "./Login";
+import './assets/css/style.css';
+import './assets/css/customize.css';
 
-const rootElement = document.getElementById("root");
-const testElement = document.getElementById("test");
-const loginElement = document.getElementById("login");
+import Routes from './routes';
+import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-
-  </React.StrictMode>,
-  rootElement
-);
-
-ReactDOM.render(
-  <React.StrictMode>
-    <Signup />
-
-  </React.StrictMode>,
-  testElement
-);
-
-ReactDOM.render(
-  <React.StrictMode>
-    <Login />
-
-  </React.StrictMode>,
-  loginElement
-);
+ReactDOM.render(<Routes />, document.getElementById('root'));
+registerServiceWorker();
+initialize();
