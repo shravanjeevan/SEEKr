@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from knox.models import AuthToken
 from rest_framework import generics, viewsets, filters
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -12,9 +13,8 @@ from .serializers import *
 from django.contrib.auth.models import User
 from .models import JobSeekerDetails,Company, Skills
 
-
 class CreateUser(generics.GenericAPIView):
-    serializer_class = UserSerializer
+    serializer_class = CreateUserSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -65,7 +65,6 @@ class AddSkill(APIView):
         filter_backends = (filters.SearchFilter,)
         skill_list = Skills.objects.all()
         serializer = SkillsSerializer(skill_list,many=True)
-        print(serializer)
         return Response(serializer.data)
 
     def post(self, request):
@@ -121,3 +120,23 @@ class AddJobSkill(APIView):
 
 class MatchList(APIView):
     serializer_class = MatchbListSerializer
+
+class LoginAPi(generics.GenericAPIView):
+    serializer_class = LoginUserSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = LoginUserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data
+        _, token = AuthToken.objects.create(user)
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": token
+        })
+
+class UserApi(generics.RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        return self.request.user
