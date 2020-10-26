@@ -39,4 +39,6 @@ urlpatterns = [
     path('auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
     path('user/info/', views.UserApi.as_view()),
 
+    path('user/jobmatch', views.MatchList.as_view())
+
 ]

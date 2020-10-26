@@ -119,7 +119,11 @@ class AddJobSkill(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MatchList(APIView):
-    serializer_class = MatchbListSerializer
+    serializer_class = MatchListSerializer
+
+    def get(self, request):
+        serializer = MatchListSerializer(data=request.data)
+        print(serializer.generateJobSkillMat())
 
 class LoginAPi(generics.GenericAPIView):
     serializer_class = LoginUserSerializer
