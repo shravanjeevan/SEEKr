@@ -11,7 +11,7 @@ function Signup(){
     const [confirmation,setconfirmation] = useState()
 
     function submit(){
-        if(cookie.load("t")!="yo"){
+        if(cookie.load("t")!==""){
             return(<></>)
         }
         if(confirmation != password){

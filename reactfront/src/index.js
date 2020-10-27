@@ -5,6 +5,15 @@ import App from "./App";
 import Signup from "./Register";
 import Login from "./Login";
 
+const Routing =()=> (
+  <Router>
+      <Route exact path="/" component={App}></Route>
+      <Route path="/register" component={Signup} ></Route>
+      <Route path="/login" component={Login} ></Route>
+  </Router>
+)
+
+
 const rootElement = document.getElementById("root");
 const testElement = document.getElementById("test");
 const loginElement = document.getElementById("login");
