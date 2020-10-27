@@ -53,7 +53,7 @@ for index, row in jobs.iterrows():
 
 # Load candidates (link to skills and users)
 for index, row in candidates.iterrows():
-    u = User.objects.create(username=row['first_name'], password=row['password'], email=row['email'], first_name=row['first_name'], last_name=['last_name'])
+    u = User.objects.create(username=row['first_name'], password=row['password'], email=row['email'], first_name=row['first_name'], last_name=row['last_name'])
     u.save()
     JobSeekerDetails(UserId=u, Education=row['education'], Latitude=row['latitude'], Longitude=row['longitude']).save()
     for skill in ast.literal_eval(row['skills']):

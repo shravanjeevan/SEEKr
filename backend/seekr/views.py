@@ -5,6 +5,7 @@ from rest_framework import generics, viewsets, filters
 from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.contrib.auth.decorators import login_required
 
 # serializers
 from .serializers import *
@@ -122,8 +123,11 @@ class MatchList(APIView):
     serializer_class = MatchListSerializer
 
     def get(self, request):
-        serializer = MatchListSerializer(data=request.data)
-        print(serializer.generateJobSkillMat())
+        #if request.user.is_authenticated:
+            serializer = MatchListSerializer(data=request.data)
+            return(serializer.generateMatchList())
+        #else:
+        #    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class LoginAPi(generics.GenericAPIView):
     serializer_class = LoginUserSerializer
