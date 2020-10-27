@@ -5,13 +5,14 @@ from rest_framework import generics, viewsets, filters
 from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.contrib.auth.decorators import login_required
 
-from .serializers import UserSerializer, JobSeekerDetailsSerializer, CompanySerializer, IndustrySerializer, SkillsSerializer, SubIndustrySerializer, JobListSerializer, JobMatchSerializer, SeekerSkillSerializer, JobSkillSerializer
-from .serializers import LoginUserSerializer, CreateUserSerializer
+# serializers
+from .serializers import *
+
 # Models
 from django.contrib.auth.models import User
-from .models import JobSeekerDetails, Industry, Company, Skills, SubIndustry
-
+from .models import JobSeekerDetails,Company, Skills
 
 class CreateUser(generics.GenericAPIView):
     serializer_class = CreateUserSerializer
@@ -53,49 +54,15 @@ class JobSeekerDetailsViewSet(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class AddIndustry(APIView):
-    queryset = Industry.objects.all()
-    serializer_class = IndustrySerializer
-
-    def get(self,request):
-        industry_list = Industry.objects.all()
-        serializer = IndustrySerializer(industry_list,many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = IndustrySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class AddSubIndustry(APIView):
-    queryset = SubIndustry.objects.all()
-    serializer_class = SubIndustrySerializer
-
-    def get(self,request):
-        subindustry_list = SubIndustry.objects.all()
-        serializer = SubIndustrySerializer(subindustry_list,many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = SubIndustrySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 class AddSkill(APIView):
     queryset = Skills.objects.all()
     serializer_class = SkillsSerializer
-    search_fields = ['SkillName']
+    search_fields = ['Name']
     filter_backends = (filters.SearchFilter,)
 
     def get(self, request):
 
-        search_fields = ['SkillName']
+        search_fields = ['Name']
         filter_backends = (filters.SearchFilter,)
         skill_list = Skills.objects.all()
         serializer = SkillsSerializer(skill_list,many=True)
@@ -152,6 +119,15 @@ class AddJobSkill(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class MatchList(APIView):
+    serializer_class = MatchListSerializer
+
+    def get(self, request):
+        #if request.user.is_authenticated:
+            serializer = MatchListSerializer(data=request.data)
+            return(serializer.generateMatchList())
+        #else:
+        #    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class LoginAPi(generics.GenericAPIView):
     serializer_class = LoginUserSerializer
@@ -165,7 +141,6 @@ class LoginAPi(generics.GenericAPIView):
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
             "token": token
         })
-
 
 class UserApi(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
