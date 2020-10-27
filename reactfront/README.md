@@ -2,9 +2,9 @@
 
 Built using following React Templates:
 
-https://github.com/lukemcdonald/holly-react/blob/master/src/components/hero/Hero.js
+https://github.com/lukemcdonald/holly-react
 
-https://github.com/mui-org/material-ui/blob/master/docs/src/pages/premium-themes/onepirate/SignIn.js
+https://github.com/mui-org/material-ui/tree/master/docs/src/pages/premium-themes/onepirate
 
 
 ## Getting started
