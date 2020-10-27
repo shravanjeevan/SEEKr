@@ -1,6 +1,11 @@
-# Holly
+# SEEKr
 
-A React implementation of [Davide Pacilio's](https://gumroad.com/davidepacilio) free landing page template. His design and layout has been rebuilt with React using [`create-react-app`](https://github.com/facebook/create-react-app). The motivation in doing this was to for my own practice and implementation of what I am learning in React.
+Built using following React Templates:
+
+https://github.com/lukemcdonald/holly-react/blob/master/src/components/hero/Hero.js
+
+https://github.com/mui-org/material-ui/blob/master/docs/src/pages/premium-themes/onepirate/SignIn.js
+
 
 ## Getting started
 
