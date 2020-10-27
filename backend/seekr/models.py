@@ -10,7 +10,6 @@ class JobSeekerDetails(models.Model):
     Description = models.CharField(max_length=1000, null=True, blank=True)
     Education = models.CharField(max_length=300, null=True, blank=True)
 
-
 class Company(models.Model):
     Name = models.CharField(max_length=200, null=True, blank=True)
     Description = models.CharField(max_length=500, null=True, blank=True)
