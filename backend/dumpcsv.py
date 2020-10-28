@@ -15,7 +15,7 @@ jobs = pd.read_csv('jobs.csv')
 candidates = pd.read_csv('candidates.csv')
 companies = pd.read_csv('company.csv')
 skills = set()
-with open('scripts\category.json') as f:
+with open(os.path.join('./', 'scripts', 'category.json')) as f:
   categories = json.load(f)
   for industry in categories:
       for skill in industry['children']:
