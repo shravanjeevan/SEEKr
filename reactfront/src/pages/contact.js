@@ -1,9 +1,13 @@
 import React from 'react';
 import Layout from '../layouts/index';
+import Hello from '../components/Hello';
 
 const ContactPage = () => {
   return (
     <Layout>
+    <div>
+    <Hello/>
+    </div>
       <article className="entry">
         <div className="container">
           <div className="entry-inner">
