@@ -25,16 +25,20 @@ function createData(name, calories, fat) {
 }
 
 const rows = [
-  createData('Data Analyst', 159, 'Apply'),
-  createData('Project Manager', 237, 'Apply'),
-  createData('Hip Hop Dancer', 262, 'Apply'),
-  createData('Another World', 305, 'Apply')
+  createData('Data Analyst', '95%', 'Apply'),
+  createData('Project Manager', '80%', 'Apply'),
+  createData('Hip Hop Dancer', '32%', 'Apply'),
+  createData('Another World', '22%', 'Apply')
 ];
   const classes = useStyles();
 
   return (
     <Layout>
     <div>
+
+    <h1>Seekr</h1>
+
+    <Hello />
   
     <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">
