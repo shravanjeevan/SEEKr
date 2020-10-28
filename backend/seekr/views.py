@@ -28,6 +28,8 @@ class CreateUser(generics.GenericAPIView):
 
 
 class CreateCompany(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+
     serializer_class = CompanySerializer
 
     def post(self, request):
@@ -39,6 +41,8 @@ class CreateCompany(generics.GenericAPIView):
 
 
 class JobSeekerDetailsViewSet(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+
     serializer_class = JobSeekerDetailsSerializer
 
     def get(self, request):
@@ -55,6 +59,7 @@ class JobSeekerDetailsViewSet(APIView):
 
 
 class AddSkill(APIView):
+
     queryset = Skills.objects.all()
     serializer_class = SkillsSerializer
     search_fields = ['Name']
@@ -77,6 +82,8 @@ class AddSkill(APIView):
 
 
 class AddJob(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+
     serializer_class = JobListSerializer
 
     def post(self, request):
@@ -99,6 +106,8 @@ class AddMatchStatus(APIView):
 
 
 class AddSeekerSkill(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+
     serializer_class = SeekerSkillSerializer
 
     def post(self, request):
@@ -110,6 +119,8 @@ class AddSeekerSkill(APIView):
 
 
 class AddJobSkill(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+
     serializer_class = JobSkillSerializer
 
     def post(self, request):
@@ -119,7 +130,9 @@ class AddJobSkill(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class MatchList(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = MatchListSerializer
 
     def get(self, request):
