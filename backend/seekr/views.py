@@ -129,6 +129,7 @@ class MatchList(APIView):
         #else:
         #    return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
 class LoginAPi(generics.GenericAPIView):
     serializer_class = LoginUserSerializer
 
@@ -141,6 +142,7 @@ class LoginAPi(generics.GenericAPIView):
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
             "token": token
         })
+
 
 class UserApi(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated, ]

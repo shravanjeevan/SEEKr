@@ -14,7 +14,7 @@ function Navbar() {
           
       </li>
       <li>  <a> Job Matching </a> </li>
-      <li> <a href="/"> Account </a> </li>
+      <li> <a href="/account"> Account </a> </li>
       <li > <a href="/login">  Login </a>   </li>
 
      </ul>

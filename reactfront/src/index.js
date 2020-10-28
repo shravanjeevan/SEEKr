@@ -4,6 +4,12 @@ import Demo from "./Demo";
 import App from "./App";
 import Signup from "./Register";
 import Login from "./Login";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 const Routing =()=> (
   <Router>
@@ -15,31 +21,30 @@ const Routing =()=> (
 
 
 const rootElement = document.getElementById("root");
-const testElement = document.getElementById("test");
-const loginElement = document.getElementById("login");
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Routing />
 
   </React.StrictMode>,
   rootElement
 );
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Signup />
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <Signup />
 
-  </React.StrictMode>,
-  testElement
-);
+//   </React.StrictMode>,
+//   testElement
+// );
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Login />
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <Login />
 
-     <Demo />
+//      <Demo />
 
-  </React.StrictMode>,
-  loginElement
-);
+//   </React.StrictMode>,
+//   loginElement
+// );
