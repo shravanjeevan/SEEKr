@@ -4,6 +4,7 @@ import Demo from "./Demo";
 import App from "./App";
 import Signup from "./Register";
 import Login from "./Login";
+import Account from "./Account"
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,6 +17,7 @@ const Routing =()=> (
       <Route exact path="/" component={App}></Route>
       <Route path="/register" component={Signup} ></Route>
       <Route path="/login" component={Login} ></Route>
+      <Route path="/account" component={Account} ></Route>
   </Router>
 )
 

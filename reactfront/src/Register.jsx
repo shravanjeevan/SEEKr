@@ -29,19 +29,19 @@ function Signup(){
             "last_name": lastname
         }
         console.log(re)
-        if(password==undefined|| password==""){
+        if(password===undefined|| password===""){
             alert("Password field can not be empty")
             return 1
-        }else if(username==undefined||username==""){
+        }else if(username===undefined||username===""){
             alert("username field can not be empty")
             return 1
-        }else if(firstname==undefined||firstname==""){
+        }else if(firstname===undefined||firstname===""){
             alert("firstname field can not be empty")
             return 1
-        }else if(lastname==undefined||lastname==""){
+        }else if(lastname===undefined||lastname===""){
             alert("lastname field can not be empty")
             return 1
-        }else if(email==undefined||email==""){
+        }else if(email===undefined||email===""){
             alert("email field can not be empty")
             return 1
         }
