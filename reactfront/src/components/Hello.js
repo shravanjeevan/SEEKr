@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
+import Demo from "../components/Demo";
 
-const list = [
-  {text: 'Data Analyst'},
-  {text: 'Project Manager'},
-  {text: 'Hip Hop Dancer'},
-  {text: 'Another world'},
+const table = [
+ 
 ];
 
 const filterSearch = searchText => item => item.text.toLowerCase().includes(searchText.toLowerCase());
@@ -14,7 +12,7 @@ class Hello extends Component {
     super(props);
 
     this.state = {
-      list,
+      table,
       searchText: ''
     }
     this.onSearch = this.onSearch.bind(this);
@@ -25,11 +23,11 @@ class Hello extends Component {
   }
 
   render() {
-    const { list, searchText } = this.state;
+    const { table, searchText } = this.state;
     return (
       <div className="application">
         <input type="text" onChange={this.onSearch} />
-        {list.filter(filterSearch(searchText)).map(item => 
+        {table.filter(filterSearch(searchText)).map(item => 
           <li>{item.text}</li>
         )}
       </div>
