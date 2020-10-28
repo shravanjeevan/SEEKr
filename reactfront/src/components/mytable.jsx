@@ -1,7 +1,4 @@
 import React from 'react';
-import Layout from '../layouts/index';
-import Hello from '../components/Hello';
-import mytable from '../components/mytable';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,9 +7,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
-
-const ContactPage = () => {
 
 const useStyles = makeStyles({
   table: {
@@ -31,12 +25,11 @@ const rows = [
   createData('Cupcake', 305, 3.7, 67, 4.3),
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
+
+export default function DenseTable() {
   const classes = useStyles();
 
   return (
-    <Layout>
-    <div>
-     <Hello/>
     <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
@@ -63,29 +56,5 @@ const rows = [
         </TableBody>
       </Table>
     </TableContainer>
-   
-
-   
-    </div>
-      <article className="entry">
-        <div className="container">
-          <div className="entry-inner">
-            <div className="entry-content">
-              <div className="container-sm">
-                <header className="entry-header">
-                  <h1 className="entry-title">Contact</h1>
-                </header>
-
-                <div className="entry-body">
-                  <p>Add your contact information here.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-    </Layout>
   );
-};
-
-export default ContactPage;
+}
