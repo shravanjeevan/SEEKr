@@ -10,7 +10,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
+import Demo from '../components/Demo';
 import { MDBBtn, MDBDataTable } from 'mdbreact';
 
 
@@ -69,7 +69,7 @@ const ContactPage= () => {
         position: '90%',
         office: '',
         extra: '',
-        age: <MDBBtn color="purple" size="sm">Apply</MDBBtn>
+        age: <Demo color="purple" size="sm">Apply</Demo>
        
       },
       {
@@ -79,7 +79,7 @@ const ContactPage= () => {
         extra1: '',
         extra2: '',
         extra: '',
-        age: <MDBBtn color="purple" size="sm">Apply</MDBBtn>
+        age: <Demo color="purple" size="sm">Apply</Demo>
       },
       {
         name: 'Hip-Hop dancer',
@@ -88,7 +88,7 @@ const ContactPage= () => {
         extra: '',
         extra1: '',
         extra2: '',
-        age: <MDBBtn color="purple" size="sm">Apply</MDBBtn>
+        age: <Demo color="purple" size="sm">Apply</Demo>
       },
       {
         name: 'Others',
@@ -97,13 +97,14 @@ const ContactPage= () => {
         extra: '',
         extra1: '',
         extra2: '',
-        age: <MDBBtn color="purple" size="sm">Apply</MDBBtn>
+        age: <Demo color="purple" size="sm">Apply</Demo>
       }
     ]
   };
 
   return (
     <Layout>
+  
     <MDBDataTable
       striped
       bordered

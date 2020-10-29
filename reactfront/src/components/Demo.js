@@ -10,7 +10,7 @@ const contentStyle = {
 
 const CustomModal = () => (
   <Popup
-    trigger={<button className="button"> Open Modal </button>}
+    trigger={<button className="button"> Apply </button>}
     modal
     contentStyle={contentStyle}
   >
