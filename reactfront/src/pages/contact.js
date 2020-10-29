@@ -516,12 +516,14 @@ const ContactPage= () => {
   };
 
   return (
+    <Layout>
     <MDBDataTable
       striped
       bordered
       small
       data={data}
     />
+    </Layout>
   );
 }
 
