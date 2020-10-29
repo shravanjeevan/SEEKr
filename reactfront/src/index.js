@@ -5,12 +5,16 @@ import App from "./App";
 import Signup from "./Register";
 import Login from "./Login";
 import Account from "./Account"
+import cookies from 'react-cookies'
+
+
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
+
 
 const Routing =()=> (
   <Router>

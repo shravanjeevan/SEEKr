@@ -161,5 +161,9 @@ class UserApi(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = UserSerializer
 
+
     def get_object(self):
-        return self.request.user
+        user = User.objects.get(username = self.request.user)
+        serializer = UserSerializer(user)
+
+        return serializer.data

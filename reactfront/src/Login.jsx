@@ -1,6 +1,6 @@
 import React, { Component, useState,useEffect } from 'react';
 import { render } from 'react-dom';
-import cookie from 'react-cookies'
+import cookies from 'react-cookies'
 import { useHistory  } from 'react-router-dom'
 
 
@@ -11,14 +11,14 @@ function Login(t){
     var show = "visible"
     const h = useHistory()
 
-    useEffect(() =>{        
-        console.log(cookie.load("t"))
-        console.log(username)
-        console.log(password)
+    // useEffect(()=>{
+    //     if (cookies.load("t")!==""|| cookies.load("t")!==undefined){
+    //         h.push("/account")
+    //     }
 
-    }
+    // },[])
 
-    )
+    
     function submit(){
         var re={
             "username": username,
@@ -39,8 +39,8 @@ function Login(t){
             console.log(data)
             if(data.token ){
                 settoken(data.token)
-                cookie.remove("t",token,{path:"/"})
-                cookie.save("t",data.token,{path:"/"})
+                cookies.remove("t",token,{path:"/"})
+                cookies.save("t",data.token,{path:"/"})
                 alert("Successful log in")
                 h.push("/account")
             }else{

@@ -1,6 +1,7 @@
 import React, { Component, useState,useEffect } from 'react';
-import cookie from 'react-cookies'
+import cookies from 'react-cookies'
 import { useHistory  } from 'react-router-dom'
+import Account from './Account';
 
 
 function Signup(){
@@ -14,7 +15,7 @@ function Signup(){
 
     function submit(){
         console.log("submit")
-        if(cookie.load("t")!==""){
+        if(cookies.load("t")!==""){
             
         }
         if(confirmation !== password ){
