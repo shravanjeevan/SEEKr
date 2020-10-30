@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import SignUpPage from './pages/signup';
-import ContactPage from './pages/contact';
-import AboutPage from './pages/about';
-import FaqsPage from './pages/faqs';
-import SupportPage from './pages/support';
-import IndexPage from './pages';
-import history from './pages/history';
-
+import SignUpPage from "./pages/signup";
+import ContactPage from "./pages/contact";
+import AboutPage from "./pages/about";
+import FaqsPage from "./pages/faqs";
+import SupportPage from "./pages/support";
+import IndexPage from "./pages";
+import history from "./pages/history";
 
 
 class App extends Component {

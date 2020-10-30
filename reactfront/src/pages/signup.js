@@ -1,4 +1,6 @@
 
+//sign up template taken from https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates
+
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
