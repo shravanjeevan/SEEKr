@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import initialize from './assets/js/main.js';
 
 import './assets/css/style.css';
