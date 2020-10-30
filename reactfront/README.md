@@ -4,6 +4,10 @@ Built using following React Templates:
 
 https://github.com/lukemcdonald/holly-react
 
+https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates/sign-in
+
+https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates/sign-up
+
 https://github.com/mui-org/material-ui/tree/master/docs/src/pages/premium-themes/onepirate
 
 
