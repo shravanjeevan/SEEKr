@@ -7,6 +7,7 @@ import AboutPage from './pages/about';
 import FaqsPage from './pages/faqs';
 import SupportPage from './pages/support';
 import IndexPage from './pages';
+import history from './pages/history';
 
 
 
