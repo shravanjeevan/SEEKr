@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '../layouts/index';
+import img from '../images/job-match2.jpg';
 
 const AboutPage = () => {
   return (
@@ -30,9 +31,13 @@ const AboutPage = () => {
                 </div>
               </div>
             </div>
-            <div className="entry-media">
-              <img src="https://placehold.it/420x640" alt="" />
-            </div>
+              <div className="img">
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <img src={img} alt="" />
+              </div>
           </div>
         </div>
       </article>
