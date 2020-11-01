@@ -66,7 +66,7 @@ class SeekerSkillSerializer(serializers.ModelSerializer):
         model = JobSeekerSkills
         fields = ('id', "UserId", "SkillsId")
 
-class MatchListSerializer (serializers.ModelSerializer):
+class MatchListSerializer(serializers.ModelSerializer):
     def generateJobSkillMat():
         incidence = pd.DataFrame.from_records(JobListingSkills.objects.values_list('SkillsId_id', 'JobListingId_id'), columns=['skills', 'jobs'])
         incidence['weight'] = 1

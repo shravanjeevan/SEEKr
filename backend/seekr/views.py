@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
 
-# serializers
+# Serializers
 from .serializers import *
 
 # Models
