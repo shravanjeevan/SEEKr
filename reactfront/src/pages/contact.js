@@ -12,7 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Demo from '../components/Demo';
 import { MDBBtn, MDBDataTable } from 'mdbreact';
-
+import 'bootstrap/dist/css/bootstrap.css';
 
 
 const ContactPage= () => {
@@ -32,32 +32,6 @@ const ContactPage= () => {
       },
       {
         label: '',
-        field: 'office',
-        sort: 'asc',
-        width: 200
-      },
-      {
-        label: '',
-        field: 'extra',
-        sort: 'asc',
-        width: 100
-      },
-      ,
-      {
-        label: '',
-        field: 'extra1',
-        sort: 'asc',
-        width: 100
-      },
-      ,
-      {
-        label: '',
-        field: 'extra2',
-        sort: 'asc',
-        width: 100
-      },
-      {
-        label: '',
         field: 'age',
         sort: 'asc',
         width: 100
@@ -67,51 +41,42 @@ const ContactPage= () => {
       {
         name: 'Data Analyst',
         position: '90%',
-        office: '',
-        extra: '',
         age: <Demo color="purple" size="sm">Apply</Demo>
        
       },
       {
         name: 'Project Manager',
         position: '82%',
-        office: '',
-        extra1: '',
-        extra2: '',
-        extra: '',
         age: <Demo color="purple" size="sm">Apply</Demo>
       },
       {
         name: 'Hip-Hop dancer',
         position: '32%',
-        office: '',
-        extra: '',
-        extra1: '',
-        extra2: '',
         age: <Demo color="purple" size="sm">Apply</Demo>
       },
       {
         name: 'Others',
         position: '10%',
-        office: '',
-        extra: '',
-        extra1: '',
-        extra2: '',
         age: <Demo color="purple" size="sm">Apply</Demo>
       }
     ]
   };
 
   return (
-    <Layout>
   
-    <MDBDataTable
+  <Layout>
+    <MDBDataTable style={{width:'650px',  marginleft : '-200', }}
+
+
+
+
       striped
       bordered
-      large
+      small
       data={data}
     />
     </Layout>
+  
   );
 }
 
