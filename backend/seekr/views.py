@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
 
-# Serializers
+# serializers
 from .serializers import *
 
 # Models
@@ -87,7 +87,7 @@ class AddJob(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class AddMatchStatus(APIView):
+class AddJobMatch(APIView):
     serializer_class = JobMatchSerializer
 
     def post(self, request):
@@ -97,6 +97,17 @@ class AddMatchStatus(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ListJobMatch(APIView):
+    serializer_class = JobMatchListSerializer
+
+    def get(self, request):
+        #if request.user.is_authenticated:
+            print(request.user)
+            serializer = JobMatchListSerializer(data=request.data)
+            return(serializer.generateMatchList())
+        #else:
+        #    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class AddSeekerSkill(APIView):
     serializer_class = SeekerSkillSerializer
@@ -119,15 +130,6 @@ class AddJobSkill(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class MatchList(APIView):
-    serializer_class = MatchListSerializer
-
-    def get(self, request):
-        #if request.user.is_authenticated:
-            serializer = MatchListSerializer(data=request.data)
-            return(serializer.generateMatchList())
-        #else:
-        #    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class LoginAPi(generics.GenericAPIView):
     serializer_class = LoginUserSerializer
@@ -141,6 +143,7 @@ class LoginAPi(generics.GenericAPIView):
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
             "token": token
         })
+
 
 class UserApi(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
