@@ -28,13 +28,13 @@ class UserSerializer(serializers.ModelSerializer):
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = ('id', 'Name', "Description", 'Industry')
+        fields = ('id', 'UserId', 'Name', "Description", 'Industry')
 
 
 class JobSeekerDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobSeekerDetails
-        fields = ('id', 'UserId', 'Description', 'Education', 'Longitutde', 'Latitude')
+        fields = ('id', 'UserId', 'Description', 'Education', 'Longitude', 'Latitude')
 
 
 class SkillsSerializer(serializers.ModelSerializer):

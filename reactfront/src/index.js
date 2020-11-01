@@ -30,10 +30,10 @@ const rootElement = document.getElementById("root");
 
 
 ReactDOM.render(
-  <React.StrictMode>
+
     <Routing />
 
-  </React.StrictMode>,
+,
   rootElement
 );
 

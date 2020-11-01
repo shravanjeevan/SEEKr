@@ -23,7 +23,7 @@ function Signup(){
             return 1
         }
         var re = {
-            "username": username,
+            "username": username, 
             "password": confirmation,
             "email": email,
             "first_name": firstname,
