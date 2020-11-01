@@ -11,7 +11,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Demo from '../components/Demo';
-import { MDBCol, MDBIcon, MDBBtn, MDBDataTable } from 'mdbreact';
+import {MDBContainer, MDBCol, MDBIcon, MDBBtn, MDBDataTable } from 'mdbreact';
 import 'bootstrap/dist/css/bootstrap.css';
 
 
@@ -64,8 +64,9 @@ const ContactPage= () => {
 
   return (
   
-  
-
+  <div>
+  <h1> SEEKER </h1>
+   
     <MDBDataTable style={{width:'980px',  backgroundColor: 'white'}}
 
 
@@ -77,7 +78,8 @@ const ContactPage= () => {
       data={data}
     />
     
-   
+    
+   </div>
   
   );
 }
