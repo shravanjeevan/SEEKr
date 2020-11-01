@@ -22,19 +22,19 @@ class CreateUserSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username')
+        fields = ('id', 'username', 'email', 'first_name', 'last_name')
 
 
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = ('id', 'Name', "Description", 'Industry')
+        fields = ('id', 'UserId', 'Name', "Description", 'Industry')
 
 
 class JobSeekerDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobSeekerDetails
-        fields = ('id', 'UserId', 'Description', 'Education', 'Longitutde', 'Latitude')
+        fields = ('id', 'UserId', 'Description', 'Education', 'Longitude', 'Latitude')
 
 
 class SkillsSerializer(serializers.ModelSerializer):
