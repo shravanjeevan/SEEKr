@@ -65,7 +65,7 @@ const ContactPage= () => {
   return (
   
   <Layout>
-    <MDBDataTable style={{width:'1200px',  backgroundColor: 'white'}}
+    <MDBDataTable style={{width:'700px',  backgroundColor: 'white'}}
 
 
 
