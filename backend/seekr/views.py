@@ -12,7 +12,8 @@ from .serializers import *
 
 # Models
 from django.contrib.auth.models import User
-from .models import JobSeekerDetails,Company, Skills
+from .models import JobSeekerDetails, Company, Skills
+
 
 class CreateUser(generics.GenericAPIView):
     serializer_class = CreateUserSerializer
@@ -28,6 +29,8 @@ class CreateUser(generics.GenericAPIView):
 
 
 class CreateCompany(generics.GenericAPIView):
+    # permission_classes = [permissions.IsAuthenticated, ]
+
     serializer_class = CompanySerializer
 
     def post(self, request):
@@ -39,15 +42,18 @@ class CreateCompany(generics.GenericAPIView):
 
 
 class JobSeekerDetailsViewSet(APIView):
+    #permission_classes = [permissions.IsAuthenticated, ]
+
     serializer_class = JobSeekerDetailsSerializer
 
     def get(self, request):
         job_seeker_details = JobSeekerDetails.objects.all()
         serializer = JobSeekerDetailsSerializer(job_seeker_details, many=True)
         return Response(serializer.data)
- 
+
     def post(self, request):
         serializer = JobSeekerDetailsSerializer(data=request.data)
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -61,11 +67,10 @@ class AddSkill(APIView):
     filter_backends = (filters.SearchFilter,)
 
     def get(self, request):
-
         search_fields = ['Name']
         filter_backends = (filters.SearchFilter,)
         skill_list = Skills.objects.all()
-        serializer = SkillsSerializer(skill_list,many=True)
+        serializer = SkillsSerializer(skill_list, many=True)
         return Response(serializer.data)
 
     def post(self, request):
@@ -77,6 +82,8 @@ class AddSkill(APIView):
 
 
 class AddJob(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+
     serializer_class = JobListSerializer
 
     def post(self, request):
@@ -99,6 +106,8 @@ class AddMatchStatus(APIView):
 
 
 class AddSeekerSkill(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+
     serializer_class = SeekerSkillSerializer
 
     def post(self, request):
@@ -110,6 +119,8 @@ class AddSeekerSkill(APIView):
 
 
 class AddJobSkill(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+
     serializer_class = JobSkillSerializer
 
     def post(self, request):
@@ -119,15 +130,18 @@ class AddJobSkill(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class MatchList(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = MatchListSerializer
 
     def get(self, request):
-        #if request.user.is_authenticated:
-            serializer = MatchListSerializer(data=request.data)
-            return(serializer.generateMatchList())
-        #else:
-        #    return Response(status=status.HTTP_400_BAD_REQUEST)
+        # if request.user.is_authenticated:
+        serializer = MatchListSerializer(data=request.data)
+        return (serializer.generateMatchList())
+    # else:
+    #    return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 class LoginAPi(generics.GenericAPIView):
     serializer_class = LoginUserSerializer
@@ -142,9 +156,38 @@ class LoginAPi(generics.GenericAPIView):
             "token": token
         })
 
+
 class UserApi(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = UserSerializer
 
-    def get_object(self):
-        return self.request.user
+    def get(self, request):
+        print(self.request.user)
+        user = User.objects.get(username=self.request.user)
+        serializer = UserSerializer(user)
+        t = serializer.data
+        print(t)
+
+        try:
+            user = JobSeekerDetails.objects.get(UserId=t['id'])
+            serializer = JobSeekerDetailsSerializer(user)
+            print(serializer.data)
+            seeker = serializer.data
+        except JobSeekerDetails.DoesNotExist:
+            print("no seeker user find")
+            seeker = dict()
+        try:
+            user = Company.objects.get(UserId=t['id'])
+            serializer = CompanySerializer(user)
+            print(serializer.data)
+            company = serializer.data
+
+        except Company.DoesNotExist:
+            print("no company user find")
+            company = dict()
+
+        return Response({
+            "account": t,
+            "company": company,
+            "seekr": seeker
+        })

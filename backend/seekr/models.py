@@ -11,6 +11,7 @@ class JobSeekerDetails(models.Model):
     Education = models.CharField(max_length=300, null=True, blank=True)
 
 class Company(models.Model):
+    UserId = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
     Name = models.CharField(max_length=200, null=True, blank=True)
     Description = models.CharField(max_length=500, null=True, blank=True)
     Industry = models.CharField(max_length=40, null=True, blank=True)

@@ -1,34 +1,56 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
+import Demo from "./Demo";
 import App from "./App";
 import Signup from "./Register";
 import Login from "./Login";
+import Account from "./Account"
+import cookies from 'react-cookies'
+
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
+
+const Routing =()=> (
+  <Router>
+      <Route exact path="/" component={App}></Route>
+      <Route path="/register" component={Signup} ></Route>
+      <Route path="/login" component={Login} ></Route>
+      <Route path="/account" component={Account} ></Route>
+  </Router>
+)
+
 
 const rootElement = document.getElementById("root");
-const testElement = document.getElementById("test");
-const loginElement = document.getElementById("login");
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
 
-  </React.StrictMode>,
+    <Routing />
+
+,
   rootElement
 );
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Signup />
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <Signup />
 
-  </React.StrictMode>,
-  testElement
-);
+//   </React.StrictMode>,
+//   testElement
+// );
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Login />
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <Login />
 
-  </React.StrictMode>,
-  loginElement
-);
+//      <Demo />
+
+//   </React.StrictMode>,
+//   loginElement
+// );
