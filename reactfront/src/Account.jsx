@@ -23,8 +23,8 @@ function Account(){
     const [longtitude,setlongtitude] = useState()
     const [description,setdescription] = useState()
     const [edu,setedu]=useState()
-
-
+    const [cname,setcname]=useState()
+    const [data,setdata]=useState()
     useEffect(()=>{
         settoken( cookies.load("t"))
         if (cookies.load("t")===""||cookies.load("t")===undefined){
@@ -38,6 +38,7 @@ function Account(){
             }    
         }).then(res => res.json()).then((data =>{
                 console.log(data)
+                setdata(data)
                 setusername(data.account.username)
                 setfirstname(data.account.first_name)
                 setlastname(data.account.last_name)
@@ -78,6 +79,27 @@ function Account(){
     //     console.log(accountsetup)
     // })
     function fancyfuntion(){
+        if(accountstatus=="Company account"){
+
+                return(<div>
+                    <div>Company NAME: {data.company.Name}</div>
+                    <div>Description: {data.company.Description}</div>
+                    <div>Industry: {data.company.Industry}</div>
+                    <button> post new jobs</button> <br></br> 
+                    <button> jobs</button> <br></br> 
+
+                </div>)
+        }else if(accountstatus=="Seeker account"){
+                return(<div>
+                    <div>Education: {data.seekr.Education}</div>
+                    <div>Description: {data.seekr.Description}</div>
+                    <div>Longtitude: {data.seekr.Longitude}</div>
+                    <div>Latitude: {data.seekr.Latitude}</div>
+
+                    <button> give me jobs</button> <br></br> 
+                    <button> Skills</button> <br></br>
+                </div>)
+        }
 
     }
 
@@ -85,7 +107,10 @@ function Account(){
     function accounttype(){
         if(type === "company"){
             return(<div>
-                <label>company</label><br></br>        
+                <label>company</label><br></br>
+                Name<input onChange={event=>setcname(event.target.value)}/>    <br></br>     
+                Description <br></br> <textarea onChange={event=>setdescription(event.target.value)}/>   <br></br>
+                Industry <input onChange={event=>setedu(event.target.value)}/>    <br></br>        
                 <button onClick={save}>Save</button>
                 </div>)
         }else if(type === "seekr"){
@@ -108,6 +133,32 @@ function Account(){
 
     function save(){
         if(type === "company"){
+            var r = {
+                "UserId":uid,
+                "Name":cname,
+                "Description":description,
+                "Industry":edu,
+
+            }
+            fetch('http://127.0.0.1:8000/company/register/',{method:"post",
+            headers: {
+                'Content-Type':'application/json',
+                'Authorization': "Token "+ token
+            },
+            body:JSON.stringify(r)
+        }).then(res => res.json()).then((data =>{
+                console.log(data)
+                closeModal()
+                window.location.reload(false)
+
+        })).
+        catch(error => {
+            if (error.status === 404) {
+                console.log(error.status + error.statusText)
+            } else if (error.status === 403) {
+                console.log(error.status + error.statusText)
+            }
+        })
 
         }else if(type === "seekr"){
             var r = {
@@ -117,7 +168,7 @@ function Account(){
                 "Longitude":longtitude,
                 "Latitude":latitude
             }
-            console.log(r)
+
             fetch('http://127.0.0.1:8000/job_seeker/details/',{method:"post",
                 headers: {
                     'Content-Type':'application/json',
