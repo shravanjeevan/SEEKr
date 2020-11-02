@@ -12,7 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Demo from '../components/Demo';
 import {MDBContainer, MDBCol, MDBIcon, MDBBtn, MDBDataTable } from 'mdbreact';
-import faker from "faker";
+//import faker from "faker";
 import { Delete } from "@material-ui/icons";
 
 import 'bootstrap/dist/css/bootstrap.css';

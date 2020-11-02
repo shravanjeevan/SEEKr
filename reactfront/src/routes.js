@@ -9,7 +9,7 @@ import FaqsPage from "./pages/faqs";
 import SupportPage from "./pages/support";
 import IndexPage from "./pages";
 import history from "./pages/history";
-
+import Account from "./pages/Account"
 
 class App extends Component {
   render() {
@@ -18,6 +18,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/signup" component={SignUpPage} />
           <Route exact path="/signin" component={SignInPage} />
+          <Route exact path="/account" component={Account} />
           <Route exact path="/contact" component={ContactPage} />
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/faqs" component={FaqsPage} />

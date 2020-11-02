@@ -1,7 +1,7 @@
 
 //sign in template taken from https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates
 
-import React from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import Header from '../components/layout/Header-withoutBody';
 import Footer from '../components/layout/Footer-withoutLinks';
 import Avatar from '@material-ui/core/Avatar';
@@ -17,7 +17,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import cookies from 'react-cookies'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,6 +42,50 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const [username, setusername] = useState()
+  const [password, setpassword] = useState()
+  const [token, settoken] = useState()
+  var show = "visible"
+  const h = useHistory()
+
+
+  function submit() {
+    var re = {
+      "username": username,
+      "password": password
+    }
+    console.log(re)
+    if (username === "" || password === "" || username === undefined || password === undefined) {
+      alert("Username or Password can not be empty")
+      return
+    }
+    fetch('http://127.0.0.1:8000/auth/login', {
+      method: "post",
+      body: JSON.stringify(re),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+
+    }).then(res => res.json()).then((data => {
+      console.log(data)
+      if (data.token) {
+        settoken(data.token)
+        cookies.remove("t", token, { path: "/" })
+        cookies.save("t", data.token, { path: "/" })
+        alert("Successful log in")
+        h.push("/account")
+      } else {
+        alert(data.non_field_errors[0])
+      }
+    })).
+      catch(error => {
+        if (error.status === 404) {
+          console.log(error.status + error.statusText)
+        } else if (error.status === 403) {
+          console.log(error.status + error.statusText)
+        }
+      })
+  }
 
   return (
     <div>
@@ -55,14 +100,14 @@ export default function SignIn() {
             Sign in
           </Typography>
           <form className={classes.form} noValidate>
-          <Grid container>
-            <Grid item>
-              <Link href="/signup" variant="body2">
-              <br></br>
-              {"Don't have an account? Sign Up"}
-              <br></br>
-              <br></br>
-              </Link>
+            <Grid container>
+              <Grid item>
+                <Link href="/signup" variant="body2">
+                  <br></br>
+                  {"Don't have an account? Sign Up"}
+                  <br></br>
+                  <br></br>
+                </Link>
               </Grid>
             </Grid>
             <TextField
@@ -70,34 +115,34 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              autoComplete="username"
               autoFocus
+              onChange={event =>setusername(event.target.value)}
             />
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              name="password"
               label="Password"
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={event => setpassword(event.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              href="contact"
               className={classes.submit}
+              onClick={submit}
             >
               Sign In
             </Button>
@@ -112,11 +157,11 @@ export default function SignIn() {
         </div>
         <Box mt={8}>
         </Box>
-        </Container>
-        <br></br>
-        <br></br>
-        <br></br>
-        <Footer />
+      </Container>
+      <br></br>
+      <br></br>
+      <br></br>
+      <Footer />
     </div>
   );
 }
