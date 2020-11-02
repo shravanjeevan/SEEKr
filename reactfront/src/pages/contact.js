@@ -23,13 +23,22 @@ import MaterialTable from "material-table";
 const ContactPage= () => {
   const results = [...Array(50).keys()].map(i => {
   return {
-    name: faker.name.findName(),
-    state: faker.address.state(),
-    account: faker.finance.account()
+    name: faker.name.jobTitle(),
+    state: faker.random.number({
+    'min': 82,
+    'max': 99
+})
   };
 });
   const [data, setData] = useState(results);
   const handleDeleteRows = (event, rowData) => {
+    let _data = [...data];
+    rowData.forEach(rd => {
+      _data = _data.filter(t => t.tableData.id !== rd.tableData.id);
+    });
+    setData(_data);
+  };
+  const handleApply= (event, rowData) => {
     let _data = [...data];
     rowData.forEach(rd => {
       _data = _data.filter(t => t.tableData.id !== rd.tableData.id);
@@ -51,12 +60,8 @@ const ContactPage= () => {
           field: "name"
         },
         {
-          title: "State",
+          title: "Percentage",
           field: "state"
-        },
-        {
-          title: "Account",
-          field: "account"
         }
       ]}
       data={data}
@@ -66,6 +71,11 @@ const ContactPage= () => {
       }}
       icons={tableIcons}
       actions={[
+        {
+          icon: () => <Delete />,
+          tooltip: "Delete Rows",
+          onClick: handleDeleteRows
+        },
         {
           icon: () => <Delete />,
           tooltip: "Delete Rows",
