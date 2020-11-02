@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '../layouts/index';
 import Hello from '../components/Hello';
 import mytable from '../components/mytable';
@@ -12,71 +12,68 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Demo from '../components/Demo';
 import {MDBContainer, MDBCol, MDBIcon, MDBBtn, MDBDataTable } from 'mdbreact';
+import faker from "faker";
+import { Delete } from "@material-ui/icons";
+
 import 'bootstrap/dist/css/bootstrap.css';
+import tableIcons from "./TableIcons.js";
+import MaterialTable from "material-table";
 
 
 const ContactPage= () => {
-  const data = {
-    columns: [
-      {
-        label: '',
-        field: 'name',
-        sort: 'asc',
-        width: 150
-      },
-      {
-        label: '',
-        field: 'position',
-        sort: 'asc',
-        width: 270
-      },
-      {
-        label: '',
-        field: 'age',
-        sort: 'asc',
-        width: 100
-      }
-    ],
-    rows: [
-      {
-        name: 'Data Analyst',
-        position: '90%',
-        age: <Demo color="purple" size="sm">Apply</Demo>
-       
-      },
-      {
-        name: 'Project Manager',
-        position: '82%',
-        age: <Demo color="purple" size="sm">Apply</Demo>
-      },
-      {
-        name: 'Hip-Hop dancer',
-        position: '32%',
-        age: <Demo color="purple" size="sm">Apply</Demo>
-      },
-      {
-        name: 'Others',
-        position: '10%',
-        age: <Demo color="purple" size="sm">Apply</Demo>
-      }
-    ]
+  const results = [...Array(50).keys()].map(i => {
+  return {
+    name: faker.name.findName(),
+    state: faker.address.state(),
+    account: faker.finance.account()
   };
+});
+  const [data, setData] = useState(results);
+  const handleDeleteRows = (event, rowData) => {
+    let _data = [...data];
+    rowData.forEach(rd => {
+      _data = _data.filter(t => t.tableData.id !== rd.tableData.id);
+    });
+    setData(_data);
+  };
+  
 
   return (
   
   <div>
   <h1> SEEKER </h1>
    
-    <MDBDataTable style={{width:'980px',  backgroundColor: 'white'}}
-
-
-
-
-      striped
-      bordered
-      small
+    <MaterialTable
+      title="Select row(s) to get the option to delete"
+      columns={[
+        {
+          title: "Name",
+          field: "name"
+        },
+        {
+          title: "State",
+          field: "state"
+        },
+        {
+          title: "Account",
+          field: "account"
+        }
+      ]}
       data={data}
+      options={{
+        selection: true,
+        pageSize: 10
+      }}
+      icons={tableIcons}
+      actions={[
+        {
+          icon: () => <Delete />,
+          tooltip: "Delete Rows",
+          onClick: handleDeleteRows
+        }
+      ]}
     />
+    
     
     
    </div>
