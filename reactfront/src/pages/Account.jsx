@@ -95,7 +95,7 @@ function Account(){
                     <div>Longtitude: {data.seekr.Longitude}</div>
                     <div>Latitude: {data.seekr.Latitude}</div>
 
-                    <button> give me jobs</button> <br></br> 
+                    <button onClick={()=>h.push('/contact')}> give me jobs</button> <br></br> 
                     <button> Skills</button> <br></br>
                 </div>)
         }
