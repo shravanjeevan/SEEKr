@@ -115,6 +115,25 @@ const ContactPage= () => {
           }),
       }}
       icons={tableIcons}
+       detailPanel={[
+    {
+      tooltip: 'Show Name',
+      render: rowData => {
+        return (
+          <div
+            style={{
+              fontSize: 100,
+              textAlign: 'center',
+              color: 'white',
+              backgroundColor: '#43A047',
+            }}
+          >
+            {rowData.name}
+          </div>
+        )
+      },
+    }
+  ]}
     />
 
   
