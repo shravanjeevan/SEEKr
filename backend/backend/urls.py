@@ -26,10 +26,6 @@ urlpatterns = [
 
     path('company/register/', views.CreateCompany.as_view()),
 
-    path('industry/add/', views.AddIndustry.as_view()),
-
-    path('sub_industry/add/', views.AddSubIndustry.as_view()),
-
     path('job_seeker/details/', views.JobSeekerDetailsViewSet.as_view()),
 
     path('skills/add/', views.AddSkill.as_view()),
@@ -42,5 +38,7 @@ urlpatterns = [
     path('auth/login', views.LoginAPi.as_view()),
     path('auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
     path('user/info/', views.UserApi.as_view()),
+
+    path('user/jobmatch', views.MatchList.as_view())
 
 ]
