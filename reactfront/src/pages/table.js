@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Layout from '../layouts/index';
+import Header from '../components/layout/Header-withoutBody';
+import Footer from '../components/layout/Footer';
 import Hello from '../components/Hello';
 import mytable from '../components/mytable';
 import { makeStyles } from '@material-ui/core/styles';
@@ -36,23 +38,22 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 import { forwardRef } from 'react';
 
 
-const ContactPage= () => {
+const MatchingJobPage= () => {
   const { useState } = React;
 
   const [columns, setColumns] = useState([
-    { title: 'Name', field: 'name' },
-    { title: 'Surname', field: 'surname', initialEditValue: 'initial edit value' },
-    { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-    {
-      title: 'Birth Place',
-      field: 'birthCity',
-      lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-    },
+    { title: 'Company Name', field: 'company' },
+    { title: 'Job Title', field: 'job' },
+    { title: 'How well suitable am I for this job?', field: 'match' },
+    { title: 'Areas to Improve On', field: 'feedback' },
+
   ]);
+
   const [data, setData] = useState([
-    { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-    { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 },
+    { company: 'IBM', job: 'Data Analyst', match: '95%', feedback: 'Attention to Detail' },
+    { company: 'Omron', job: 'Project Manager', match: '80%', feedback: 'Management' },
   ]);
+
 
   const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -76,71 +77,73 @@ const ContactPage= () => {
  
 
   return (
-  
+  <div>
+  <Header />
+    <MaterialTable
+          title="Jobs That Match with You"
+          columns={columns}
+          data={data}
+          editable={{
+            onRowAdd: newData =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  setData([...data, newData]);
+                  
+                  resolve();
+                }, 1000)
+              }),
+            onRowUpdate: (newData, oldData) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  const dataUpdate = [...data];
+                  const index = oldData.tableData.id;
+                  dataUpdate[index] = newData;
+                  setData([...dataUpdate]);
 
-<MaterialTable
-      title="Editable Preview"
-      columns={columns}
-      data={data}
-      editable={{
-        onRowAdd: newData =>
-          new Promise((resolve, reject) => {
-            setTimeout(() => {
-              setData([...data, newData]);
-              
-              resolve();
-            }, 1000)
-          }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise((resolve, reject) => {
-            setTimeout(() => {
-              const dataUpdate = [...data];
-              const index = oldData.tableData.id;
-              dataUpdate[index] = newData;
-              setData([...dataUpdate]);
-
-              resolve();
-            }, 1000)
-          }),
-        onRowDelete: oldData =>
-          new Promise((resolve, reject) => {
-            setTimeout(() => {
-              const dataDelete = [...data];
-              const index = oldData.tableData.id;
-              dataDelete.splice(index, 1);
-              setData([...dataDelete]);
-              
-              resolve()
-            }, 1000)
-          }),
-      }}
-      icons={tableIcons}
-       detailPanel={[
-    {
-      tooltip: 'Show Name',
-      render: rowData => {
-        return (
-          <div
-            style={{
-              fontSize: 100,
-              textAlign: 'center',
-              color: 'white',
-              backgroundColor: '#43A047',
-            }}
-          >
-            {rowData.name}
-          </div>
-        )
-      },
-    }
-  ]}
-    />
-
-  
-  );
-}
+                  resolve();
+                }, 1000)
+              }),
+            onRowDelete: oldData =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  const dataDelete = [...data];
+                  const index = oldData.tableData.id;
+                  dataDelete.splice(index, 1);
+                  setData([...dataDelete]);
+                  
+                  resolve()
+                }, 1000)
+              }),
+          }}
+          icons={tableIcons}
+           detailPanel={[
+        {
+          tooltip: 'Show Name',
+          render: rowData => {
+            return (
+              <div
+                style={{
+                  fontSize: 100,
+                  textAlign: 'center',
+                  color: 'white',
+                  backgroundColor: '#43A047',
+                }}
+              >
+                {rowData.name}
+              </div>
+            )
+          },
+        }
+      ]}
+   
+      />
+    <Footer />
+    </div>
+    
+    );
+  }
 
 
 
 
-export default ContactPage;
+export default MatchingJobPage;
