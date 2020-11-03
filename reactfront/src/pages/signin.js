@@ -107,7 +107,7 @@ export default function SignIn() {
           <form className={classes.form} noValidate>
             <Grid container>
               <Grid item>
-                <Link href="/signup" variant="body2">
+                <Link href="/signup-job" variant="body2">
                   <br></br>
                   {"Don't have an account? Sign Up"}
                   <br></br>

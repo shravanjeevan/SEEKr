@@ -3,9 +3,8 @@
 
 import React, { Component, useState, useEffect } from 'react';
 import './styles.css';
-import RadioButtons from './new-buttons';
-import history from './history';
 import Radio from '@material-ui/core/Radio';
+import history from './history';
 //import Layout from '../layouts/custom-index';
 import Header from '../components/layout/Header-withoutBody';
 import Footer from '../components/layout/Footer-withoutLinks';
@@ -143,13 +142,13 @@ export default function SignUp() {
                   <br></br>
                   <br></br>
                 <form>
-                 <div class="my-style btn-group" data-toggle="buttons">
-                <label class="btn btn-primary form-check-label active">
-                  <input class="form-check-input" type="radio" name="options" id="option1" autocomplete="off" checked/>
+                 <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-primary form-check-label">
+                  <input class="form-check-input" type="radio" name="options" id="option1" autocomplete="off"/>
                   I am looking for a job
                 </label>
-                <label class="btn btn-primary form-check-label">
-                  <input class="form-check-input" type="radio" name="options" id="option2" autocomplete="off"/> I am looking for employees
+                <label class="btn btn-primary form-check-label active">
+                  <input class="form-check-input" type="radio" name="options" id="option2" autocomplete="off" checked/> I am looking for employees
                 </label>
                  </div>
                  </form>
@@ -158,27 +157,16 @@ export default function SignUp() {
               </Grid>
             </Grid>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
-                  autoComplete="fname"
-                  name="firstName"
+                  autoComplete="cname"
+                  name="companyName"
                   variant="outlined"
                   required
                   fullWidth
-                  label="First Name"
+                  label="Company Name"
                   autoFocus
                   onChange={event =>setfirstname(event.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  autoComplete="lname"
-                  onChange={event => setlastname(event.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -197,7 +185,7 @@ export default function SignUp() {
                   variant="outlined"
                   required
                   fullWidth
-                  label="Your User Name"
+                  label="User Name"
                   autoComplete="current-password"
                   onChange={event =>setusername(event.target.value)}
                 />

@@ -24,7 +24,7 @@ const IndexPage = () => {
 	                	<br></br>
                 	<form>
 				        <div className="control">
-				        	<button className="button button-primary button-block button-shadow" onClick={() => history.push('/signup')}>Sign Up Today</button>
+				        	<button className="button button-primary button-block button-shadow" onClick={() => history.push('/signup-job')}>Sign Up Today</button>
 				        </div>
 			        </form>
                 </div>
