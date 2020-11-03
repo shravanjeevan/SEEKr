@@ -143,12 +143,12 @@ export default function SignUp() {
                   <br></br>
                 <form>
                  <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-primary form-check-label active">
-                  <input class="form-check-input" type="radio" name="options" id="option1" autocomplete="off" checked/>
+                <label class="btn btn-outline-primary btn-sm form-check-label active">
+                  <input class="form-check-input" type="radio" id="option1" autocomplete="off" checked/>
                   I am looking for a job
                 </label>
-                <label class="btn btn-primary form-check-label">
-                  <input class="form-check-input" type="radio" name="options" id="option2" autocomplete="off" onClick={() => history.push('/signup-company')}/> I am looking for employees
+                <label class="btn btn-outline-primary btn-sm form-check-label">
+                  <input class="form-check-input" type="radio" id="option2" autocomplete="off"/> I am looking for employees
                 </label>
                  </div>
                  </form>
