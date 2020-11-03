@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import SignUpPage from "./pages/signup";
 import SignInPage from "./pages/signin";
-import ContactPage from "./pages/table";
+import MatchingPage from "./pages/matched-jobs";
 import AboutPage from "./pages/about";
 import FaqsPage from "./pages/faqs";
 import SupportPage from "./pages/support";
@@ -19,7 +19,7 @@ class App extends Component {
           <Route exact path="/signup" component={SignUpPage} />
           <Route exact path="/signin" component={SignInPage} />
           <Route exact path="/account" component={Account} />
-          <Route exact path="/table" component={ContactPage} />
+          <Route exact path="/matched-jobs" component={MatchingPage} />
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/faqs" component={FaqsPage} />
           <Route exact path="/support" component={SupportPage} />

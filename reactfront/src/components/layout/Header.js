@@ -18,6 +18,7 @@ class Header extends Component {
               <h1 className="m-0">
                 <Link to="/">
                   <Logo /> {this.props.title}
+                  SEEKr
                 </Link>
               </h1>
             </div>
