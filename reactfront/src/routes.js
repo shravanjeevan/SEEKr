@@ -5,6 +5,7 @@ import SignUpJobPage from "./pages/signup-job";
 import SignUpCompanyPage from "./pages/signup-company";
 import SignInPage from "./pages/signin";
 import MatchingPage from "./pages/matched-jobs";
+import PostJobPage from "./pages/post-jobs";
 import AboutPage from "./pages/about";
 import FaqsPage from "./pages/faqs";
 import SupportPage from "./pages/support";
@@ -22,6 +23,7 @@ class App extends Component {
           <Route exact path="/signin" component={SignInPage} />
           <Route exact path="/account" component={Account} />
           <Route exact path="/matched-jobs" component={MatchingPage} />
+          <Route exact path="/post-jobs" component={PostJobPage} />
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/faqs" component={FaqsPage} />
           <Route exact path="/support" component={SupportPage} />
