@@ -5,7 +5,6 @@ import React, { Component, useState, useEffect } from 'react';
 import './styles.css';
 import Radio from '@material-ui/core/Radio';
 import history from './history';
-//import Layout from '../layouts/custom-index';
 import Header from '../components/layout/Header-withoutBody';
 import Footer from '../components/layout/Footer-withoutLinks';
 import Avatar from '@material-ui/core/Avatar';
@@ -22,7 +21,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import cookies from 'react-cookies'
 import { useHistory } from 'react-router-dom'
-// import Account from './Account';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -144,11 +142,11 @@ export default function SignUp() {
                  <form>
                  <div class="btn-group" data-toggle="buttons">
                 <label class="btn btn-outline-primary btn-sm form-check-label">
-                  <input class="form-check-input" type="radio" name="option1" id="option1" autocomplete="off"/>
+                  <input class="form-check-input" type="radio" name="option" id="option1" autocomplete="off" onClick={() => history.push('/signup-job?')}/>
                   I am looking for a job
                 </label>
                 <label class="btn btn-outline-primary btn-sm form-check-label active">
-                  <input class="form-check-input" type="radio" name="option2" id="option2" autocomplete="off" checked/> I am looking for employees
+                  <input class="form-check-input" type="radio" name="option" id="option2" autocomplete="off" checked/> I am looking for employees
                 </label>
                  </div>
                  </form>
