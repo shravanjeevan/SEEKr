@@ -106,16 +106,67 @@ class AddMatchStatus(APIView):
 
 
 class AddSeekerSkill(APIView):
-    permission_classes = [permissions.IsAuthenticated, ]
+    # permission_classes = [permissions.IsAuthenticated, ]
 
     serializer_class = SeekerSkillSerializer
 
     def post(self, request):
-        serializer = SeekerSkillSerializer(data=request.data)
-        if serializer.is_valid():
+        print(request.data)
+        newskill = request.data['Skills']
+        try:
+            query = Skills.objects.get(Name = newskill)
+            serializer = SkillsSerializer(query)
+        except Skills.DoesNotExist:
+            print(newskill, "does not exist")
+            term = dict({"Name": newskill})
+            serializer = SkillsSerializer(data=term)
+            serializer.is_valid()
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        query = Skills.objects.get(Name = newskill)
+        serializer = SkillsSerializer(query)
+        t = dict({"UserId":request.data['UserId'],"SkillsId":serializer.data['id']})
+        print(t)
+        serializer = SeekerSkillSerializer(data=t)
+        serializer.is_valid()
+        serializer.save()
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class GetSeekerSkill(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+
+    serializer_class = UserSerializer
+
+    def get(self, request):
+        user = User.objects.get(username=self.request.user)
+        serializer = UserSerializer(user)
+        t = serializer.data
+        print(t)
+        try:
+            query = JobSeekerSkills.objects.filter(UserId=t['id'])
+            serializer = SeekerSkillSerializer(query, many=True)
+            print(serializer.data)
+            user_skills = list()
+            for skill in serializer.data:
+                query = Skills.objects.filter(id=skill['SkillsId'])
+                serializer = SkillsSerializer(query, many=True)
+                temp = dict(serializer.data[0])
+                print(temp)
+                user_skills.append(temp)
+
+        except JobSeekerSkills.DoesNotExist:
+            user_skills = list()
+            # serializer = SeekerSkillSerializer(data=request.data)
+            # if serializer.is_valid():
+                # serializer.save()
+                # return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response({"skills": user_skills})
 
 
 class AddJobSkill(APIView):

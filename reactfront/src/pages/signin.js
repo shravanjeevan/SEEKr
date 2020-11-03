@@ -48,6 +48,11 @@ export default function SignIn() {
   var show = "visible"
   const h = useHistory()
 
+  useEffect(()=>{
+    if (cookies.load("t") !== "" &&cookies.load("t") !== undefined) {
+      h.push("/account")
+    }
+  },[])
 
   function submit() {
     var re = {

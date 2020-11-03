@@ -52,11 +52,16 @@ export default function SignUp() {
   const [confirmation, setconfirmation] = useState()
   const h = useHistory()
   const classes = useStyles();
+
+  useEffect(()=>{
+    if (cookies.load("t") !== "" &&cookies.load("t") !== undefined) {
+      h.push("/account")
+    }
+  },[])
+  
   function submit() {
     console.log("submit")
-    if (cookies.load("t") !== "") {
 
-    }
     if (confirmation !== password) {
       alert("confirmation should be same as password")
       return 1
