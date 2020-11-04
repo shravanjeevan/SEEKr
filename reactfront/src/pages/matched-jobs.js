@@ -98,6 +98,7 @@ const MatchingJobPage= () => {
           title = "Jobs For You"
           columns={columns}
           data={data}
+
           options={{
             headerStyle: {
               backgroundColor: "#FDF6F7",
@@ -145,20 +146,19 @@ const MatchingJobPage= () => {
             return (
               <div
                 style={{
-                  fontSize: 50,
+                  fontSize: 100,
                   textAlign: 'center',
-                  backgroundColor: "#FDF6F7b",
-                  color: '#FDF6F7',
-                  
+                  color: 'white',
+                  backgroundColor: '#43A047',
                 }}
               >
-                {rowData.name}
+                {rowData.company}
               </div>
             )
           },
         }
       ]}
-   
+      
       />
       </Container>
     <Footer />
