@@ -121,7 +121,6 @@ function Account() {
                 <div>
                 </div>)
         } else {
-            console.log(userskills)
             var table = userskills.skills
             return (
                 <div>
@@ -137,7 +136,7 @@ function Account() {
                                 return (
                                     <tr key={element}>
                                         <td>{table[element].Name}</td>
-                                        <td><button>remove</button></td>
+                                        <td><button onClick={()=>deleteskill(table[element])}>remove</button></td>
                                     </tr>
                                 )
                             })
@@ -149,6 +148,32 @@ function Account() {
 
     }
 
+    function deleteskill(item){
+        console.log(item)
+        fetch('http://127.0.0.1:8000/seeker_skill/remove/', {
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Token " + token
+            },
+            body:JSON.stringify({
+                "UserId":uid,
+                "SkillsId":item.id
+            })
+        }).then(res => res.json()).then((data => {
+            setuserskills(data)
+            console.log("remove and set")
+        })).
+            catch(error => {
+                if (error.status === 404) {
+                    console.log(error.status + error.statusText)
+                } else if (error.status === 403) {
+                    console.log(error.status + error.statusText)
+                }
+            })
+
+
+    }
 
     //Give different functions dependent on account type
     function fancyfuntion() {
@@ -349,7 +374,7 @@ function Account() {
             })
 
         }).then(res => res.json()).then((data => {
-            console.log(data)
+            setuserskills(data)
             alert("New skill succesfull added")
 
         })).

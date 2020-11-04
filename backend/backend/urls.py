@@ -34,8 +34,10 @@ urlpatterns = [
     path('job_list/get/', views.Getjoblist.as_view()),
 
     path('match_status/add/', views.AddMatchStatus.as_view()),
+
     path('seeker_skill/add/', views.AddSeekerSkill.as_view()),
     path('seeker_skill/get/', views.GetSeekerSkill.as_view()),
+    path('seeker_skill/remove/', views.RemoveSeekerSkill.as_view()),
 
     path('job_skill/add/', views.AddJobSkill.as_view()),
 
