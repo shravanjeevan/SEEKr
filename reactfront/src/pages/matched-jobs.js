@@ -57,12 +57,15 @@ const MatchingJobPage= () => {
     { title: 'Areas to Improve On', field: 'feedback' , headerStyle: {
                 backgroundColor: "#FDF6F7", fontSize: 16
               } },
+    { title: 'Apply', field: 'Apply' , headerStyle: {
+                backgroundColor: "#FDF6F7", fontSize: 16
+              } },
 
   ]);
 
   const [data, setData] = useState([
-    { company: 'IBM', job: 'Data Analyst', match: '95%', feedback: 'Attention to Detail' },
-    { company: 'Omron', job: 'Project Manager', match: '80%', feedback: 'Management' },
+    { company: 'IBM', job: 'Data Analyst', match: '95%', feedback: 'Attention to Detail', Apply: <a href="https://www.w3schools.com/"> Apply</a> },
+    { company: 'Omron', job: 'Project Manager', match: '80%', feedback: 'Management', Apply:<a href="https://www.w3schools.com/"> Apply</a> },
   ]);
 
 
@@ -146,13 +149,15 @@ const MatchingJobPage= () => {
             return (
               <div
                 style={{
-                  fontSize: 100,
+                  fontSize: 40,
                   textAlign: 'center',
-                  color: 'white',
-                  backgroundColor: '#43A047',
+                  color: 'black',
+                  backgroundColor: 'white',
                 }}
               >
-                {rowData.company}
+                Apply for {rowData.job} At {rowData.company} by clicking on 
+                <a href="https://www.w3schools.com/"> Apply</a>
+                 
               </div>
             )
           },
