@@ -81,8 +81,19 @@ class AddSkill(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class Getjoblist(APIView):
+    serializer_class = CompanySerializer
+
+    def post(self, request):
+        print(request.data)
+        query = JobListing.objects.filter(Company=request.data['Company'])
+        serializer = JobListSerializer(query, many=True)
+        print(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
 class AddJob(APIView):
-    permission_classes = [permissions.IsAuthenticated, ]
+    # permission_classes = [permissions.IsAuthenticated, ]
 
     serializer_class = JobListSerializer
 

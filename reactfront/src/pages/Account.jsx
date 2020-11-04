@@ -7,6 +7,7 @@ import 'reactjs-popup/dist/index.css';
 import { Button, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { Add } from '@material-ui/icons';
 import TextField from '@material-ui/core/TextField';
+import MaterialTable from "material-table";
 
 function Account() {
     const h = useHistory()
@@ -29,6 +30,14 @@ function Account() {
     const [skills, setskills] = useState(false)
     const [newskills, setnewskills] = useState()
     const [userskills, setuserskills] = useState()
+    const [newjobtoggle, setnewjobtoggle] = useState(false)
+    const [viewjobstoggle, setviewjobstoggle] = useState(false)
+    const [jobname, setjobname] = useState()
+    const [jobdescription, setjobdescription] = useState()
+    const [jobtype, setjobtype] = useState()
+    const [salary, setsalary] = useState()
+
+
 
     useEffect(() => {
         settoken(cookies.load("t"))
@@ -140,16 +149,91 @@ function Account() {
 
     }
 
+
+    //Give different functions dependent on account type
     function fancyfuntion() {
         if (accountstatus == "Company account") {
-
+            // if account is company return this
+            // show company infomation from data that recieved
             return (<div>
                 <div>Company NAME: {data.company.Name}</div>
                 <div>Description: {data.company.Description}</div>
                 <div>Industry: {data.company.Industry}</div>
-                <button> post new jobs</button> <br></br>
-                <button> jobs</button> <br></br>
+                {/* toggle post new job medal out  */}
+                <button onClick={() => setnewjobtoggle(!newjobtoggle)} > post new jobs</button> <br></br>
 
+                <button onClick={jobmanagement}> jobs</button> <br></br>
+                <Modal isOpen={newjobtoggle}
+                >
+                    <ModalHeader>Post a New Job</ModalHeader>
+                    <ModalBody>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            label="Job Name"
+                            onChange={(event) => setjobname(event.target.value)}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            label="Description"
+                            onChange={(event) => setjobdescription(event.target.value)}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            label="Type"
+                            onChange={(event) => setjobtype(event.target.value)}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            label="Education"
+                            onChange={(event) => setedu(event.target.value)}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            label="Salary"
+                            onChange={(event) => setsalary(event.target.value)}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            label="Longitude"
+                            onChange={(event) => setlongtitude(event.target.value)}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            label="Latitude"
+                            onChange={(event) => setlatitude(event.target.value)}
+                        />
+                        <button onClick={addjob}> Add Job </button>
+
+                    </ModalBody>
+                    <button onClick={() => setnewjobtoggle(!newjobtoggle)}> Back </button>
+
+                </Modal>
+                <Modal isOpen={viewjobstoggle}>
+                    {}
+                    <button onClick={() => setviewjobstoggle()}> Back </button> <br></br>
+
+                </Modal>
             </div>)
         } else if (accountstatus == "Seeker account") {
             return (<div>
@@ -188,12 +272,70 @@ function Account() {
 
     }
 
-    function addskill() {
-        if(newskills===undefined || newskills === ""){
-            alert("skill can not be empty")
-            return(1)
+    //post job to backend
+    function addjob() {
+        var r = {
+            "Name": jobname,
+            "Company": data.company.id,
+            "Description": jobdescription,
+            "SalaryUp": salary,
+            "SalaryDown": salary,
+            "Type": jobtype,
+            "Education": edu,
+            "Latitude": latitude,
+            "Longitude": longtitude
         }
-        console.log(        newskills.toUpperCase()
+        fetch('http://127.0.0.1:8000/job_list/add/', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Token " + token
+
+            },
+            body: JSON.stringify(r)
+        }).then(res => res.json()).then((data => {
+            console.log(data)
+        })).
+            catch(error => {
+                if (error.status === 404) {
+                    console.log(error.status + error.statusText)
+                } else if (error.status === 403) {
+                    console.log(error.status + error.statusText)
+                }
+            })
+    }
+
+    //get joblist for the company
+    function jobmanagement() {
+        setviewjobstoggle(!viewjobstoggle)
+        fetch('http://127.0.0.1:8000/job_list/get/', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Token " + token
+
+            },
+            body: JSON.stringify({
+                'Company': data.company.id
+            })
+        }).then(res => res.json()).then((data => {
+            console.log(data)
+        })).
+            catch(error => {
+                if (error.status === 404) {
+                    console.log(error.status + error.statusText)
+                } else if (error.status === 403) {
+                    console.log(error.status + error.statusText)
+                }
+            })
+    }
+
+    function addskill() {
+        if (newskills === undefined || newskills === "") {
+            alert("skill can not be empty")
+            return (1)
+        }
+        console.log(newskills.toUpperCase()
         )
         fetch('http://127.0.0.1:8000/seeker_skill/add/', {
             method: "post",
@@ -201,7 +343,7 @@ function Account() {
                 'Content-Type': 'application/json',
                 'Authorization': "Token " + token
             },
-            body:JSON.stringify({
+            body: JSON.stringify({
                 'UserId': uid,
                 'Skills': newskills.toUpperCase()
             })

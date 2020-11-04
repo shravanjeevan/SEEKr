@@ -134,28 +134,7 @@ export default function SignUp() {
             Get Started with SEEKr
             </Typography>
           <form className={classes.form} noValidate>
-            <Grid container>
-              <Grid item>
-                <Link href="/signin" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-                  <br></br>
-                  <br></br>
-                <form>
-                 <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-outline-primary btn-sm form-check-label active">
-                  <input class="form-check-input" type="radio" name="options" id="option1" autocomplete="off" checked/>
-                  I am looking for a job
-                </label>
-                <label class="btn btn-outline-primary btn-sm form-check-label">
-                  <input class="form-check-input" type="radio" name="options" id="option2" autocomplete="off" onClick={() => history.push('/signup-company?')}/> I am looking for employees
-                </label>
-                 </div>
-                 </form>
-                <br></br>
-                <br></br>
-              </Grid>
-            </Grid>
+
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
