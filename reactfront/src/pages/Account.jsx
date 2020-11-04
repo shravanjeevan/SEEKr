@@ -242,7 +242,7 @@ function Account() {
                 <div>Longtitude: {data.seekr.Longitude}</div>
                 <div>Latitude: {data.seekr.Latitude}</div>
 
-                <button onClick={() => h.push('/contact')}> give me jobs</button> <br></br>
+                <button onClick={() => h.push('/matched-jobs')}> give me jobs</button> <br></br>
                 <button onClick={skill_mangement}>My skills</button>
                 <Modal isOpen={skills}
                 >

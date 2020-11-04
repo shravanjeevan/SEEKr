@@ -136,6 +136,11 @@ export default function SignUp() {
           <form className={classes.form} noValidate>
 
             <Grid container spacing={2}>
+            <Grid item>
+                <Link href="/signin" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="fname"
