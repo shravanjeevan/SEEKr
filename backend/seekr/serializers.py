@@ -46,7 +46,7 @@ class SkillsSerializer(serializers.ModelSerializer):
 class JobListSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobListing
-        fields = ('id', 'Name', 'CompanyId', 'Description', 'Type', 'Education', 'SalaryUp', 'SalaryDown', 'Longitude', 'Latitude')
+        fields = ('id', 'Name', 'Company', 'Description', 'Type', 'Education', 'SalaryUp', 'SalaryDown', 'Longitude', 'Latitude')
 
 
 class JobMatchSerializer(serializers.ModelSerializer):

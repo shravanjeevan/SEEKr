@@ -1,56 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import Demo from "./Demo";
-import App from "./App";
-import Signup from "./Register";
-import Login from "./Login";
-import Account from "./Account"
-import cookies from 'react-cookies'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import initialize from './assets/js/main.js';
 
+import './assets/css/style.css';
+import './assets/css/customize.css';
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import Routes from './routes';
+import registerServiceWorker from './registerServiceWorker';
 
-
-const Routing =()=> (
-  <Router>
-      <Route exact path="/" component={App}></Route>
-      <Route path="/register" component={Signup} ></Route>
-      <Route path="/login" component={Login} ></Route>
-      <Route path="/account" component={Account} ></Route>
-  </Router>
-)
-
-
-const rootElement = document.getElementById("root");
-
-
-ReactDOM.render(
-
-    <Routing />
-
-,
-  rootElement
-);
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <Signup />
-
-//   </React.StrictMode>,
-//   testElement
-// );
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <Login />
-
-//      <Demo />
-
-//   </React.StrictMode>,
-//   loginElement
-// );
+ReactDOM.render(<Routes />, document.getElementById('root'));
+registerServiceWorker();
+initialize();
