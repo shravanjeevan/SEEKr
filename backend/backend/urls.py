@@ -31,10 +31,9 @@ urlpatterns = [
     path('skills/add/', views.AddSkill.as_view()),
 
     path('job_list/add/', views.AddJob.as_view()),
-    path('job_match/add/', views.AddJobMatch.as_view()),
     path('job_list/get/', views.Getjoblist.as_view()),
 
-    path('match_status/add/', views.AddMatchStatus.as_view()),
+    #TODO path('match_status/add/', views.AddMatchStatus.as_view()), 
     path('seeker_skill/add/', views.AddSeekerSkill.as_view()),
     path('seeker_skill/get/', views.GetSeekerSkill.as_view()),
 
@@ -44,6 +43,6 @@ urlpatterns = [
     path('auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
     path('user/info/', views.UserApi.as_view()),
 
-    path('user/jobmatch', views.ListJobMatch.as_view())
+    path('user/jobmatch/<int:uid>', views.JobMatchList)
 
 ]
