@@ -53,7 +53,12 @@ class JobMatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobMatch
         fields = ('id', "JobListingId", "UserId", "PercentageMatch", "Status")
-        
+
+
+class JobMatchStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobMatch
+        fields = ('id', "JobListingId", "Status")        
 
 class JobSkillSerializer(serializers.ModelSerializer):
     class Meta:

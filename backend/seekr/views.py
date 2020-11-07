@@ -6,6 +6,7 @@ from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
+from rest_framework.decorators import api_view
 from django.db.models import Exists
 
 # serializers
@@ -183,28 +184,27 @@ class AddJobSkill(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class AddJobMatch(APIView):
-    serializer_class = JobMatchSerializer
+class JobMatchStatus(APIView):
+    serializer_class = JobMatchStatusSerializer
 
-    def post(self, request):
-        serializer = JobMatchSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get_object(self, job_match_id):
+        try:
+            return JobMatch.objects.get(id=job_match_id)
+        except JobMatch.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
+    def put(self, request):
+        # Update status
+        job_match = self.get_object(request.data['JobListingId'])
+        job_match.Status = request.data['Status']
+        job_match.save()
 
-# class ListJobMatch(APIView):
-#     serializer_class = JobMatchListSerializer
+        # Get return object
+        job_match = JobMatch.objects.get(id=request.data['JobListingId'])
+        serializer = JobMatchSerializer(job_match)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-#     def get(self, request):
-#         #if request.user.is_authenticated:
-#             print(request.user)
-#             serializer = JobMatchListSerializer(data=request.data)
-#             return(serializer.generateMatchList())
-#         #else:
-#         #    return Response(status=status.HTTP_400_BAD_REQUEST)
-
+@api_view(['GET'])
 def JobMatchList(request, uid):
     '''
     Returns list of job matches for a user. Refreshes matches on GET request
@@ -224,13 +224,13 @@ def JobMatchList(request, uid):
                 continue
             else:
                 # Create new match and save in database
-                m = JobMatch(JobListingId=joblist_obj, UserId=user_obj, PercentageMatch=row['percentage'])
+                m = JobMatch(JobListingId=joblist_obj, UserId=user_obj, PercentageMatch=row['percentage'], Status=0)
                 m.save()
         
         # Grab the matches for this user
         user_matches = JobMatch.objects.filter(UserId=user_obj)
         serializer = JobMatchSerializer(user_matches, many=True)
-        return JsonResponse(serializer.data, status=status.HTTP_200_OK, safe=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     else:
         #TODO
