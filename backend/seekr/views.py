@@ -207,9 +207,8 @@ class AddJobMatch(APIView):
 
 def JobMatchList(request, uid):
     '''
-    Function checks 
+    Returns list of job matches for a user. Refreshes matches on GET request
     '''
-
     if request.method == 'GET':
         # Get user
         user_obj = User.objects.get(pk=uid)
