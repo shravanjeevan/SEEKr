@@ -45,4 +45,5 @@ class JobSeekerSkills(models.Model):
 class JobMatch(models.Model):
     JobListingId = models.ForeignKey(JobListing, on_delete=models.DO_NOTHING)
     UserId = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    PercentageMatch = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     Status = models.IntegerField(null=True, blank=True)
