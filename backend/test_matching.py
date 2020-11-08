@@ -23,6 +23,8 @@ job_skill_mat['sum'] = job_skill_mat.sum(axis=1)
 seeker = User.objects.get(username='test')
 seeker_skills = list(JobSeekerSkills.objects.filter(UserId=seeker).values_list('SkillsId_id', flat=True))
 job_skill_mat['matching'] = job_skill_mat[seeker_skills].sum(axis=1)
+# Add multiplier for matching NLP cluster
+
 # Calculate % Match
 job_skill_mat['percentage'] = job_skill_mat['matching']/job_skill_mat['sum']
 # Calculate difference (for feedback)

@@ -38,13 +38,15 @@ for s in skills:
 
 # Load companies (link to industries)
 for index, row in companies.iterrows():
-    Company(Name=row['name'], Industry=row['industry']).save()
+    u = User.objects.create(username=row['username'], password=row['password'], email=row['email'], first_name=row['first_name'], last_name=row['last_name'])
+    u.save()
+    Company(UserId=u, Name=row['name'], Industry=row['industry']).save()
 
 # Load jobs (link to companies, skills)
 for index, row in jobs.iterrows():
     c_key = Company.objects.get(Name=row['company'])
     if c_key is not None:
-        j = JobListing.objects.create(Name=row['name'], SalaryUp=row['salary_top'], SalaryDown=row['salary_bottom'], Company=c_key, Type=row['type'], Education=row['education'], Latitude=row['latitude'], Longitude=row['longitude'])
+        j = JobListing.objects.create(Name=row['name'], SalaryUp=row['salary_top'], SalaryDown=row['salary_bottom'], Company=c_key, Type=row['type'], Education=row['education'], Latitude=row['latitude'], Longitude=row['longitude'], Description=row['description'])
         j.save()
         for skill in ast.literal_eval(row['skills']):
             skill_key = Skills.objects.get(Name=skill)
@@ -57,7 +59,7 @@ for index, row in candidates.iterrows():
     uname = row['first_name'].replace(" ", "")
     u = User.objects.create(username=uname, password=row['password'], email=row['email'], first_name=row['first_name'], last_name=row['last_name'])
     u.save()
-    JobSeekerDetails(UserId=u, Education=row['education'], Latitude=row['latitude'], Longitude=row['longitude']).save()
+    JobSeekerDetails(UserId=u, Education=row['education'], Latitude=row['latitude'], Longitude=row['longitude'], Description=row['description']).save()
     for skill in ast.literal_eval(row['skills']):
         skill_key = Skills.objects.get(Name=skill)
         if skill_key is not None:
