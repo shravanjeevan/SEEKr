@@ -258,10 +258,10 @@ def generateMatchList(user):
     seeker_cluster = JobSeekerGroups.objects.get(UserId=seeker).ClusterId
     shared_group = list(JobListingGroups.objects.filter(ClusterId=seeker_cluster).values_list('JobListingId_id', flat=True))
     for job in shared_group:
-        job_skill_mat.loc[job, 'shared'] = float(seeker_cluster.NormSize)
+        job_skill_mat.loc[job, 'shared'] = 1-float(seeker_cluster.NormSize)
     job_skill_mat.fillna(0, inplace=True)
     # Calculate % Match
-    job_skill_mat['percentage'] = job_skill_mat['matching']/job_skill_mat['sum']*job_skill_mat['shared']
+    job_skill_mat['percentage'] = job_skill_mat['matching']/job_skill_mat['sum']+job_skill_mat['shared']
     job_skill_mat.fillna(0, inplace=True)
     response = mat[['job_id','percentage']].sort_values(by='percentage', ascending=False)
     return response
