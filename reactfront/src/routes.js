@@ -12,6 +12,7 @@ import SupportPage from "./pages/support";
 import IndexPage from "./pages";
 import history from "./pages/history";
 import Account from "./pages/Account"
+import Profile from "./pages/profile"
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/faqs" component={FaqsPage} />
           <Route exact path="/support" component={SupportPage} />
+          <Route exact path="/profile" component={Profile} />
           <Route exact path="/" component={IndexPage} />
         </Switch>
       </Router>
