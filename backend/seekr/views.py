@@ -14,7 +14,7 @@ from .serializers import *
 
 # Models
 from django.contrib.auth.models import User
-from .models import JobSeekerDetails, Company, Skills
+from .models import JobSeekerDetails, Company, Skills, JobSeekerGroups, JobListingGroups
 
 
 class CreateUser(generics.GenericAPIView):
@@ -257,14 +257,17 @@ def generateMatchList(user):
     mat = generateJobSkillMat()
     mat['matching'] = mat[seeker_skills].sum(axis=1)
     # Account for if user profile is textually similar to job description
-    seeker_cluster = JobSeekerGroups.objects.get(UserId=seeker).ClusterId
+    seeker_cluster = JobSeekerGroups.objects.get(UserId=user).ClusterId
     shared_group = list(JobListingGroups.objects.filter(ClusterId=seeker_cluster).values_list('JobListingId_id', flat=True))
-    for job in shared_group:
-        job_skill_mat.loc[job, 'shared'] = 1-float(seeker_cluster.NormSize)
-    job_skill_mat.fillna(0, inplace=True)
+    mat['shared'] = 0
+    # Check if shared groups is empty
+    if (len(shared_group) > 0):
+        for job in shared_group:
+            mat.loc[job, 'shared'] = 1-float(seeker_cluster.NormSize)
     # Calculate % Match
-    job_skill_mat['percentage'] = job_skill_mat['matching']/job_skill_mat['sum']+job_skill_mat['shared']
-    job_skill_mat.fillna(0, inplace=True)
+    mat['percentage'] = mat['matching']/mat['sum']+mat['shared']
+    mat.fillna(0, inplace=True)
+    mat['job_id'] = mat.index
     response = mat[['job_id','percentage']].sort_values(by='percentage', ascending=False)
     return response
 
