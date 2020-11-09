@@ -216,15 +216,6 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              
-            >
-            <a href="/">back</a>
-            </Button>
           </form>
         </div>
         <Box mt={5}>
