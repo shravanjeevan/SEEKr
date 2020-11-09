@@ -8,7 +8,6 @@ import { Button, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { Add } from '@material-ui/icons';
 import TextField from '@material-ui/core/TextField';
 import MaterialTable from "material-table";
-import Job_detial from "./Job_detial"
 
 function Account() {
     const h = useHistory()
