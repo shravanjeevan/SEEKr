@@ -97,11 +97,12 @@ function Matchlist() {
 
     return (<>
         <div>
-            {rendertable()}
-        </div>
-        <div>
             <button onClick={() => h.push("/account")}>Back</button>
         </div>
+        <div>
+            {rendertable()}
+        </div>
+
     </>)
 }
 
