@@ -298,13 +298,21 @@ def JobMatchFeedback(request, jobmatchid):
 
         # NLP Calculation
         # get user cluster
-        ucluster = JobSeekerGroups.objects.get(UserId_id=jobmatch_obj.UserId_id).ClusterId
-        # get job cluster
-        jcluster = JobListingGroups.objects.get(JobListingId_id=jobmatch_obj.JobListingId_id).ClusterId
+        try:
+            ucluster = JobSeekerGroups.objects.get(UserId_id=jobmatch_obj.UserId_id).ClusterId
+        except:
+            ucluster = None
+        
+        try:
+            # get job cluster
+            jcluster = JobListingGroups.objects.get(JobListingId_id=jobmatch_obj.JobListingId_id).ClusterId
+        except:
+            jcluster = None
         # if cluster are the same set cluster_size else set to 0
-        if ucluster == jcluster:
-            # Set to 1-NormSize so smaller clusters are worth more in percentage calculation
-            cluster_size = 1-float(ucluster.NormSize)
+        if ucluster is not None and jcluster is not None:
+            if ucluster == jcluster:
+                # Set to 1-NormSize so smaller clusters are worth more in percentage calculation
+                cluster_size = 1-float(ucluster.NormSize)
         else:
             cluster_size = 0
         # calculate percentage of match
