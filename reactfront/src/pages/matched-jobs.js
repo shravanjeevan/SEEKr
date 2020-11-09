@@ -57,7 +57,7 @@ const MatchingJobPage= () => {
     { title: 'Areas to Improve On', field: 'feedback' , headerStyle: {
                 backgroundColor: "#FDF6F7", fontSize: 16
               } },
-    { title: 'Apply', field: 'Apply' , headerStyle: {
+    { title: '', field: 'Apply' , headerStyle: {
                 backgroundColor: "#FDF6F7", fontSize: 16
               } },
 
