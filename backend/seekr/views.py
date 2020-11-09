@@ -205,13 +205,13 @@ class JobMatchStatus(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-def JobMatchList(request, uid):
+def JobMatchList(request):
     '''
     Returns list of job matches for a user. Refreshes matches on GET request
     '''
     if request.method == 'GET':
         # Get user
-        user_obj = User.objects.get(pk=uid)
+        user_obj = request.user
         # Generate a new list of matches using the matching algorithm
         matches = generateMatchList(user_obj)
         
@@ -239,6 +239,7 @@ def JobMatchList(request, uid):
 
 
 def generateJobSkillMat():
+    '''Helper function to generate job matches'''
     incidence = pd.DataFrame.from_records(JobListingSkills.objects.values_list('SkillsId_id', 'JobListingId_id'), columns=['skills', 'jobs'])
     skill_ids = np.unique(incidence[['skills']])
     job_ids = np.unique(incidence[['jobs']])
@@ -249,6 +250,7 @@ def generateJobSkillMat():
     return job_skill_mat
 
 def generateMatchList(user):
+    '''Helper function to generate job matches'''
     # Function should take user id as input and return dataframe of job listings annotated with % match
     seeker_skills = list(JobSeekerSkills.objects.filter(UserId=user).values_list('SkillsId_id', flat=True))
     # Sum only skills shared with the seeker
@@ -267,6 +269,7 @@ def generateMatchList(user):
     return response
 
 def getFeedbackData(user):
+    '''Helper function to generate job match feedback'''
     # Function should take user id as input and return dataframe of job_id, difference in skills, matching skills and total skills
     # To be used by different function to generate feedback
     seeker_skills = list(JobSeekerSkills.objects.filter(UserId=user).values_list('SkillsId_id', flat=True))
@@ -280,6 +283,7 @@ def getFeedbackData(user):
     return HttpResponse(response)
 
 def generateFeedback(job):
+    '''Helper function to generate job match feedback'''
     user = serializers.getCurrentUserDefault()
     mat = getFeedBackData(user)
     JobListingId = set(JobListingSkills.objects.get(JobListing=job).values_list('JobListingId_id', flat=True))
