@@ -318,6 +318,22 @@ def JobMatchFeedback(request, jobmatchid):
             # shared_skills - list of skills that both the user and the job have
             # cluster_size - 0 (cluster not shared), >0 (size of shared cluster - larger is better)
             # percentage - percentage score of match 
+
+        # Feedback example
+        print(uname, " has ", len(uskills), " skills: ", uskills)
+        print(jname, " has ", len(jskills), " skills: ", jskills)
+        print("They have ", len(shared_skills), " shared skills: ", shared_skills)
+
+        if cluster_size > 0.75:
+            print(uname, " and ", jname, "have textually similar descriptions. Their descriptions are also greatly dissimilar to other jobs and candidates")
+        elif cluster_size > 0.25:
+            print(uname, " and ", jname, "have textually similar descriptions. Their descriptions are also fairly dissimilar to other jobs and candidates")
+        elif cluster_size > 0:
+            print(uname, " and ", jname, "have textually similar descriptions. Their descriptions are also slightly dissimilar to other jobs and candidates")
+        else:
+            print(uname, " and ", jname, "do not have textually similar descriptions.")
+        
+        print("So match score is: ", percentage*100, "%")
     else:
         # Return bad request for now
         return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
