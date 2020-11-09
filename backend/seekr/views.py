@@ -44,7 +44,7 @@ class CreateCompany(generics.GenericAPIView):
 
 
 class JobSeekerDetailsViewSet(APIView):
-    #permission_classes = [permissions.IsAuthenticated, ]
+    # permission_classes = [permissions.IsAuthenticated, ]
 
     serializer_class = JobSeekerDetailsSerializer
 
@@ -107,6 +107,31 @@ class AddJob(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class RemoveJob(APIView):
+    serializer_class = JobListSerializer
+
+    def post(self, request):
+        print(request.data)
+        query = JobListing.objects.get(id=request.data['Id'], Company=request.data['Company'])
+        query.delete()
+        serializer = JobListSerializer(query)
+
+        user = User.objects.get(username=self.request.user)
+        serializer = UserSerializer(user)
+        t = serializer.data
+        print(t)
+        job_list = list()
+        try:
+            query = JobListing.objects.filter(Company=request.data['Company'])
+            serializer = JobListSerializer(query, many=True)
+            print(serializer.data)
+            job_list=serializer.data
+        except JobListing.DoesNotExist:
+            job_list = list()
+
+        return Response({"job_list": job_list})
+
+
 class AddSeekerSkill(APIView):
     # permission_classes = [permissions.IsAuthenticated, ]
 
@@ -116,7 +141,7 @@ class AddSeekerSkill(APIView):
         print(request.data)
         newskill = request.data['Skills']
         try:
-            query = Skills.objects.get(Name = newskill)
+            query = Skills.objects.get(Name=newskill)
             serializer = SkillsSerializer(query)
         except Skills.DoesNotExist:
             print(newskill, "does not exist")
@@ -125,18 +150,96 @@ class AddSeekerSkill(APIView):
             serializer.is_valid()
             serializer.save()
 
-        query = Skills.objects.get(Name = newskill)
+        query = Skills.objects.get(Name=newskill)
         serializer = SkillsSerializer(query)
-        t = dict({"UserId":request.data['UserId'],"SkillsId":serializer.data['id']})
+        t = dict({"UserId": request.data['UserId'], "SkillsId": serializer.data['id']})
         print(t)
         serializer = SeekerSkillSerializer(data=t)
         serializer.is_valid()
         serializer.save()
-        # if serializer.is_valid():
-        #     serializer.save()
-        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        user = User.objects.get(username=self.request.user)
+        serializer = UserSerializer(user)
+        t = serializer.data
+        print(t)
+        try:
+            query = JobSeekerSkills.objects.filter(UserId=t['id'])
+            serializer = SeekerSkillSerializer(query, many=True)
+            print(serializer.data)
+            user_skills = list()
+            for skill in serializer.data:
+                query = Skills.objects.filter(id=skill['SkillsId'])
+                serializer = SkillsSerializer(query, many=True)
+                temp = dict(serializer.data[0])
+                print(temp)
+                user_skills.append(temp)
+
+        except JobSeekerSkills.DoesNotExist:
+            user_skills = list()
+            # serializer = SeekerSkillSerializer(data=request.data)
+            # if serializer.is_valid():
+            # serializer.save()
+            # return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response({"skills": user_skills})
+
+
+class RemoveSeekerSkill(APIView):
+    # permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = SeekerSkillSerializer
+
+    def post(self, request):
+        print(request.data)
+        query = JobSeekerSkills.objects.filter(UserId=request.data['UserId'], SkillsId=request.data['SkillsId'])
+        query.delete()
+        user = User.objects.get(username=self.request.user)
+        serializer = UserSerializer(user)
+        t = serializer.data
+        print(t)
+        try:
+            query = JobSeekerSkills.objects.filter(UserId=t['id'])
+            serializer = SeekerSkillSerializer(query, many=True)
+            print(serializer.data)
+            user_skills = list()
+            for skill in serializer.data:
+                query = Skills.objects.filter(id=skill['SkillsId'])
+                serializer = SkillsSerializer(query, many=True)
+                temp = dict(serializer.data[0])
+                print(temp)
+                user_skills.append(temp)
+
+        except JobSeekerSkills.DoesNotExist:
+            user_skills = list()
+            # serializer = SeekerSkillSerializer(data=request.data)
+            # if serializer.is_valid():
+            # serializer.save()
+            # return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response({"skills": user_skills})
+
+
+class CompanyJobStatus(APIView):
+    serializer_class = JobMatchSerializer
+
+    def post(self, request):
+        print(request.data)
+        query = JobMatch.objects.filter(JobListingId=request.data['id'], Status="1")
+        serializer = JobMatchSerializer(query, many=True)
+        userlist = list()
+        for u in serializer.data:
+            print(u)
+            user = User.objects.get(id=u["UserId"])
+            serializer = UserSerializer(user)
+            info = serializer.data
+            user = JobSeekerDetails.objects.get(UserId=u["UserId"])
+            serializer = JobSeekerDetailsSerializer(user)
+            print(serializer.data)
+            extra = serializer.data
+            t = dict()
+            t.update({"info": info})
+            t.update({"extra": extra})
+            userlist.append(t)
+        print(userlist)
+        return Response(userlist)
 
 
 class GetSeekerSkill(APIView):
@@ -165,8 +268,8 @@ class GetSeekerSkill(APIView):
             user_skills = list()
             # serializer = SeekerSkillSerializer(data=request.data)
             # if serializer.is_valid():
-                # serializer.save()
-                # return Response(serializer.data, status=status.HTTP_201_CREATED)
+            # serializer.save()
+            # return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response({"skills": user_skills})
 
@@ -204,6 +307,7 @@ class JobMatchStatus(APIView):
         serializer = JobMatchSerializer(job_match)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 def JobMatchList(request, uid):
     '''
@@ -214,7 +318,7 @@ def JobMatchList(request, uid):
         user_obj = User.objects.get(pk=uid)
         # Generate a new list of matches using the matching algorithm
         matches = generateMatchList(user_obj)
-        
+
         # Add each match to the database
         for index, row in matches.iterrows():
             # Check if match already exists
@@ -226,14 +330,14 @@ def JobMatchList(request, uid):
                 # Create new match and save in database
                 m = JobMatch(JobListingId=joblist_obj, UserId=user_obj, PercentageMatch=row['percentage'], Status=0)
                 m.save()
-        
+
         # Grab the matches for this user
         user_matches = JobMatch.objects.filter(UserId=user_obj)
         serializer = JobMatchSerializer(user_matches, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     else:
-        #TODO
+        # TODO
         # Just return bad request for now
         return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
 
@@ -248,6 +352,7 @@ def generateJobSkillMat():
         job_skill_mat.loc[row['jobs'], row['skills']] = 1
     job_skill_mat['sum'] = job_skill_mat.sum(axis=1)
     return job_skill_mat
+
 
 def generateMatchList(user):
     '''Helper function to generate job matches'''
@@ -271,6 +376,7 @@ def generateMatchList(user):
     response = mat[['job_id','percentage']].sort_values(by='percentage', ascending=False)
     return response
 
+
 def getFeedbackData(user):
     '''Helper function to generate job match feedback'''
     # Function should take user id as input and return dataframe of job_id, difference in skills, matching skills and total skills
@@ -280,10 +386,11 @@ def getFeedbackData(user):
     mat = generateJobSkillMat()
     mat['matching'] = mat[seeker_skills].sum(axis=1)
     # Calculate difference (for feedback)
-    mat['difference'] = mat['sum']/mat['matching']
+    mat['difference'] = mat['sum'] / mat['matching']
     mat['job_id'] = mat.index
     response = mat[['job_id', 'difference', 'matching', 'sum']].to_html()
     return HttpResponse(response)
+
 
 def generateFeedback(job):
     '''Helper function to generate job match feedback'''
@@ -292,7 +399,8 @@ def generateFeedback(job):
     JobListingId = set(JobListingSkills.objects.get(JobListing=job).values_list('JobListingId_id', flat=True))
     user_skills = len(list(JobSeekerSkills.objects.filter(UserId=user).values_list('SkillsId_id', flat=True)))
     # below doesn't work --> Used to represent what feedback should look like
-    feedback = "%s has %d skills, %s has %d skills. That's %d matched, and %d skills missing." % (user.first_name, user_skills, job.Name, mat.loc[job, 'sum'], mat.loc[job, 'matching'], mat.loc[job, 'difference'])
+    feedback = "%s has %d skills, %s has %d skills. That's %d matched, and %d skills missing." % (
+    user.first_name, user_skills, job.Name, mat.loc[job, 'sum'], mat.loc[job, 'matching'], mat.loc[job, 'difference'])
     return feedback
 
 
@@ -310,12 +418,32 @@ class LoginAPi(generics.GenericAPIView):
         })
 
 
+class removeApi(generics.GenericAPIView):
+    serializer_class = UserSerializer
+
+    def get(self, request):
+        user = User.objects.get(username=self.request.user)
+        serializer = UserSerializer(user)
+        try:
+            usert = JobSeekerDetails.objects.get(UserId=serializer.data['id'])
+            usert.delete()
+        except JobSeekerDetails.DoesNotExist:
+            print("no seeker user find")
+        try:
+            usert = Company.objects.get(UserId=serializer.data['id'])
+            usert.delete()
+
+        except Company.DoesNotExist:
+            print("no company user find")
+        user.delete()
+        return Response({"Status": "deleted"})
+
+
 class UserApi(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = UserSerializer
 
     def get(self, request):
-        print(self.request.user)
         user = User.objects.get(username=self.request.user)
         serializer = UserSerializer(user)
         t = serializer.data

@@ -10,10 +10,11 @@ django.setup()
 from django.contrib.auth.models import User
 from seekr.models import *
 
+print("yo")
 # Load Raw Data
-jobs = pd.read_csv('jobs.csv')
-candidates = pd.read_csv('candidates.csv')
-companies = pd.read_csv('company.csv')
+jobs = pd.read_csv('./jobs.csv')
+candidates = pd.read_csv('./candidates.csv')
+companies = pd.read_csv('./company.csv')
 skills = set()
 with open(os.path.join('./', 'scripts', 'category.json')) as f:
   categories = json.load(f)

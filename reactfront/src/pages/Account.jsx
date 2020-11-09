@@ -36,6 +36,10 @@ function Account() {
     const [jobdescription, setjobdescription] = useState()
     const [jobtype, setjobtype] = useState()
     const [salary, setsalary] = useState()
+    const [joblist, setjoblist] = useState()
+    const [showjobdetail, setshowjobdetail] = useState(false)
+    const [jobdetail, setjobdetail] = useState()
+    const [waitlist, setwaitlist] = useState([])
 
 
 
@@ -121,8 +125,8 @@ function Account() {
                 <div>
                 </div>)
         } else {
-            console.log(userskills)
             var table = userskills.skills
+            console.log(table)
             return (
                 <div>
 
@@ -137,7 +141,7 @@ function Account() {
                                 return (
                                     <tr key={element}>
                                         <td>{table[element].Name}</td>
-                                        <td><button>remove</button></td>
+                                        <td><button onClick={() => deleteskill(table[element])}>remove</button></td>
                                     </tr>
                                 )
                             })
@@ -149,6 +153,32 @@ function Account() {
 
     }
 
+    function deleteskill(item) {
+        console.log(item)
+        fetch('http://127.0.0.1:8000/seeker_skill/remove/', {
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Token " + token
+            },
+            body: JSON.stringify({
+                "UserId": uid,
+                "SkillsId": item.id
+            })
+        }).then(res => res.json()).then((data => {
+            setuserskills(data)
+            console.log("remove and set")
+        })).
+            catch(error => {
+                if (error.status === 404) {
+                    console.log(error.status + error.statusText)
+                } else if (error.status === 403) {
+                    console.log(error.status + error.statusText)
+                }
+            })
+
+
+    }
 
     //Give different functions dependent on account type
     function fancyfuntion() {
@@ -230,7 +260,7 @@ function Account() {
 
                 </Modal>
                 <Modal isOpen={viewjobstoggle}>
-                    {}
+                    {showjobs()}
                     <button onClick={() => setviewjobstoggle()}> Back </button> <br></br>
 
                 </Modal>
@@ -272,6 +302,157 @@ function Account() {
 
     }
 
+    function showjobs() {
+        if (!joblist) {
+            return (<></>)
+        } else {
+            var table = joblist
+            console.log(table)
+            return (<>
+                <div>
+                    <table className="MyClassName">
+                        <thead>
+                            <tr>
+                                <td>Job Name</td>
+                                <td>Type</td>
+                                <td>Education</td>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Object.keys(table).map(function (element) {
+                                return (
+                                    <tr key={element}>
+                                        <td onClick={() => Job_detail(table[element])}>{table[element].Name}</td>
+                                        <td>{table[element].Type}</td>
+                                        <td>{table[element].Education}</td>
+                                        <td><button onClick={() => deletejobs(table[element])}>remove</button></td>
+                                    </tr>
+                                )
+                            })
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    {render_Job_detail()}
+
+                </div>
+            </>)
+        }
+
+    }
+
+    function render_Job_detail() {
+        if (jobdetail && waitlist) {
+            var table = waitlist
+            return (
+                <Modal isOpen={showjobdetail} >
+                    <ModalHeader>Job Detial: {jobdetail.Name}</ModalHeader>
+                    <ModalBody>
+                        Unique ID: {jobdetail.id}<br></br>
+                            Company:{jobdetail.Company}<br></br>
+
+                            Job:{jobdetail.Name}<br></br>
+                            Description:{jobdetail.Description}<br></br>
+                            Working type:{jobdetail.Type}<br></br>
+                            Salary:{jobdetail.SalaryUp}<br></br>
+                            who applied:<br></br>
+                        <table className="MyClassName">
+                            <thead>
+                                <tr>
+                                    <td>First Name</td>
+                                    <td>Last Name</td>
+                                    <td>Email</td>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Object.keys(table).map(function (element) {
+                                    return (
+                                        <tr key={element}>
+                                            <td>{table[element].info.first_name}</td>
+                                            <td>{table[element].info.last_name}</td>
+                                            <td>{table[element].info.email}</td>
+
+
+
+                                        </tr>
+                                    )
+                                })
+                                }
+                            </tbody>
+                        </table>
+                        <button onClick={() => setshowjobdetail(!showjobdetail)}>Back</button>
+                    </ModalBody>
+                </Modal>
+            )
+        } else {
+            return (<></>)
+        }
+
+    }
+
+
+
+    function Job_detail(item) {
+        if (item) {
+            setshowjobdetail(!showjobdetail)
+            setjobdetail(item)
+            if (jobdetail) {
+                fetch('http://127.0.0.1:8000/job_match/status/company', {
+                    method: "post",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': "Token " + token
+                    },
+                    body: JSON.stringify({
+                        "id": item.id
+                    })
+                }).then(res => res.json()).then((data => {
+                    console.log(data)
+                    setwaitlist(data)
+
+                })).
+                    catch(error => {
+                        if (error.status === 404) {
+                            console.log(error.status + error.statusText)
+                        } else if (error.status === 403) {
+                            console.log(error.status + error.statusText)
+                        }
+                    })
+            }
+
+        }
+
+    }
+
+    function deletejobs(item) {
+        console.log(item)
+        fetch('http://127.0.0.1:8000/job_list/delete/', {
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Token " + token
+            },
+            body: JSON.stringify({
+                "Id": item.id,
+                "Company": item.Company
+            })
+        }).then(res => res.json()).then((data => {
+            console.log(data)
+            setjoblist(data['job_list'])
+            console.log("remove and set")
+        })).
+            catch(error => {
+                if (error.status === 404) {
+                    console.log(error.status + error.statusText)
+                } else if (error.status === 403) {
+                    console.log(error.status + error.statusText)
+                }
+            })
+    }
+
     //post job to backend
     function addjob() {
         var r = {
@@ -295,6 +476,9 @@ function Account() {
             body: JSON.stringify(r)
         }).then(res => res.json()).then((data => {
             console.log(data)
+            alert("Job added")
+            setnewjobtoggle(!newjobtoggle)
+
         })).
             catch(error => {
                 if (error.status === 404) {
@@ -320,6 +504,7 @@ function Account() {
             })
         }).then(res => res.json()).then((data => {
             console.log(data)
+            setjoblist(data)
         })).
             catch(error => {
                 if (error.status === 404) {
@@ -349,7 +534,7 @@ function Account() {
             })
 
         }).then(res => res.json()).then((data => {
-            console.log(data)
+            setuserskills(data)
             alert("New skill succesfull added")
 
         })).
@@ -453,6 +638,32 @@ function Account() {
         }
     }
 
+    function erase() {
+        //logout()
+        console.log(data)
+        fetch('http://127.0.0.1:8000/user/remove/', {
+            method: "get",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Token " + token
+            }
+
+        }).then(res => res.json()).then((data => {
+            console.log(data)
+            cookies.remove("t", { domain: "localhost", path: '/' })
+            alert("Account deleted, you will now redierct to main page")
+            h.push('/signin')
+        })).
+            catch(error => {
+                if (error.status === 404) {
+                    console.log(error.status + error.statusText)
+                } else if (error.status === 403) {
+                    console.log(error.status + error.statusText)
+                }
+            })
+
+    }
+
     function logout() {
         fetch('http://127.0.0.1:8000/auth/logout', {
             method: "post",
@@ -493,24 +704,14 @@ function Account() {
         <button onClick={logout}> Log out </button>
         <button><a href="/">back</a></button>
 
-        {/* <Popup position="right center" open={accountsetup} modal nested onClose={closeModal}>
-
-            <div className="header">Set your account now</div>
-            <div className="modal">
-                <a className="close" onClick={closeModal}>
-                    &times;
-            </a>
+        <Popup trigger={<button> Erase All</button>}>
+            <div>
+                <p>This will delete everything in or link to this account.</p>
+                <button onClick={erase}>Delete everything I have </button>
             </div>
-            <form>
-                <input type='radio' name="account type" onChange={() => settype("company")} /> Comapny
-                <input type='radio' name="account type" onChange={() => settype("seekr")} /> Job Seekr
-
-        </form>
-            {accounttype()}
+        </Popup>
 
 
-
-        </Popup> */}
         <Modal isOpen={accountsetup} >
             <div className="modal">
                 <a className="close" onClick={closeModal}>

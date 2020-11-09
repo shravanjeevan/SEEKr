@@ -12,6 +12,7 @@ import SupportPage from "./pages/support";
 import IndexPage from "./pages";
 import history from "./pages/history";
 import Account from "./pages/Account"
+import Matchlist from "./pages/MatchedJob"
 
 class App extends Component {
   render() {
@@ -22,7 +23,7 @@ class App extends Component {
           <Route exact path="/signup-company" component={SignUpCompanyPage} />
           <Route exact path="/signin" component={SignInPage} />
           <Route exact path="/account" component={Account} />
-          <Route exact path="/matched-jobs" component={MatchingPage} />
+          <Route exact path="/matched-jobs" component={Matchlist} />
           <Route exact path="/post-jobs" component={PostJobPage} />
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/faqs" component={FaqsPage} />
