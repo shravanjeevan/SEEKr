@@ -360,10 +360,20 @@ def generateMatchList(user):
     seeker_skills = list(JobSeekerSkills.objects.filter(UserId=user).values_list('SkillsId_id', flat=True))
     # Sum only skills shared with the seeker
     mat = generateJobSkillMat()
-    mat['matching'] = mat[seeker_skills].sum(axis=1)
+    # get only skills that seeker shares with all jobs
+    shared_skills = [skill for skill in seeker_skills if skill in mat.columns]
+    if len(shared_skills) > 0:
+        mat['matching'] = mat[shared_skills].sum(axis=1)
+    else:
+        mat['matching'] = 0
     # Account for if user profile is textually similar to job description
-    seeker_cluster = JobSeekerGroups.objects.get(UserId=user).ClusterId
-    shared_group = list(JobListingGroups.objects.filter(ClusterId=seeker_cluster).values_list('JobListingId_id', flat=True))
+    try:
+        seeker_group_obj = JobSeekerGroups.objects.get(UserId=user)
+        if seeker_group_obj:
+            seeker_cluster = seeker_group_obj.ClusterId
+            shared_group = list(JobListingGroups.objects.filter(ClusterId=seeker_cluster).values_list('JobListingId_id', flat=True))
+    except:
+        shared_group=[]
     mat['shared'] = 0
     # Check if shared groups is empty
     if (len(shared_group) > 0):
