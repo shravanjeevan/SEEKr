@@ -14,7 +14,7 @@ from .serializers import *
 
 # Models
 from django.contrib.auth.models import User
-from .models import JobSeekerDetails, Company, Skills
+from .models import JobSeekerDetails, Company, Skills, JobSeekerGroups, JobListingGroups
 
 
 class CreateUser(generics.GenericAPIView):
@@ -309,13 +309,13 @@ class JobMatchStatus(APIView):
 
 
 @api_view(['GET'])
-def JobMatchList(request, uid):
+def JobMatchList(request):
     '''
     Returns list of job matches for a user. Refreshes matches on GET request
     '''
     if request.method == 'GET':
         # Get user
-        user_obj = User.objects.get(pk=uid)
+        user_obj = request.user
         # Generate a new list of matches using the matching algorithm
         matches = generateMatchList(user_obj)
 
@@ -343,8 +343,8 @@ def JobMatchList(request, uid):
 
 
 def generateJobSkillMat():
-    incidence = pd.DataFrame.from_records(JobListingSkills.objects.values_list('SkillsId_id', 'JobListingId_id'),
-                                          columns=['skills', 'jobs'])
+    '''Helper function to generate job matches'''
+    incidence = pd.DataFrame.from_records(JobListingSkills.objects.values_list('SkillsId_id', 'JobListingId_id'), columns=['skills', 'jobs'])
     skill_ids = np.unique(incidence[['skills']])
     job_ids = np.unique(incidence[['jobs']])
     job_skill_mat = pd.DataFrame(0, index=job_ids, columns=skill_ids)
@@ -355,26 +355,30 @@ def generateJobSkillMat():
 
 
 def generateMatchList(user):
+    '''Helper function to generate job matches'''
     # Function should take user id as input and return dataframe of job listings annotated with % match
     seeker_skills = list(JobSeekerSkills.objects.filter(UserId=user).values_list('SkillsId_id', flat=True))
     # Sum only skills shared with the seeker
     mat = generateJobSkillMat()
     mat['matching'] = mat[seeker_skills].sum(axis=1)
     # Account for if user profile is textually similar to job description
-    seeker_cluster = JobSeekerGroups.objects.get(UserId=seeker).ClusterId
-    shared_group = list(
-        JobListingGroups.objects.filter(ClusterId=seeker_cluster).values_list('JobListingId_id', flat=True))
-    for job in shared_group:
-        job_skill_mat.loc[job, 'shared'] = 1 - float(seeker_cluster.NormSize)
-    job_skill_mat.fillna(0, inplace=True)
+    seeker_cluster = JobSeekerGroups.objects.get(UserId=user).ClusterId
+    shared_group = list(JobListingGroups.objects.filter(ClusterId=seeker_cluster).values_list('JobListingId_id', flat=True))
+    mat['shared'] = 0
+    # Check if shared groups is empty
+    if (len(shared_group) > 0):
+        for job in shared_group:
+            mat.loc[job, 'shared'] = 1-float(seeker_cluster.NormSize)
     # Calculate % Match
-    job_skill_mat['percentage'] = job_skill_mat['matching'] / job_skill_mat['sum'] + job_skill_mat['shared']
-    job_skill_mat.fillna(0, inplace=True)
-    response = mat[['job_id', 'percentage']].sort_values(by='percentage', ascending=False)
+    mat['percentage'] = mat['matching']/mat['sum']+mat['shared']
+    mat.fillna(0, inplace=True)
+    mat['job_id'] = mat.index
+    response = mat[['job_id','percentage']].sort_values(by='percentage', ascending=False)
     return response
 
 
 def getFeedbackData(user):
+    '''Helper function to generate job match feedback'''
     # Function should take user id as input and return dataframe of job_id, difference in skills, matching skills and total skills
     # To be used by different function to generate feedback
     seeker_skills = list(JobSeekerSkills.objects.filter(UserId=user).values_list('SkillsId_id', flat=True))
@@ -389,6 +393,7 @@ def getFeedbackData(user):
 
 
 def generateFeedback(job):
+    '''Helper function to generate job match feedback'''
     user = serializers.getCurrentUserDefault()
     mat = getFeedBackData(user)
     JobListingId = set(JobListingSkills.objects.get(JobListing=job).values_list('JobListingId_id', flat=True))
