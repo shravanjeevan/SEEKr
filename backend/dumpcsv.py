@@ -8,7 +8,7 @@ from string import punctuation
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 django.setup()
 from django.contrib.auth.models import User
-from seekr.models import Company, Skills, JobListing, JobListingSkills, JobSeekerSkills, JobSeekerDetails
+from seekr.models import *
 
 # Load Raw Data
 jobs = pd.read_csv('jobs.csv')
@@ -24,12 +24,15 @@ job_types = ['casual', 'full time', 'part time', 'internship', 'apprenticeship']
 
 ### Fill models ###
 # Clear current models
+JobListingGroups.objects.all().delete()
+JobSeekerGroups.objects.all().delete()
 JobSeekerSkills.objects.all().delete()
 JobListingSkills.objects.all().delete()
 JobSeekerDetails.objects.all().delete()
 JobListing.objects.all().delete()
 Company.objects.all().delete()
 Skills.objects.all().delete()
+NLPClusters.objects.all().delete()
 User.objects.all().delete()
 
 # Load Skills
@@ -38,7 +41,7 @@ for s in skills:
 
 # Load companies (link to industries)
 for index, row in companies.iterrows():
-    u = User.objects.create(username=row['username'], password=row['password'], email=row['email'], first_name=row['first_name'], last_name=row['last_name'])
+    u = User.objects.create_user(username=row['username'], password=row['password'], email=row['email'], first_name=row['first_name'], last_name=row['last_name'])
     u.save()
     Company(UserId=u, Name=row['name'], Industry=row['industry']).save()
 
@@ -57,7 +60,7 @@ for index, row in jobs.iterrows():
 for index, row in candidates.iterrows():
     # Username cannot contain spaces
     uname = row['first_name'].replace(" ", "")
-    u = User.objects.create(username=uname, password=row['password'], email=row['email'], first_name=row['first_name'], last_name=row['last_name'])
+    u = User.objects.create_user(username=uname, password=row['password'], email=row['email'], first_name=row['first_name'], last_name=row['last_name'])
     u.save()
     JobSeekerDetails(UserId=u, Education=row['education'], Latitude=row['latitude'], Longitude=row['longitude'], Description=row['description']).save()
     for skill in ast.literal_eval(row['skills']):
