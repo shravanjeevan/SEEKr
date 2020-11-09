@@ -49,7 +49,8 @@ urlpatterns = [
     path('user/remove/', views.removeApi.as_view()),
 
     # Get list of all job matches for a user id
-    path('job_match/list/', views.JobMatchList),
-    path('job_match/status/', views.JobMatchStatus.as_view()),
+    path('job_match/list/<int:uid>/', views.JobMatchList),
+    path('job_match/status/', views.JobMatchStatus.as_view()), 
     path('job_match/status/company', views.CompanyJobStatus.as_view())
+
 ]
