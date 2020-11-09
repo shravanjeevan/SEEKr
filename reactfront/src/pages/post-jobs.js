@@ -47,15 +47,30 @@ const MatchingJobPage= () => {
     { title: 'Job Title', field: 'job' , headerStyle: {
                 backgroundColor: "#FDF6F7", fontSize: 16
               } },
-    { title: 'Post Date', field: 'date', headerStyle: {
-                backgroundColor: "#FDF6F7", fontSize: 16
-              } },
+    {
+      title: 'Skills',
+      field: 'skills',
+      lookup: { 1: 'Project Management', 2: 'Data Analysis', 3: 'Organisation', 4: 'Time Management', 5: 'Communication' },
+    },
+
+      {
+      title: 'Location',
+      field: 'location',
+      lookup: { 1: 'NSW', 2: 'ACT', 3: 'Victoria', 4: 'WA', 5: 'QLD' },
+    },
+
+
+    {
+      title: 'Salary',
+      field: 'salary',
+      lookup: { 1: '40K', 2: '50K', 3: '60K', 4: '70K', 5: '80K+' },
+    },
+    
 
   ]);
 
   const [data, setData] = useState([
-    { job: 'Data Analyst', date: '27th July 2020' },
-    { job: 'Project Manager', date: '12th June 2020' },
+    { job: 'Data Analyst', skills: 2, location: 1, salary: 5},
   ]);
 
 
