@@ -205,13 +205,13 @@ class JobMatchStatus(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-def JobMatchList(request):
+def JobMatchList(request, uid):
     '''
     Returns list of job matches for a user. Refreshes matches on GET request
     '''
     if request.method == 'GET':
         # Get user
-        user_obj = request.user
+        user_obj = User.objects.get(pk=uid)
         # Generate a new list of matches using the matching algorithm
         matches = generateMatchList(user_obj)
         
