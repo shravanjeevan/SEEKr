@@ -278,39 +278,49 @@ def JobMatchFeedback(request, jobmatchid):
     if request.method == 'GET':
         # Get user
         jobmatch_obj = JobMatch.objects.get(pk=jobmatchid)
-        print(jobmatch_obj)
 
-        # Run feedback
-        # feedback = generateFeedback(jobmatchid, user_obj)
+        # get user and user details (name and skills)
+        user_obj = User.objects.get(pk=jobmatch_obj.UserId_id)
+        uname = user_obj.username
+        uskills = []
+        for skill_obj in list(JobSeekerSkills.objects.filter(UserId_id=jobmatch_obj.UserId_id)):
+            uskills.append(skill_obj.SkillsId.Name)
+       
+        # get job and job details (name and skills)
+        job_obj = JobListing.objects.get(pk=jobmatch_obj.JobListingId_id)
+        jname = job_obj.Name
+        jskills = []
+        for skill_obj in list(JobListingSkills.objects.filter(JobListingId_id=jobmatch_obj.JobListingId_id)):
+            jskills.append(skill_obj.SkillsId.Name)
 
+        # Calculate number of shared skills between jobs and user
+        shared_skills = [skill for skill in uskills if skill in jskills]
+
+        # NLP Calculation
+        # get user cluster
+        ucluster = JobSeekerGroups.objects.get(UserId_id=jobmatch_obj.UserId_id).ClusterId
+        # get job cluster
+        jcluster = JobListingGroups.objects.get(JobListingId_id=jobmatch_obj.JobListingId_id).ClusterId
+        # if cluster are the same set cluster_size else set to 0
+        if ucluster == jcluster:
+            # Set to 1-NormSize so smaller clusters are worth more in percentage calculation
+            cluster_size = 1-float(ucluster.NormSize)
+        else:
+            cluster_size = 0
+        # calculate percentage of match
+        percentage = len(shared_skills)/len(jskills) + cluster_size
+        # OUTPUT
+        # Variables are now: 
+            # uname - username
+            # uskills - list of names of user skills
+            # jname - job name
+            # jskills - list of names of job skills
+            # shared_skills - list of skills that both the user and the job have
+            # cluster_size - 0 (cluster not shared), >0 (size of shared cluster - larger is better)
+            # percentage - percentage score of match 
     else:
         # Return bad request for now
         return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
-
-
-def getFeedbackData(user):
-    '''Helper function to generate job match feedback'''
-    # Function should take user id as input and return dataframe of job_id, difference in skills, matching skills and total skills
-    # To be used by different function to generate feedback
-    seeker_skills = list(JobSeekerSkills.objects.filter(UserId=user).values_list('SkillsId_id', flat=True))
-    # Sum only skills shared with the seeker
-    mat = generateJobSkillMat()
-    mat['matching'] = mat[seeker_skills].sum(axis=1)
-    # Calculate difference (for feedback)
-    mat['difference'] = mat['sum']/mat['matching']
-    mat['job_id'] = mat.index
-    response = mat[['job_id', 'difference', 'matching', 'sum']]
-    return response
-
-def generateFeedback(job, user):
-    '''Helper function to generate job match feedback'''
-    # user = serializers.getCurrentUserDefault()
-    mat = getFeedBackData(user)
-    JobListingId = set(JobListingSkills.objects.get(JobListing=job).values_list('JobListingId_id', flat=True)) # skills of the job
-    user_skills = list(JobSeekerSkills.objects.filter(UserId=user).values_list('SkillsId_id', flat=True))
-    # below doesn't work --> Used to represent what feedback should look like
-    feedback = "%s has %d skills, %s has %d skills. That's %d matched, and %d skills missing." % (user.first_name, user_skills, job.Name, mat.loc[job, 'sum'], mat.loc[job, 'matching'], mat.loc[job, 'difference'])
-    return feedback
 
 
 class LoginAPi(generics.GenericAPIView):
