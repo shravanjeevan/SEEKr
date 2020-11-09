@@ -54,7 +54,7 @@ class JobSeekerGroups(models.Model):
     ClusterId = models.ForeignKey(NLPClusters, on_delete=models.DO_NOTHING)
 
 class JobMatch(models.Model):
-    JobListingId = models.ForeignKey(JobListing, on_delete=models.DO_NOTHING)
+    JobListingId = models.ForeignKey(JobListing, on_delete=models.CASCADE)
     UserId = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     PercentageMatch = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     Status = models.IntegerField(null=True, blank=True)

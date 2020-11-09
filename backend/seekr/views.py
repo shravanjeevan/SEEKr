@@ -217,6 +217,31 @@ class RemoveSeekerSkill(APIView):
         return Response({"skills": user_skills})
 
 
+class CompanyJobStatus(APIView):
+    serializer_class = JobMatchSerializer
+
+    def post(self, request):
+        print(request.data)
+        query = JobMatch.objects.filter(JobListingId=request.data['id'], Status="1")
+        serializer = JobMatchSerializer(query, many=True)
+        userlist = list()
+        for u in serializer.data:
+            print(u)
+            user = User.objects.get(id=u["UserId"])
+            serializer = UserSerializer(user)
+            info = serializer.data
+            user = JobSeekerDetails.objects.get(UserId=u["UserId"])
+            serializer = JobSeekerDetailsSerializer(user)
+            print(serializer.data)
+            extra = serializer.data
+            t = dict()
+            t.update({"info": info})
+            t.update({"extra": extra})
+            userlist.append(t)
+        print(userlist)
+        return Response(userlist)
+
+
 class GetSeekerSkill(APIView):
     permission_classes = [permissions.IsAuthenticated, ]
 

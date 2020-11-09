@@ -8,6 +8,7 @@ import { Button, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { Add } from '@material-ui/icons';
 import TextField from '@material-ui/core/TextField';
 import MaterialTable from "material-table";
+import Job_detial from "./Job_detial"
 
 function Account() {
     const h = useHistory()
@@ -37,6 +38,9 @@ function Account() {
     const [jobtype, setjobtype] = useState()
     const [salary, setsalary] = useState()
     const [joblist, setjoblist] = useState()
+    const [showjobdetail, setshowjobdetail] = useState(false)
+    const [jobdetail, setjobdetail] = useState()
+    const [waitlist, setwaitlist] = useState([])
 
 
 
@@ -138,7 +142,7 @@ function Account() {
                                 return (
                                     <tr key={element}>
                                         <td>{table[element].Name}</td>
-                                        <td><button onClick={()=>deleteskill(table[element])}>remove</button></td>
+                                        <td><button onClick={() => deleteskill(table[element])}>remove</button></td>
                                     </tr>
                                 )
                             })
@@ -150,7 +154,7 @@ function Account() {
 
     }
 
-    function deleteskill(item){
+    function deleteskill(item) {
         console.log(item)
         fetch('http://127.0.0.1:8000/seeker_skill/remove/', {
             method: "post",
@@ -158,9 +162,9 @@ function Account() {
                 'Content-Type': 'application/json',
                 'Authorization': "Token " + token
             },
-            body:JSON.stringify({
-                "UserId":uid,
-                "SkillsId":item.id
+            body: JSON.stringify({
+                "UserId": uid,
+                "SkillsId": item.id
             })
         }).then(res => res.json()).then((data => {
             setuserskills(data)
@@ -299,46 +303,132 @@ function Account() {
 
     }
 
-    function showjobs(){
-        if(!joblist){
-            return(<></>)
-        }else{
+    function showjobs() {
+        if (!joblist) {
+            return (<></>)
+        } else {
             var table = joblist
             console.log(table)
-            return(<>
-             <div>
-                <table className="MyClassName">
-                    <thead>
-                        <tr>
-                            <td>Job Name</td>
-                            <td>Type</td>
-                            <td>Education</td>
-                            <td>Salary</td>
+            return (<>
+                <div>
+                    <table className="MyClassName">
+                        <thead>
+                            <tr>
+                                <td>Job Name</td>
+                                <td>Type</td>
+                                <td>Education</td>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {Object.keys(table).map(function (element) {
-                            return (
-                                <tr key={element}>
-                                    <td>{table[element].Name}</td>
-                                    <td>{table[element].Type}</td>
-                                    <td>{table[element].Education}</td>
-                                    <td>{table[element].SalaryUp}</td>
-                                    <td><button onClick={()=>deletejobs(table[element])}>remove</button></td>
-                                </tr>
-                            )
-                        })
-                        }
-                    </tbody>
-                </table>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Object.keys(table).map(function (element) {
+                                return (
+                                    <tr key={element}>
+                                        <td onClick={() => Job_detail(table[element])}>{table[element].Name}</td>
+                                        <td>{table[element].Type}</td>
+                                        <td>{table[element].Education}</td>
+                                        <td><button onClick={() => deletejobs(table[element])}>remove</button></td>
+                                    </tr>
+                                )
+                            })
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    {render_Job_detail()}
+
                 </div>
             </>)
         }
-        
+
     }
 
-    function deletejobs(item){
+    function render_Job_detail() {
+        if (jobdetail && waitlist) {
+            var table = waitlist
+            return (
+                <Modal isOpen={showjobdetail} >
+                    <ModalHeader>Job Detial: {jobdetail.Name}</ModalHeader>
+                    <ModalBody>
+                        Unique ID: {jobdetail.id}<br></br>
+                            Company:{jobdetail.Company}<br></br>
+
+                            Job:{jobdetail.Name}<br></br>
+                            Description:{jobdetail.Description}<br></br>
+                            Working type:{jobdetail.Type}<br></br>
+                            Salary:{jobdetail.SalaryUp}<br></br>
+                            who applied:<br></br>
+                        <table className="MyClassName">
+                            <thead>
+                                <tr>
+                                    <td>First Name</td>
+                                    <td>Last Name</td>
+                                    <td>Email</td>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Object.keys(table).map(function (element) {
+                                    return (
+                                        <tr key={element}>
+                                            <td>{table[element].info.first_name}</td>
+                                            <td>{table[element].info.last_name}</td>
+                                            <td>{table[element].info.email}</td>
+
+
+
+                                        </tr>
+                                    )
+                                })
+                                }
+                            </tbody>
+                        </table>
+                        <button onClick={() => setshowjobdetail(!showjobdetail)}>Back</button>
+                    </ModalBody>
+                </Modal>
+            )
+        } else {
+            return (<></>)
+        }
+
+    }
+
+
+
+    function Job_detail(item) {
+        if (item) {
+            setshowjobdetail(!showjobdetail)
+            setjobdetail(item)
+            if (jobdetail) {
+                fetch('http://127.0.0.1:8000/job_match/status/company', {
+                    method: "post",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': "Token " + token
+                    },
+                    body: JSON.stringify({
+                        "id": item.id
+                    })
+                }).then(res => res.json()).then((data => {
+                    console.log(data)
+                    setwaitlist(data)
+
+                })).
+                    catch(error => {
+                        if (error.status === 404) {
+                            console.log(error.status + error.statusText)
+                        } else if (error.status === 403) {
+                            console.log(error.status + error.statusText)
+                        }
+                    })
+            }
+
+        }
+
+    }
+
+    function deletejobs(item) {
         console.log(item)
         fetch('http://127.0.0.1:8000/job_list/delete/', {
             method: "post",
@@ -346,9 +436,9 @@ function Account() {
                 'Content-Type': 'application/json',
                 'Authorization': "Token " + token
             },
-            body:JSON.stringify({
-                "Id":item.id,
-                "Company":item.Company
+            body: JSON.stringify({
+                "Id": item.id,
+                "Company": item.Company
             })
         }).then(res => res.json()).then((data => {
             console.log(data)
@@ -549,7 +639,7 @@ function Account() {
         }
     }
 
-    function erase(){
+    function erase() {
         //logout()
         console.log(data)
         fetch('http://127.0.0.1:8000/user/remove/', {
@@ -614,14 +704,13 @@ function Account() {
         {fancyfuntion()}
         <button onClick={logout}> Log out </button>
         <button><a href="/">back</a></button>
-  
-      
-        <Popup  trigger={<button> Erase All</button>}>
+
+        <Popup trigger={<button> Erase All</button>}>
             <div>
                 <p>This will delete everything in or link to this account.</p>
                 <button onClick={erase}>Delete everything I have </button>
             </div>
-            </Popup>
+        </Popup>
 
 
         <Modal isOpen={accountsetup} >
