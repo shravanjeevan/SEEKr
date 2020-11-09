@@ -47,6 +47,6 @@ urlpatterns = [
     path('job_match/status/', views.JobMatchStatus.as_view()),
 
     # Get feedback for a job listing
-    path('job_match/feedback/<int:joblistingid>', views.JobMatchFeedback),
+    path('job_match/feedback/<int:jobmatchid>/', views.JobMatchFeedback),
 
 ]
