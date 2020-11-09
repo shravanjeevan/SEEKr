@@ -233,10 +233,8 @@ def JobMatchList(request, uid):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     else:
-        #TODO
-        # Just return bad request for now
+        # Return bad request for now
         return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
-
 
 def generateJobSkillMat():
     '''Helper function to generate job matches'''
@@ -270,6 +268,15 @@ def generateMatchList(user):
     mat['job_id'] = mat.index
     response = mat[['job_id','percentage']].sort_values(by='percentage', ascending=False)
     return response
+
+
+@api_view(['GET'])
+def JobMatchFeedback(request, joblistingid):
+    '''
+    Returns feedback for a job listing. Generated on GET request
+    '''
+
+
 
 def getFeedbackData(user):
     '''Helper function to generate job match feedback'''
