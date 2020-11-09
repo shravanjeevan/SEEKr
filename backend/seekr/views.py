@@ -107,6 +107,31 @@ class AddJob(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class RemoveJob(APIView):
+    serializer_class = JobListSerializer
+
+    def post(self, request):
+        print(request.data)
+        query = JobListing.objects.get(id=request.data['Id'], Company=request.data['Company'])
+        query.delete()
+        serializer = JobListSerializer(query)
+
+        user = User.objects.get(username=self.request.user)
+        serializer = UserSerializer(user)
+        t = serializer.data
+        print(t)
+        job_list = list()
+        try:
+            query = JobListing.objects.filter(Company=request.data['Company'])
+            serializer = JobListSerializer(query, many=True)
+            print(serializer.data)
+            job_list=serializer.data
+        except JobListing.DoesNotExist:
+            job_list = list()
+
+        return Response({"job_list": job_list})
+
+
 class AddSeekerSkill(APIView):
     # permission_classes = [permissions.IsAuthenticated, ]
 
@@ -192,7 +217,6 @@ class RemoveSeekerSkill(APIView):
         return Response({"skills": user_skills})
 
 
-
 class GetSeekerSkill(APIView):
     permission_classes = [permissions.IsAuthenticated, ]
 
@@ -258,6 +282,7 @@ class JobMatchStatus(APIView):
         serializer = JobMatchSerializer(job_match)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 def JobMatchList(request, uid):
     '''
@@ -268,7 +293,7 @@ def JobMatchList(request, uid):
         user_obj = User.objects.get(pk=uid)
         # Generate a new list of matches using the matching algorithm
         matches = generateMatchList(user_obj)
-        
+
         # Add each match to the database
         for index, row in matches.iterrows():
             # Check if match already exists
@@ -280,20 +305,21 @@ def JobMatchList(request, uid):
                 # Create new match and save in database
                 m = JobMatch(JobListingId=joblist_obj, UserId=user_obj, PercentageMatch=row['percentage'], Status=0)
                 m.save()
-        
+
         # Grab the matches for this user
         user_matches = JobMatch.objects.filter(UserId=user_obj)
         serializer = JobMatchSerializer(user_matches, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     else:
-        #TODO
+        # TODO
         # Just return bad request for now
         return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
 
 
 def generateJobSkillMat():
-    incidence = pd.DataFrame.from_records(JobListingSkills.objects.values_list('SkillsId_id', 'JobListingId_id'), columns=['skills', 'jobs'])
+    incidence = pd.DataFrame.from_records(JobListingSkills.objects.values_list('SkillsId_id', 'JobListingId_id'),
+                                          columns=['skills', 'jobs'])
     skill_ids = np.unique(incidence[['skills']])
     job_ids = np.unique(incidence[['jobs']])
     job_skill_mat = pd.DataFrame(0, index=job_ids, columns=skill_ids)
@@ -301,6 +327,7 @@ def generateJobSkillMat():
         job_skill_mat.loc[row['jobs'], row['skills']] = 1
     job_skill_mat['sum'] = job_skill_mat.sum(axis=1)
     return job_skill_mat
+
 
 def generateMatchList(user):
     # Function should take user id as input and return dataframe of job listings annotated with % match
@@ -310,15 +337,17 @@ def generateMatchList(user):
     mat['matching'] = mat[seeker_skills].sum(axis=1)
     # Account for if user profile is textually similar to job description
     seeker_cluster = JobSeekerGroups.objects.get(UserId=seeker).ClusterId
-    shared_group = list(JobListingGroups.objects.filter(ClusterId=seeker_cluster).values_list('JobListingId_id', flat=True))
+    shared_group = list(
+        JobListingGroups.objects.filter(ClusterId=seeker_cluster).values_list('JobListingId_id', flat=True))
     for job in shared_group:
-        job_skill_mat.loc[job, 'shared'] = 1-float(seeker_cluster.NormSize)
+        job_skill_mat.loc[job, 'shared'] = 1 - float(seeker_cluster.NormSize)
     job_skill_mat.fillna(0, inplace=True)
     # Calculate % Match
-    job_skill_mat['percentage'] = job_skill_mat['matching']/job_skill_mat['sum']+job_skill_mat['shared']
+    job_skill_mat['percentage'] = job_skill_mat['matching'] / job_skill_mat['sum'] + job_skill_mat['shared']
     job_skill_mat.fillna(0, inplace=True)
-    response = mat[['job_id','percentage']].sort_values(by='percentage', ascending=False)
+    response = mat[['job_id', 'percentage']].sort_values(by='percentage', ascending=False)
     return response
+
 
 def getFeedbackData(user):
     # Function should take user id as input and return dataframe of job_id, difference in skills, matching skills and total skills
@@ -328,10 +357,11 @@ def getFeedbackData(user):
     mat = generateJobSkillMat()
     mat['matching'] = mat[seeker_skills].sum(axis=1)
     # Calculate difference (for feedback)
-    mat['difference'] = mat['sum']/mat['matching']
+    mat['difference'] = mat['sum'] / mat['matching']
     mat['job_id'] = mat.index
     response = mat[['job_id', 'difference', 'matching', 'sum']].to_html()
     return HttpResponse(response)
+
 
 def generateFeedback(job):
     user = serializers.getCurrentUserDefault()
@@ -339,7 +369,8 @@ def generateFeedback(job):
     JobListingId = set(JobListingSkills.objects.get(JobListing=job).values_list('JobListingId_id', flat=True))
     user_skills = len(list(JobSeekerSkills.objects.filter(UserId=user).values_list('SkillsId_id', flat=True)))
     # below doesn't work --> Used to represent what feedback should look like
-    feedback = "%s has %d skills, %s has %d skills. That's %d matched, and %d skills missing." % (user.first_name, user_skills, job.Name, mat.loc[job, 'sum'], mat.loc[job, 'matching'], mat.loc[job, 'difference'])
+    feedback = "%s has %d skills, %s has %d skills. That's %d matched, and %d skills missing." % (
+    user.first_name, user_skills, job.Name, mat.loc[job, 'sum'], mat.loc[job, 'matching'], mat.loc[job, 'difference'])
     return feedback
 
 
@@ -357,12 +388,32 @@ class LoginAPi(generics.GenericAPIView):
         })
 
 
+class removeApi(generics.GenericAPIView):
+    serializer_class = UserSerializer
+
+    def get(self, request):
+        user = User.objects.get(username=self.request.user)
+        serializer = UserSerializer(user)
+        try:
+            usert = JobSeekerDetails.objects.get(UserId=serializer.data['id'])
+            usert.delete()
+        except JobSeekerDetails.DoesNotExist:
+            print("no seeker user find")
+        try:
+            usert = Company.objects.get(UserId=serializer.data['id'])
+            usert.delete()
+
+        except Company.DoesNotExist:
+            print("no company user find")
+        user.delete()
+        return Response({"Status": "deleted"})
+
+
 class UserApi(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = UserSerializer
 
     def get(self, request):
-        print(self.request.user)
         user = User.objects.get(username=self.request.user)
         serializer = UserSerializer(user)
         t = serializer.data

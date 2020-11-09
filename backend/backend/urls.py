@@ -31,9 +31,11 @@ urlpatterns = [
     path('skills/add/', views.AddSkill.as_view()),
 
     path('job_list/add/', views.AddJob.as_view()),
+    path('job_list/delete/', views.RemoveJob.as_view()),
+
     path('job_list/get/', views.Getjoblist.as_view()),
 
-    path('match_status/add/', views.AddMatchStatus.as_view()),
+    # path('match_status/add/', views.AddMatchStatus.as_view()),
 
     path('seeker_skill/add/', views.AddSeekerSkill.as_view()),
     path('seeker_skill/get/', views.GetSeekerSkill.as_view()),
@@ -44,6 +46,7 @@ urlpatterns = [
     path('auth/login', views.LoginAPi.as_view()),
     path('auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
     path('user/info/', views.UserApi.as_view()),
+    path('user/remove/', views.removeApi.as_view()),
 
     # Get list of all job matches for a user id
     path('job_match/list/<int:uid>', views.JobMatchList),
