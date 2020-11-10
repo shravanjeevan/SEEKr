@@ -36,6 +36,7 @@ function Account() {
     const [jobdescription, setjobdescription] = useState()
     const [jobtype, setjobtype] = useState()
     const [salary, setsalary] = useState()
+    const [joblist, setjoblist] = useState()
 
 
 
@@ -122,6 +123,7 @@ function Account() {
                 </div>)
         } else {
             var table = userskills.skills
+            console.log(table)
             return (
                 <div>
 
@@ -255,7 +257,7 @@ function Account() {
 
                 </Modal>
                 <Modal isOpen={viewjobstoggle}>
-                    {}
+                    {showjobs()}
                     <button onClick={() => setviewjobstoggle()}> Back </button> <br></br>
 
                 </Modal>
@@ -297,6 +299,71 @@ function Account() {
 
     }
 
+    function showjobs(){
+        if(!joblist){
+            return(<></>)
+        }else{
+            var table = joblist
+            console.log(table)
+            return(<>
+             <div>
+                <table className="MyClassName">
+                    <thead>
+                        <tr>
+                            <td>Job Name</td>
+                            <td>Type</td>
+                            <td>Education</td>
+                            <td>Salary</td>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {Object.keys(table).map(function (element) {
+                            return (
+                                <tr key={element}>
+                                    <td>{table[element].Name}</td>
+                                    <td>{table[element].Type}</td>
+                                    <td>{table[element].Education}</td>
+                                    <td>{table[element].SalaryUp}</td>
+                                    <td><button onClick={()=>deletejobs(table[element])}>remove</button></td>
+                                </tr>
+                            )
+                        })
+                        }
+                    </tbody>
+                </table>
+                </div>
+            </>)
+        }
+        
+    }
+
+    function deletejobs(item){
+        console.log(item)
+        fetch('http://127.0.0.1:8000/job_list/delete/', {
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Token " + token
+            },
+            body:JSON.stringify({
+                "Id":item.id,
+                "Company":item.Company
+            })
+        }).then(res => res.json()).then((data => {
+            console.log(data)
+            setjoblist(data['job_list'])
+            console.log("remove and set")
+        })).
+            catch(error => {
+                if (error.status === 404) {
+                    console.log(error.status + error.statusText)
+                } else if (error.status === 403) {
+                    console.log(error.status + error.statusText)
+                }
+            })
+    }
+
     //post job to backend
     function addjob() {
         var r = {
@@ -320,6 +387,9 @@ function Account() {
             body: JSON.stringify(r)
         }).then(res => res.json()).then((data => {
             console.log(data)
+            alert("Job added")
+            setnewjobtoggle(!newjobtoggle)
+
         })).
             catch(error => {
                 if (error.status === 404) {
@@ -345,6 +415,7 @@ function Account() {
             })
         }).then(res => res.json()).then((data => {
             console.log(data)
+            setjoblist(data)
         })).
             catch(error => {
                 if (error.status === 404) {
@@ -478,6 +549,32 @@ function Account() {
         }
     }
 
+    function erase(){
+        //logout()
+        console.log(data)
+        fetch('http://127.0.0.1:8000/user/remove/', {
+            method: "get",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Token " + token
+            }
+
+        }).then(res => res.json()).then((data => {
+            console.log(data)
+            cookies.remove("t", { domain: "localhost", path: '/' })
+            alert("Account deleted, you will now redierct to main page")
+            h.push('/signin')
+        })).
+            catch(error => {
+                if (error.status === 404) {
+                    console.log(error.status + error.statusText)
+                } else if (error.status === 403) {
+                    console.log(error.status + error.statusText)
+                }
+            })
+
+    }
+
     function logout() {
         fetch('http://127.0.0.1:8000/auth/logout', {
             method: "post",
@@ -517,25 +614,16 @@ function Account() {
         {fancyfuntion()}
         <button onClick={logout}> Log out </button>
         <button><a href="/">back</a></button>
-
-        {/* <Popup position="right center" open={accountsetup} modal nested onClose={closeModal}>
-
-            <div className="header">Set your account now</div>
-            <div className="modal">
-                <a className="close" onClick={closeModal}>
-                    &times;
-            </a>
+  
+      
+        <Popup  trigger={<button> Erase All</button>}>
+            <div>
+                <p>This will delete everything in or link to this account.</p>
+                <button onClick={erase}>Delete everything I have </button>
             </div>
-            <form>
-                <input type='radio' name="account type" onChange={() => settype("company")} /> Comapny
-                <input type='radio' name="account type" onChange={() => settype("seekr")} /> Job Seekr
-
-        </form>
-            {accounttype()}
+            </Popup>
 
 
-
-        </Popup> */}
         <Modal isOpen={accountsetup} >
             <div className="modal">
                 <a className="close" onClick={closeModal}>
