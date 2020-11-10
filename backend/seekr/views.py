@@ -529,3 +529,11 @@ class UserApi(generics.RetrieveAPIView):
             "company": company,
             "seekr": seeker
         })
+
+class JobDetails(generics.GenericAPIView):
+    serializer_class = JobDetailSerializer
+
+    def get(self, request, joblistingid):
+        job_details = JobListing.objects.get(pk=joblistingid)
+        serializer = JobDetailSerializer(job_details)
+        return Response(serializer.data)

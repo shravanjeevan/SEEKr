@@ -48,6 +48,12 @@ class JobListSerializer(serializers.ModelSerializer):
         model = JobListing
         fields = ('id', 'Name', 'Company', 'Description', 'Type', 'Education', 'SalaryUp', 'SalaryDown', 'Longitude', 'Latitude')
 
+class JobDetailSerializer(serializers.HyperlinkedModelSerializer):
+    company = CompanySerializer(source='Company')
+
+    class Meta:
+        model = JobListing
+        fields = ('id', 'Name', 'company', 'Description', 'Type', 'Education', 'SalaryUp', 'SalaryDown', 'Longitude', 'Latitude')
 
 class JobMatchSerializer(serializers.ModelSerializer):
     class Meta:
