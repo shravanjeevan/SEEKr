@@ -14,7 +14,7 @@ function Matchlist() {
     const h = useHistory()
     const [userdata, setuserdata] = useState()
     const [joblist, setjoblist] = useState()
-    const [visibleterm,setvisibleterm] = useState(20)
+    const [visibleterm, setvisibleterm] = useState(20)
     useEffect(() => {
         if (cookies.load("t") === "" || cookies.load("t") === undefined) {
             h.push("/signin")
@@ -56,20 +56,14 @@ function Matchlist() {
 
     }, [])
 
-    function applyjob(item) {
+    function applyjob(item, status) {
         console.log(item)
         console.log(userdata)
-        var status = 0
-        if(item.Status==0){
-            status = 1
 
-        }else{
-            status = 0
-        }
         var r = {
-            "UserId":userdata,
-            "JobListingId":item.JobListingId,
-            "Status":status
+            "UserId": userdata,
+            "JobListingId": item.JobListingId,
+            "Status": status
         }
         fetch('http://localhost:8000/job_match/status/update', {
             method: "post",
@@ -77,7 +71,7 @@ function Matchlist() {
                 'Content-Type': 'application/json',
                 'Authorization': "Token " + cookies.load("t")
             },
-            body:JSON.stringify(r)
+            body: JSON.stringify(r)
         }).then(res => res.json()).then((data => {
             console.log(data)
             fetch('http://localhost:8000/job_match/list/' + userdata, {
@@ -114,11 +108,11 @@ function Matchlist() {
                 loading
             </>)
         } else {
-            var table = joblist.slice(visibleterm-20,visibleterm)
+            var table = joblist.slice(visibleterm - 20, visibleterm)
             console.log(table)
             return (<>
-            <button onClick={()=>setvisibleterm(visibleterm-20)}> previous </button>
-            <button onClick={()=>setvisibleterm(visibleterm+20)}> next </button>
+                <button onClick={() => setvisibleterm(visibleterm - 20)}> previous </button>
+                <button onClick={() => setvisibleterm(visibleterm + 20)}> next </button>
 
                 <table className="MyClassName">
                     <thead>
@@ -133,8 +127,14 @@ function Matchlist() {
                         {Object.keys(table).map(function (element) {
                             return (
                                 <tr key={element}>
-                                    <td>{table[element].JobListingId}</td>
-                                    <td>{table[element].PercentageMatch * 100 + " %"}</td>
+                                    {(table[element].Status != -1) &&
+
+                                        <td>{table[element].JobListingId}</td>
+                                    }
+                                    {(table[element].Status != -1) &&
+
+                                        <td>{table[element].PercentageMatch * 100 + " %"}</td>
+                                    }
                                     {(table[element].Status == 0) &&
                                         <td>Not Apply</td>
                                     }
@@ -143,10 +143,11 @@ function Matchlist() {
                                     }
                                     {(table[element].Status == 0) &&
 
-                                        <td><button onClick={() => applyjob(table[element])}>Apply</button></td>
+                                        <td><button onClick={() => applyjob(table[element], 1)}>Apply</button>  <button onClick={() => applyjob(table[element], -1)}> Reject</button></td>
+
                                     }
                                     {(table[element].Status == 1) &&
-                                        <td><button onClick={() => applyjob(table[element])}>unApply</button></td>
+                                        <td><button onClick={() => applyjob(table[element], 0)}>unApply</button></td>
                                     }
                                 </tr>
                             )
