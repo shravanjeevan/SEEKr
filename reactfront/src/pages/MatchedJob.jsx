@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { Button, Modal, ModalBody, ModalHeader } from 'reactstrap';
-import { Add } from '@material-ui/icons';
+import { Add, Feedback } from '@material-ui/icons';
 import TextField from '@material-ui/core/TextField';
 import SelectSearch from 'react-select-search';
 
@@ -15,6 +15,12 @@ function Matchlist() {
     const [userdata, setuserdata] = useState()
     const [joblist, setjoblist] = useState()
     const [visibleterm, setvisibleterm] = useState(20)
+    const [feedbacktoggle, setfeedbacktoggle] = useState(false)
+    const [feedback, setfeedback] = useState()
+    const [detailtoggle, setdetailtoggle] = useState(false)
+    const [detail,setdetail] = useState()
+
+
     useEffect(() => {
         if (cookies.load("t") === "" || cookies.load("t") === undefined) {
             h.push("/signin")
@@ -36,7 +42,9 @@ function Matchlist() {
                 }
             }).then(res => res.json()).then((data => {
                 console.log(data)
-                setjoblist(data)
+                setjoblist(data.list)
+
+
             })).
                 catch(error => {
                     if (error.status === 404) {
@@ -59,10 +67,9 @@ function Matchlist() {
     function applyjob(item, status) {
         console.log(item)
         console.log(userdata)
-
         var r = {
             "UserId": userdata,
-            "JobListingId": item.JobListingId,
+            "JobListingId": item.job.JobListingId,
             "Status": status
         }
         fetch('http://localhost:8000/job_match/status/update', {
@@ -82,7 +89,7 @@ function Matchlist() {
                 }
             }).then(res => res.json()).then((data => {
                 console.log(data)
-                setjoblist(data)
+                setjoblist(data.list)
             })).
                 catch(error => {
                     if (error.status === 404) {
@@ -100,23 +107,59 @@ function Matchlist() {
                 }
             })
 
+
+    }
+
+
+    function renderfeedback(item) {
+        setfeedbacktoggle(!feedbacktoggle)
+        fetch('http://localhost:8000/job_match/feedback/' + item.job.id, {
+            method: "get",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Token " + cookies.load("t")
+            }
+        }).then(res => res.json()).then((data => {
+            //console.log(data)
+            setfeedback(data)
+        })).
+            catch(error => {
+                if (error.status === 404) {
+                    console.log(error.status + error.statusText)
+                } else if (error.status === 403) {
+                    console.log(error.status + error.statusText)
+                }
+            })
+
+    }
+
+    function renderdetail(item){
+        setdetailtoggle(!detailtoggle)
+        setdetail(item)
     }
 
     function rendertable() {
+        console.log(joblist)
         if (!joblist) {
             return (<>
                 loading
             </>)
         } else {
-            var table = joblist.slice(visibleterm - 20, visibleterm)
-            console.log(table)
-            return (<>
-                <button onClick={() => setvisibleterm(visibleterm - 20)}> previous </button>
-                <button onClick={() => setvisibleterm(visibleterm + 20)}> next </button>
 
-                <table className="MyClassName">
-                    <thead>
+            var table = joblist.slice(visibleterm-20,visibleterm)
+            //console.log(table)
+            return (<>
+                <button onClick={() => setvisibleterm(visibleterm - 20)} style={{margin: 0}}> previous </button>
+                <button onClick={() => setvisibleterm(visibleterm + 20)}style={{margin: 5}}> next </button>
+
+                <table className="MyClassName" style={{colour: "#007bff"}}>
+                    <thead style={{background: "#007bff"}}>
                         <tr>
+                            <td>Job Name</td>
+                            <td>Company</td>
+
+                            <td>Salary</td>
+
                             <td>JobListingId</td>
                             <td>PercentageMatch</td>
                             <td>Status</td>
@@ -127,26 +170,32 @@ function Matchlist() {
                         {Object.keys(table).map(function (element) {
                             return (
                                 <tr key={element}>
-                                    {(table[element].Status != -1) &&
+                                    {(table[element].job.Status != -1) &&
+                                    <>
+                                        <td onClick={()=>renderdetail(table[element])}>{table[element].detial.Name}</td>
 
-                                        <td>{table[element].JobListingId}</td>
-                                    }
-                                    {(table[element].Status != -1) &&
+                                        <td onClick={()=>renderdetail(table[element])}>{table[element].company.Name}</td>
+                                        <td onClick={()=>renderdetail(table[element])}>{table[element].detial.SalaryUp}</td>
 
-                                        <td>{table[element].PercentageMatch * 100 + " %"}</td>
+                                        <td onClick={()=>renderdetail(table[element])}> {table[element].job.JobListingId}</td>
+                                    </>
                                     }
-                                    {(table[element].Status == 0) &&
+                                    {(table[element].job.Status != -1) &&
+
+                                        <td onClick={() => renderfeedback(table[element])}>{table[element].job.PercentageMatch * 100 + " %"}</td>
+                                    }
+                                    {(table[element].job.Status == 0) &&
                                         <td>Not Apply</td>
                                     }
-                                    {(table[element].Status == 1) &&
+                                    {(table[element].job.Status == 1) &&
                                         <td>Applied</td>
                                     }
-                                    {(table[element].Status == 0) &&
+                                    {(table[element].job.Status == 0) &&
 
                                         <td><button onClick={() => applyjob(table[element], 1)}>Apply</button>  <button onClick={() => applyjob(table[element], -1)}> Reject</button></td>
 
                                     }
-                                    {(table[element].Status == 1) &&
+                                    {(table[element].job.Status == 1) &&
                                         <td><button onClick={() => applyjob(table[element], 0)}>unApply</button></td>
                                     }
                                 </tr>
@@ -154,19 +203,62 @@ function Matchlist() {
                         })
                         }
                     </tbody>
-                </table>                </>)
+                </table>
+                <Modal isOpen={detailtoggle}>
+                    <ModalHeader>
+                        Job Detail
+                    </ModalHeader>
+                    <ModalBody>
+                        {(detail) &&
+                        <>
+                            <p>Company: {detail.company.Name}</p>
+                            <p>Company Description: {detail.company.Description}</p>
+                            <p>Industry: {detail.company.Industry}</p>
+                            <p>Job: {detail.detial.Name}</p>
+                            <p>Job Description: {detail.detial.Description}</p>
+                            <p>Job Type: {detail.detial.Type}</p>
+                            <p>Salary:  {detail.detial.SalaryUp}</p>
+                            <p>Education: {detail.detial.Education}</p>
+                            <p>Latitude: {detail.detial.Latitude}</p>
+                            <p>Longitude: {detail.detial.Longitude}</p>
+
+
+
+                        </>
+                        }
+                    </ModalBody>
+
+                <button onClick={() => setdetailtoggle(!detailtoggle)}>back</button>
+
+                </Modal>
+
+                <Modal isOpen={feedbacktoggle}>
+                    {(feedback) &&
+                        <>
+                            <p>{feedback.message.split(".")[0]}</p>
+                            <p>{feedback.message.split(".")[1]}</p>
+                            <p>{feedback.message.split(".")[2]}</p>
+                            <p>{feedback.message.split(".")[3]}<br />{feedback.message.split(".")[4]}</p>
+
+                        </>
+                    }
+                    <button onClick={() => setfeedbacktoggle(!feedbacktoggle)}>back</button>
+                </Modal>
+            </>)
         }
 
     }
 
     return (<>
+        
         <div>
-            <button onClick={() => h.push("/account")}>Back</button>
-        </div>
-        <div>
+        <h1> Job Dashboard</h1>
 
 
             {rendertable()}
+        </div>
+        <div>
+            <button onClick={() => h.push("/account")}>Back</button>
         </div>
 
     </>)
