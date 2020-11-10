@@ -8,7 +8,7 @@ import { Button, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { Add, Feedback } from '@material-ui/icons';
 import TextField from '@material-ui/core/TextField';
 import SelectSearch from 'react-select-search';
-
+import "./lumen.css"
 
 function Matchlist() {
     const h = useHistory()
@@ -149,11 +149,11 @@ function Matchlist() {
             var table = joblist.slice(visibleterm-20,visibleterm)
             //console.log(table)
             return (<>
-                <button onClick={() => setvisibleterm(visibleterm - 20)} style={{margin: 0}}> previous </button>
-                <button onClick={() => setvisibleterm(visibleterm + 20)}style={{margin: 5}}> next </button>
+                <button onClick={() => setvisibleterm(visibleterm - 20)} type="button" class="btn btn-primary btn-lg" > previous </button>
+                <button onClick={() => setvisibleterm(visibleterm + 20)} type="button" class="btn btn-primary btn-lg" > next </button>
 
-                <table className="MyClassName" style={{colour: "#007bff"}}>
-                    <thead style={{background: "#007bff"}}>
+                <table class="table table-hover">
+                    <thead >
                         <tr>
                             <td>Job Name</td>
                             <td>Company</td>
@@ -192,11 +192,11 @@ function Matchlist() {
                                     }
                                     {(table[element].job.Status == 0) &&
 
-                                        <td><button onClick={() => applyjob(table[element], 1)}>Apply</button>  <button onClick={() => applyjob(table[element], -1)}> Reject</button></td>
+                                        <td><button onClick={() => applyjob(table[element], 1)} type="button" class="btn btn-primary">Apply</button>  <button onClick={() => applyjob(table[element], -1)}  type="button" class="btn btn-danger"> Reject</button></td>
 
                                     }
                                     {(table[element].job.Status == 1) &&
-                                        <td><button onClick={() => applyjob(table[element], 0)}>unApply</button></td>
+                                        <td><button onClick={() => applyjob(table[element], 0)}  type="button" class="btn btn-secondary" >unApply</button></td>
                                     }
                                 </tr>
                             )
