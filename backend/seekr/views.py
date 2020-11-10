@@ -324,13 +324,11 @@ def JobMatchList(request, uid):
             # Check if match already exists
             joblist_obj = JobListing.objects.get(pk=row['job_id'])
             if (JobMatch.objects.filter(JobListingId=joblist_obj, UserId=user_obj).exists()):
-                print("match already exists")
                 continue
             else:
                 # Create new match and save in database
                 m = JobMatch(JobListingId=joblist_obj, UserId=user_obj, PercentageMatch=row['percentage'], Status=0)
                 m.save()
-                print("match created")
 
         # Grab the matches for this user
         user_matches = JobMatch.objects.filter(UserId=user_obj)
