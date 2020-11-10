@@ -19,7 +19,7 @@ class Company(models.Model):
 
 class JobListing(models.Model):
     Name = models.CharField(max_length=20, null=True, blank=True)
-    Company = models.ForeignKey(Company, on_delete=models.DO_NOTHING, null=True, blank=True)
+    Company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True)
     Description = models.CharField(max_length=1000, null=True, blank=True)
     SalaryUp = models.IntegerField(null=True, blank=True)
     SalaryDown = models.IntegerField(null=True, blank=True)
@@ -33,8 +33,8 @@ class Skills(models.Model):
 
 
 class JobListingSkills(models.Model):
-    JobListingId = models.ForeignKey(JobListing, on_delete=models.DO_NOTHING)
-    SkillsId = models.ForeignKey(Skills, on_delete=models.DO_NOTHING)
+    JobListingId = models.ForeignKey(JobListing, on_delete=models.CASCADE)
+    SkillsId = models.ForeignKey(Skills, on_delete=models.CASCADE)
 
 
 class JobSeekerSkills(models.Model):
@@ -46,8 +46,8 @@ class NLPClusters(models.Model):
     NormSize = models.DecimalField(max_digits=10, decimal_places=9, null=True, blank=True)
 
 class JobListingGroups(models.Model):
-    JobListingId = models.ForeignKey(JobListing, on_delete=models.DO_NOTHING)
-    ClusterId = models.ForeignKey(NLPClusters, on_delete=models.DO_NOTHING)
+    JobListingId = models.ForeignKey(JobListing, on_delete=models.CASCADE)
+    ClusterId = models.ForeignKey(NLPClusters, on_delete=models.CASCADE)
 
 class JobSeekerGroups(models.Model):
     UserId = models.ForeignKey(User, on_delete=models.CASCADE)
