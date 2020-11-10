@@ -334,20 +334,20 @@ def JobMatchFeedback(request, jobmatchid):
         print("=====")
         # Build feedback message
         feedback_message = ""
-        feedback_message += "You have " + str(len(uskills)) + " skills: " + uskill_pretty + ".<br>"
-        feedback_message += "This job requires " + str(len(jskills)) + " skills: " + jskill_pretty + ".<br>"
-        feedback_message += "The " + str(len(shared_skills)) + " shared skills are: " + shared_skill_pretty + ".<br>"
+        feedback_message += "You have " + str(len(uskills)) + " skills: " + uskill_pretty + "."
+        feedback_message += "This job requires " + str(len(jskills)) + " skills: " + jskill_pretty + "."
+        feedback_message += "The " + str(len(shared_skills)) + " shared skills are: " + shared_skill_pretty + "."
 
         if cluster_size > 0.75:
-            feedback_message += "Your description and the job description are textually similar. The descriptions are also greatly dissimilar to other jobs and candidates.<br>"
+            feedback_message += "Your description and the job description are textually similar. The descriptions are also greatly dissimilar to other jobs and candidates."
         elif cluster_size > 0.25:
-            feedback_message += "Your description and the job description are textually similar. The descriptions are also fairly dissimilar to other jobs and candidates.<br>"
+            feedback_message += "Your description and the job description are textually similar. The descriptions are also fairly dissimilar to other jobs and candidates."
         elif cluster_size > 0:
-            feedback_message += "Your description and the job description are textually similar. The descriptions are also slightly dissimilar to other jobs and candidates.<br>"
+            feedback_message += "Your description and the job description are textually similar. The descriptions are also slightly dissimilar to other jobs and candidates."
         else:
-            feedback_message += "Your description and the job description are not textually similar.<br>"
+            feedback_message += "Your description and the job description are not textually similar."
         
-        feedback_message += "<br>So the match score is " + str(int(percentage*100)) + "%"
+        feedback_message += "So the match score is " + str(int(percentage*100)) + "%"
         
         return Response(data={"message": feedback_message}, status=status.HTTP_200_OK)
 
