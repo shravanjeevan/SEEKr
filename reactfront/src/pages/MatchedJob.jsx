@@ -114,8 +114,8 @@ function Matchlist() {
                 <button onClick={() => setvisibleterm(visibleterm - 20)}> previous </button>
                 <button onClick={() => setvisibleterm(visibleterm + 20)}> next </button>
 
-                <table className="MyClassName">
-                    <thead>
+                <table className="MyClassName" style={{colour: "#007bff"}}>
+                    <thead style={{background: "#007bff"}}>
                         <tr>
                             <td>JobListingId</td>
                             <td>PercentageMatch</td>
