@@ -8,6 +8,7 @@ import { Button, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { Add } from '@material-ui/icons';
 import TextField from '@material-ui/core/TextField';
 import MaterialTable from "material-table";
+import { ListGroup } from 'react-bootstrap';
 
 function Account() {
     const h = useHistory()
@@ -694,11 +695,13 @@ function Account() {
 
 
     return (<>
-        <div>USER NAME: {username}</div>
-        <div>FIRST NAME: {firstname}</div>
-        <div>LAST NAME: {lastname}</div>
-        <div>EMAIL: {email}</div>
-        <div>Account status: {accountstatus} </div>
+    <ListGroup>
+       <ListGroup.Item>USER NAME: {username}</ListGroup.Item>
+        <ListGroup.Item>FIRST NAME: {firstname}</ListGroup.Item>
+        <ListGroup.Item>LAST NAME: {lastname}</ListGroup.Item>
+       <ListGroup.Item>EMAIL: {email}</ListGroup.Item>
+        <ListGroup.Item>Account status: {accountstatus} </ListGroup.Item>
+    </ListGroup>
 
         {fancyfuntion()}
         <button onClick={logout}> Log out </button>
