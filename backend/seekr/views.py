@@ -139,22 +139,9 @@ class AddSeekerSkill(APIView):
 
     def post(self, request):
         print(request.data)
-        newskill = request.data['Skills']
-        try:
-            query = Skills.objects.get(Name=newskill)
-            serializer = SkillsSerializer(query)
-        except Skills.DoesNotExist:
-            print(newskill, "does not exist")
-            term = dict({"Name": newskill})
-            serializer = SkillsSerializer(data=term)
-            serializer.is_valid()
-            serializer.save()
 
-        query = Skills.objects.get(Name=newskill)
-        serializer = SkillsSerializer(query)
-        t = dict({"UserId": request.data['UserId'], "SkillsId": serializer.data['id']})
-        print(t)
-        serializer = SeekerSkillSerializer(data=t)
+
+        serializer = SeekerSkillSerializer(data=request.data)
         serializer.is_valid()
         serializer.save()
         user = User.objects.get(username=self.request.user)

@@ -8,6 +8,8 @@ import { Button, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { Add } from '@material-ui/icons';
 import TextField from '@material-ui/core/TextField';
 import MaterialTable from "material-table";
+import SelectSearch from 'react-select-search';
+import Select from 'react-select'
 
 function Account() {
     const h = useHistory()
@@ -40,6 +42,7 @@ function Account() {
     const [showjobdetail, setshowjobdetail] = useState(false)
     const [jobdetail, setjobdetail] = useState()
     const [waitlist, setwaitlist] = useState([])
+    const [skilllist, setskilllist] = useState([])
 
 
 
@@ -87,6 +90,8 @@ function Account() {
                     console.log(error.status + error.statusText)
                 }
             })
+
+
     }, [])
 
     function skill_mangement() {
@@ -99,6 +104,34 @@ function Account() {
             },
         }).then(res => res.json()).then((data => {
             setuserskills(data)
+        })).
+            catch(error => {
+                if (error.status === 404) {
+                    console.log(error.status + error.statusText)
+                } else if (error.status === 403) {
+                    console.log(error.status + error.statusText)
+                }
+            })
+        fetch('http://127.0.0.1:8000/skills/add', {
+            method: "get",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Token " + token
+            },
+        }).then(res => res.json()).then((data => {
+            console.log(data)
+            let idModified = data.map(
+                obj => {
+                    return {
+                        "value": obj.id,
+                        "name": obj.Name,
+
+                    }
+                }
+            );
+            console.log(idModified)
+            setskilllist(idModified)
+
         })).
             catch(error => {
                 if (error.status === 404) {
@@ -120,6 +153,7 @@ function Account() {
     // })
 
     function showskills() {
+        console.log(newskills)
         if (!userskills) {
             return (
                 <div>
@@ -271,7 +305,6 @@ function Account() {
                 <div>Description: {data.seekr.Description}</div>
                 <div>Longtitude: {data.seekr.Longitude}</div>
                 <div>Latitude: {data.seekr.Latitude}</div>
-
                 <button onClick={() => h.push('/matched-jobs')}> give me jobs</button> <br></br>
                 <button onClick={skill_mangement}>My skills</button>
                 <Modal isOpen={skills}
@@ -281,16 +314,13 @@ function Account() {
                     <ModalBody>
                         {showskills()}
 
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            label="New skill"
-                            onChange={(event) => setnewskills(event.target.value)}
-                        />
-                        <button onClick={addskill}>add </button>
+
                     </ModalBody>
+                    <SelectSearch onChange={setnewskills}
+                        options={skilllist} search
+                        placeholder="Add a skill"
+                    />                        <button onClick={addskill}>add </button>
+
                     <button onClick={() => setskills(!skills)}> Back </button>
 
                 </Modal>
@@ -300,6 +330,37 @@ function Account() {
             return (<div><button onClick={submit}>set up account</button></div>)
         }
 
+    }
+
+    function addskill() {
+        if (newskills === undefined || newskills === "") {
+            alert("skill can not be empty")
+            return (1)
+        }
+        
+        fetch('http://127.0.0.1:8000/seeker_skill/add/', {
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Token " + token
+            },
+            body: JSON.stringify({
+                'UserId': uid,
+                'SkillsId': newskills
+            })
+
+        }).then(res => res.json()).then((data => {
+            setuserskills(data)
+            alert("New skill succesfull added")
+
+        })).
+            catch(error => {
+                if (error.status === 404) {
+                    console.log(error.status + error.statusText)
+                } else if (error.status === 403) {
+                    console.log(error.status + error.statusText)
+                }
+            })
     }
 
     function showjobs() {
@@ -515,37 +576,6 @@ function Account() {
             })
     }
 
-    function addskill() {
-        if (newskills === undefined || newskills === "") {
-            alert("skill can not be empty")
-            return (1)
-        }
-        console.log(newskills.toUpperCase()
-        )
-        fetch('http://127.0.0.1:8000/seeker_skill/add/', {
-            method: "post",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': "Token " + token
-            },
-            body: JSON.stringify({
-                'UserId': uid,
-                'Skills': newskills.toUpperCase()
-            })
-
-        }).then(res => res.json()).then((data => {
-            setuserskills(data)
-            alert("New skill succesfull added")
-
-        })).
-            catch(error => {
-                if (error.status === 404) {
-                    console.log(error.status + error.statusText)
-                } else if (error.status === 403) {
-                    console.log(error.status + error.statusText)
-                }
-            })
-    }
 
     function accounttype() {
         if (type === "company") {
