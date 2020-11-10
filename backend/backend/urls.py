@@ -36,12 +36,13 @@ urlpatterns = [
     path('job_list/get/', views.Getjoblist.as_view()),
 
     # path('match_status/add/', views.AddMatchStatus.as_view()),
+    path('job_skill/get/', views.GetJobSkill.as_view()),
+    path('job_skill/remove/', views.RemoveJobSkill.as_view()),
+    path('job_skill/add/', views.AddJobSkill.as_view()),
 
     path('seeker_skill/add/', views.AddSeekerSkill.as_view()),
     path('seeker_skill/get/', views.GetSeekerSkill.as_view()),
     path('seeker_skill/remove/', views.RemoveSeekerSkill.as_view()),
-
-    path('job_skill/add/', views.AddJobSkill.as_view()),
 
     path('auth/login', views.LoginAPi.as_view()),
     path('auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
@@ -52,8 +53,11 @@ urlpatterns = [
     path('job_match/list/<int:uid>/', views.JobMatchList),
     path('job_match/status/', views.JobMatchStatus.as_view()),
 
+    path('job_match/status/update', views.JobMatchStatusUpdate.as_view()),
+
+    path('job_match/status/company', views.CompanyJobStatus.as_view()),
     # Get feedback for a job match
-    path('job_match/feedback/<int:jobmatchid>/', views.JobMatchFeedback),
+    path('job_match/feedback/<int:jobmatchid>/', views.JobMatchFeedback)
 
     # Given all details for a job listing
     path('job_detail/<int:joblistingid>/', views.JobDetails.as_view())
