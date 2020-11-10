@@ -360,8 +360,16 @@ def generateMatchList(user):
     mat = generateJobSkillMat()
     mat['matching'] = mat[seeker_skills].sum(axis=1)
     # Account for if user profile is textually similar to job description
-    seeker_cluster = JobSeekerGroups.objects.get(UserId=user).ClusterId
-    shared_group = list(JobListingGroups.objects.filter(ClusterId=seeker_cluster).values_list('JobListingId_id', flat=True))
+    shared_group = []
+    try:
+        seeker_cluster = JobSeekerGroups.objects.get(UserId=user).ClusterId
+    except:
+        seeker_cluster = None
+    if seeker_cluster is not None:
+        try:
+            shared_group = list(JobListingGroups.objects.filter(ClusterId=seeker_cluster).values_list('JobListingId_id', flat=True))
+        except:
+            shared_group = []
     mat['shared'] = 0
     # Check if shared groups is empty
     if (len(shared_group) > 0):
@@ -388,15 +396,24 @@ def JobMatchFeedback(request, jobmatchid):
         user_obj = User.objects.get(pk=jobmatch_obj.UserId_id)
         uname = user_obj.username
         uskills = []
-        for skill_obj in list(JobSeekerSkills.objects.filter(UserId_id=jobmatch_obj.UserId_id)):
-            uskills.append(skill_obj.SkillsId.Name)
+        try:
+            skill_list = list(JobSeekerSkills.objects.filter(UserId_id=jobmatch_obj.UserId_id))
+        except:
+            skill_list = []
+        
+        if len(skill_list) > 0:
+            uskills = [skill_obj.SkillsId.Name for skill_obj in skill_list]
        
         # Get job and job details (name and skills)
         job_obj = JobListing.objects.get(pk=jobmatch_obj.JobListingId_id)
         jname = job_obj.Name
         jskills = []
-        for skill_obj in list(JobListingSkills.objects.filter(JobListingId_id=jobmatch_obj.JobListingId_id)):
-            jskills.append(skill_obj.SkillsId.Name)
+        try:
+            skill_list = list(JobListingSkills.objects.filter(JobListingId_id=jobmatch_obj.JobListingId_id))
+        except:
+            skill_list = []
+        if len(skill_list) > 0:
+            jskills = [skill_obj.SkillsId.Name for skill_obj in skill_list]
 
         # Calculate number of shared skills between jobs and user
         shared_skills = [skill for skill in uskills if skill in jskills]
