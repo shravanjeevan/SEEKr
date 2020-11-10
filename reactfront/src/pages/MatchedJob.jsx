@@ -111,8 +111,8 @@ function Matchlist() {
             var table = joblist.slice(visibleterm - 20, visibleterm)
             console.log(table)
             return (<>
-                <button onClick={() => setvisibleterm(visibleterm - 20)}> previous </button>
-                <button onClick={() => setvisibleterm(visibleterm + 20)}> next </button>
+                <button onClick={() => setvisibleterm(visibleterm - 20)} style={{margin: 0}}> previous </button>
+                <button onClick={() => setvisibleterm(visibleterm + 20)}style={{margin: 5}}> next </button>
 
                 <table className="MyClassName" style={{colour: "#007bff"}}>
                     <thead style={{background: "#007bff"}}>
@@ -162,6 +162,7 @@ function Matchlist() {
     return (<>
         
         <div>
+        <h1> Job Dashboard</h1>
 
 
             {rendertable()}
