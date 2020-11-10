@@ -10,6 +10,8 @@ import TextField from '@material-ui/core/TextField';
 import MaterialTable from "material-table";
 import SelectSearch from 'react-select-search';
 import Select from 'react-select'
+import './skillcss.css'
+
 
 function Account() {
     const h = useHistory()
