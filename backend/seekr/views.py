@@ -274,6 +274,18 @@ class AddJobSkill(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class JobMatchStatusUpdate(APIView):
+    serializer_class = JobMatchStatusSerializer
+
+    def post(self, request):
+        print(request.data)
+        term = JobMatch.objects.get(JobListingId=request.data["JobListingId"], UserId=request.data['UserId'])
+        print(term)
+        term.Status = request.data['Status']
+        term.save()
+        return Response({"Status": "done"})
+
+
 class JobMatchStatus(APIView):
     serializer_class = JobMatchStatusSerializer
 
@@ -433,6 +445,7 @@ class removeApi(generics.GenericAPIView):
         except Company.DoesNotExist:
             print("no company user find")
         user.delete()
+
         return Response({"Status": "deleted"})
 
 

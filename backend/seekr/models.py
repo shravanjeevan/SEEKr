@@ -4,14 +4,14 @@ from django.contrib.auth.models import User
 
 
 class JobSeekerDetails(models.Model):
-    UserId = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
+    UserId = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     Latitude = models.DecimalField(max_digits=15, decimal_places=10, null=True, blank=True)
     Longitude = models.DecimalField(max_digits=15, decimal_places=10, null=True, blank=True)
     Description = models.CharField(max_length=1000, null=True, blank=True)
     Education = models.CharField(max_length=300, null=True, blank=True)
 
 class Company(models.Model):
-    UserId = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
+    UserId = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     Name = models.CharField(max_length=200, null=True, blank=True)
     Description = models.CharField(max_length=500, null=True, blank=True)
     Industry = models.CharField(max_length=40, null=True, blank=True)
@@ -38,8 +38,8 @@ class JobListingSkills(models.Model):
 
 
 class JobSeekerSkills(models.Model):
-    UserId = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    SkillsId = models.ForeignKey(Skills, on_delete=models.DO_NOTHING)
+    UserId = models.ForeignKey(User, on_delete=models.CASCADE)
+    SkillsId = models.ForeignKey(Skills, on_delete=models.CASCADE)
 
 class NLPClusters(models.Model):
     ClusterId = models.DecimalField(max_digits=4, decimal_places=0, null=True, blank=True)
@@ -50,11 +50,11 @@ class JobListingGroups(models.Model):
     ClusterId = models.ForeignKey(NLPClusters, on_delete=models.DO_NOTHING)
 
 class JobSeekerGroups(models.Model):
-    UserId = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    ClusterId = models.ForeignKey(NLPClusters, on_delete=models.DO_NOTHING)
+    UserId = models.ForeignKey(User, on_delete=models.CASCADE)
+    ClusterId = models.ForeignKey(NLPClusters, on_delete=models.CASCADE)
 
 class JobMatch(models.Model):
     JobListingId = models.ForeignKey(JobListing, on_delete=models.CASCADE)
-    UserId = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    UserId = models.ForeignKey(User, on_delete=models.CASCADE)
     PercentageMatch = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     Status = models.IntegerField(null=True, blank=True)
