@@ -372,10 +372,15 @@ def JobMatchList(request, uid):
 
         # Add each match to the database
         for index, row in matches.iterrows():
-            # Check if match already exists
+            # Get JobListing object
             joblist_obj = JobListing.objects.get(pk=row['job_id'])
+
+            # Check if match already exists
             if (JobMatch.objects.filter(JobListingId=joblist_obj, UserId=user_obj).exists()):
-                continue
+                # Update percentage match as this may have changed with skills being added/removed
+                m = JobMatch.objects.get(JobListingId=joblist_obj, UserId=user_obj)
+                m.PercentageMatch = row['percentage']
+                m.save()
             else:
                 # Create new match and save in database
                 m = JobMatch(JobListingId=joblist_obj, UserId=user_obj, PercentageMatch=row['percentage'], Status=0)
