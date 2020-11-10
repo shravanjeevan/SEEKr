@@ -388,10 +388,8 @@ def JobMatchList(request, uid):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     else:
-        # TODO
-        # Just return bad request for now
+        # Return bad request for now
         return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
-
 
 def generateJobSkillMat():
     '''Helper function to generate job matches'''
@@ -438,31 +436,90 @@ def generateMatchList(user):
     return response
 
 
-def getFeedbackData(user):
-    '''Helper function to generate job match feedback'''
-    # Function should take user id as input and return dataframe of job_id, difference in skills, matching skills and total skills
-    # To be used by different function to generate feedback
-    seeker_skills = list(JobSeekerSkills.objects.filter(UserId=user).values_list('SkillsId_id', flat=True))
-    # Sum only skills shared with the seeker
-    mat = generateJobSkillMat()
-    mat['matching'] = mat[seeker_skills].sum(axis=1)
-    # Calculate difference (for feedback)
-    mat['difference'] = mat['sum'] / mat['matching']
-    mat['job_id'] = mat.index
-    response = mat[['job_id', 'difference', 'matching', 'sum']].to_html()
-    return HttpResponse(response)
+@api_view(['GET'])
+def JobMatchFeedback(request, jobmatchid):
+    '''
+    Returns feedback for a job match. Generated on GET request
+    '''
+    if request.method == 'GET':
+        # Get JobMatch object
+        jobmatch_obj = JobMatch.objects.get(pk=jobmatchid)
 
+        # Get user and user details (name and skills)
+        user_obj = User.objects.get(pk=jobmatch_obj.UserId_id)
+        uname = user_obj.username
+        uskills = []
+        for skill_obj in list(JobSeekerSkills.objects.filter(UserId_id=jobmatch_obj.UserId_id)):
+            uskills.append(skill_obj.SkillsId.Name)
+       
+        # Get job and job details (name and skills)
+        job_obj = JobListing.objects.get(pk=jobmatch_obj.JobListingId_id)
+        jname = job_obj.Name
+        jskills = []
+        for skill_obj in list(JobListingSkills.objects.filter(JobListingId_id=jobmatch_obj.JobListingId_id)):
+            jskills.append(skill_obj.SkillsId.Name)
 
-def generateFeedback(job):
-    '''Helper function to generate job match feedback'''
-    user = serializers.getCurrentUserDefault()
-    mat = getFeedBackData(user)
-    JobListingId = set(JobListingSkills.objects.get(JobListing=job).values_list('JobListingId_id', flat=True))
-    user_skills = len(list(JobSeekerSkills.objects.filter(UserId=user).values_list('SkillsId_id', flat=True)))
-    # below doesn't work --> Used to represent what feedback should look like
-    feedback = "%s has %d skills, %s has %d skills. That's %d matched, and %d skills missing." % (
-    user.first_name, user_skills, job.Name, mat.loc[job, 'sum'], mat.loc[job, 'matching'], mat.loc[job, 'difference'])
-    return feedback
+        # Calculate number of shared skills between jobs and user
+        shared_skills = [skill for skill in uskills if skill in jskills]
+
+        # NLP Calculation
+        # get user cluster
+        try:
+            ucluster = JobSeekerGroups.objects.get(UserId_id=jobmatch_obj.UserId_id).ClusterId
+        except:
+            ucluster = None
+        
+        try:
+            # Get job cluster
+            jcluster = JobListingGroups.objects.get(JobListingId_id=jobmatch_obj.JobListingId_id).ClusterId
+        except:
+            jcluster = None
+        # If cluster are the same set cluster_size else set to 0
+        cluster_size = 0
+        if ucluster is not None and jcluster is not None:
+            if ucluster == jcluster:
+                # Set to 1-NormSize so smaller clusters are worth more in percentage calculation
+                cluster_size = 1-float(ucluster.NormSize)
+
+        # calculate percentage of match
+        percentage = len(shared_skills)/len(jskills) + cluster_size
+        # OUTPUT
+        # Variables are now: 
+            # uname - username
+            # uskills - list of names of user skills
+            # jname - job name
+            # jskills - list of names of job skills
+            # shared_skills - list of skills that both the user and the job have
+            # cluster_size - 0 (cluster not shared), >0 (size of shared cluster - larger is better)
+            # percentage - percentage score of match 
+
+        # Feedback example
+        uskill_pretty = ", ".join(uskills)
+        jskill_pretty = ", ".join(jskills)
+        shared_skill_pretty = ", ".join(shared_skills)
+        
+        # Build feedback message
+        feedback_message = ""
+        feedback_message += "You have " + str(len(uskills)) + " skills: " + uskill_pretty + "."
+        feedback_message += "This job requires " + str(len(jskills)) + " skills: " + jskill_pretty + "."
+        feedback_message += "The " + str(len(shared_skills)) + " shared skills are: " + shared_skill_pretty + "."
+
+        if cluster_size > 0.75:
+            feedback_message += "Your description and the job description are textually similar. The descriptions are also greatly dissimilar to other jobs and candidates."
+        elif cluster_size > 0.25:
+            feedback_message += "Your description and the job description are textually similar. The descriptions are also fairly dissimilar to other jobs and candidates."
+        elif cluster_size > 0:
+            feedback_message += "Your description and the job description are textually similar. The descriptions are also slightly dissimilar to other jobs and candidates."
+        else:
+            feedback_message += "Your description and the job description are not textually similar."
+        
+        feedback_message += "So the match score is " + str(int(percentage*100)) + "%"
+        
+        return Response(data={"message": feedback_message}, status=status.HTTP_200_OK)
+
+    else:
+        # Return bad request for now
+        return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
 
 
 class LoginAPi(generics.GenericAPIView):

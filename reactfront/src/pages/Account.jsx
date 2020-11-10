@@ -12,6 +12,7 @@ import SelectSearch from 'react-select-search';
 import Select from 'react-select'
 import './skillcss.css'
 
+import { ListGroup } from 'react-bootstrap';
 
 function Account() {
     const h = useHistory()
@@ -863,22 +864,25 @@ function Account() {
 
 
     return (<>
-        <div>USER NAME: {username}</div>
-        <div>FIRST NAME: {firstname}</div>
-        <div>LAST NAME: {lastname}</div>
-        <div>EMAIL: {email}</div>
-        <div>Account status: {accountstatus} </div>
+    <h1> Accounts page </h1>
+    <ListGroup>
+       <ListGroup.Item>USER NAME: {username}</ListGroup.Item>
+        <ListGroup.Item>FIRST NAME: {firstname}</ListGroup.Item>
+        <ListGroup.Item>LAST NAME: {lastname}</ListGroup.Item>
+       <ListGroup.Item>EMAIL: {email}</ListGroup.Item>
+        <ListGroup.Item>Account status: {accountstatus} </ListGroup.Item>
+    
 
         {fancyfuntion()}
-        <button onClick={logout}> Log out </button>
-        <button><a href="/">back</a></button>
+       <ListGroup.Item> <button onClick={logout}> Log out </button> </ListGroup.Item>
+        <ListGroup.Item><button><a href="/">back</a></button></ListGroup.Item>
 
-        <Popup trigger={<button> Erase All</button>}>
+       <ListGroup.Item> <Popup trigger={<button> Erase All</button>}>
             <div>
                 <p>This will delete everything in or link to this account.</p>
                 <button onClick={erase}>Delete everything I have </button>
             </div>
-        </Popup>
+        </Popup> </ListGroup.Item>
 
 
         <Modal isOpen={accountsetup} >
@@ -887,8 +891,8 @@ function Account() {
                     &times;
             </a>
             </div>
-            <button onClick={submit} > Set up later</button>
-            <ModalHeader>Your account is not set up yet!</ModalHeader>
+            <ListGroup.Item><button onClick={submit} > Set up later</button></ListGroup.Item>
+            <ListGroup.Item><ModalHeader>Your account is not set up yet!</ModalHeader>
             <ModalBody>
                 <div className="header">Set your account now</div>
                 <div className="modal">
@@ -904,9 +908,10 @@ function Account() {
                 {accounttype()}
 
 
-            </ModalBody>
+            </ModalBody></ListGroup.Item>
 
         </Modal>
+    </ListGroup>
 
 
     </>
