@@ -337,12 +337,7 @@ def JobMatchList(request, uid):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     else:
-<<<<<<< HEAD
         # Return bad request for now
-=======
-        # TODO
-        # Just return bad request for now
->>>>>>> main
         return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
 
 def generateJobSkillMat():
