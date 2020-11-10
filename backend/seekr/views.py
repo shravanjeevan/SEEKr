@@ -276,17 +276,17 @@ def JobMatchFeedback(request, jobmatchid):
     Returns feedback for a job match. Generated on GET request
     '''
     if request.method == 'GET':
-        # Get user
+        # Get JobMatch object
         jobmatch_obj = JobMatch.objects.get(pk=jobmatchid)
 
-        # get user and user details (name and skills)
+        # Get user and user details (name and skills)
         user_obj = User.objects.get(pk=jobmatch_obj.UserId_id)
         uname = user_obj.username
         uskills = []
         for skill_obj in list(JobSeekerSkills.objects.filter(UserId_id=jobmatch_obj.UserId_id)):
             uskills.append(skill_obj.SkillsId.Name)
        
-        # get job and job details (name and skills)
+        # Get job and job details (name and skills)
         job_obj = JobListing.objects.get(pk=jobmatch_obj.JobListingId_id)
         jname = job_obj.Name
         jskills = []
@@ -304,17 +304,17 @@ def JobMatchFeedback(request, jobmatchid):
             ucluster = None
         
         try:
-            # get job cluster
+            # Get job cluster
             jcluster = JobListingGroups.objects.get(JobListingId_id=jobmatch_obj.JobListingId_id).ClusterId
         except:
             jcluster = None
-        # if cluster are the same set cluster_size else set to 0
+        # If cluster are the same set cluster_size else set to 0
+        cluster_size = 0
         if ucluster is not None and jcluster is not None:
             if ucluster == jcluster:
                 # Set to 1-NormSize so smaller clusters are worth more in percentage calculation
                 cluster_size = 1-float(ucluster.NormSize)
-        else:
-            cluster_size = 0
+
         # calculate percentage of match
         percentage = len(shared_skills)/len(jskills) + cluster_size
         # OUTPUT
@@ -328,20 +328,29 @@ def JobMatchFeedback(request, jobmatchid):
             # percentage - percentage score of match 
 
         # Feedback example
-        print(uname, " has ", len(uskills), " skills: ", uskills)
-        print(jname, " has ", len(jskills), " skills: ", jskills)
-        print("They have ", len(shared_skills), " shared skills: ", shared_skills)
+        uskill_pretty = ", ".join(uskills)
+        jskill_pretty = ", ".join(jskills)
+        shared_skill_pretty = ", ".join(shared_skills)
+        print("=====")
+        # Build feedback message
+        feedback_message = ""
+        feedback_message += "You have " + str(len(uskills)) + " skills: " + uskill_pretty + ".<br>"
+        feedback_message += "This job requires " + str(len(jskills)) + " skills: " + jskill_pretty + ".<br>"
+        feedback_message += "The " + str(len(shared_skills)) + " shared skills are: " + shared_skill_pretty + ".<br>"
 
         if cluster_size > 0.75:
-            print(uname, " and ", jname, "have textually similar descriptions. Their descriptions are also greatly dissimilar to other jobs and candidates")
+            feedback_message += "Your description and the job description are textually similar. The descriptions are also greatly dissimilar to other jobs and candidates.<br>"
         elif cluster_size > 0.25:
-            print(uname, " and ", jname, "have textually similar descriptions. Their descriptions are also fairly dissimilar to other jobs and candidates")
+            feedback_message += "Your description and the job description are textually similar. The descriptions are also fairly dissimilar to other jobs and candidates.<br>"
         elif cluster_size > 0:
-            print(uname, " and ", jname, "have textually similar descriptions. Their descriptions are also slightly dissimilar to other jobs and candidates")
+            feedback_message += "Your description and the job description are textually similar. The descriptions are also slightly dissimilar to other jobs and candidates.<br>"
         else:
-            print(uname, " and ", jname, "do not have textually similar descriptions.")
+            feedback_message += "Your description and the job description are not textually similar.<br>"
         
-        print("So match score is: ", percentage*100, "%")
+        feedback_message += "<br>So the match score is " + str(int(percentage*100)) + "%"
+        
+        return Response(data={"message": feedback_message}, status=status.HTTP_200_OK)
+
     else:
         # Return bad request for now
         return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
