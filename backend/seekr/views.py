@@ -385,7 +385,19 @@ def JobMatchList(request, uid):
         # Grab the matches for this user
         user_matches = JobMatch.objects.filter(UserId=user_obj)
         serializer = JobMatchSerializer(user_matches, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        job_list = list()
+        for job in serializer.data:
+            query = JobListing.objects.get(id=job['JobListingId'])
+            serializer = JobListSerializer(query)
+            t = serializer.data
+            query = Company.objects.get(id=t["Company"])
+            serializer = CompanySerializer(query)
+            d = dict()
+            d.update({"job":job})
+            d.update({"detial":t})
+            d.update({"company":serializer.data})
+            job_list.append(d)
+        return Response({"list":job_list}, status=status.HTTP_200_OK)
 
     else:
         # Return bad request for now
