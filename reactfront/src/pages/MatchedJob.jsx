@@ -14,7 +14,7 @@ function Matchlist() {
     const h = useHistory()
     const [userdata, setuserdata] = useState()
     const [joblist, setjoblist] = useState()
-    const [visibleterm,setvisibleterm] = useState(50)
+    const [visibleterm,setvisibleterm] = useState(20)
     useEffect(() => {
         if (cookies.load("t") === "" || cookies.load("t") === undefined) {
             h.push("/signin")
@@ -114,11 +114,11 @@ function Matchlist() {
                 loading
             </>)
         } else {
-            var table = joblist.slice(visibleterm-50,visibleterm)
+            var table = joblist.slice(visibleterm-20,visibleterm)
             console.log(table)
             return (<>
-            <button onClick={()=>setvisibleterm(visibleterm-50)}> previous </button>
-            <button onClick={()=>setvisibleterm(visibleterm+50)}> next </button>
+            <button onClick={()=>setvisibleterm(visibleterm-20)}> previous </button>
+            <button onClick={()=>setvisibleterm(visibleterm+20)}> next </button>
 
                 <table className="MyClassName">
                     <thead>
