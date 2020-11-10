@@ -695,6 +695,7 @@ function Account() {
 
 
     return (<>
+    <h1> Accounts page </h1>
     <ListGroup>
        <ListGroup.Item>USER NAME: {username}</ListGroup.Item>
         <ListGroup.Item>FIRST NAME: {firstname}</ListGroup.Item>
