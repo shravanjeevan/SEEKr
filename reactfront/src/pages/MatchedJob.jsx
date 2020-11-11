@@ -35,27 +35,32 @@ function Matchlist() {
         }).then(res => res.json()).then((data => {
             console.log(data)
             setuserdata(data.account.id)
-            fetch('http://localhost:8000/job_match/list/' + data.account.id, {
-                method: "get",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': "Token " + cookies.load("t")
-                }
-            }).then(res => res.json()).then((data => {
-                console.log(data)
-                data.list.sort((a,b)=> parseFloat( b.job.PercentageMatch) - parseFloat( a.job.PercentageMatch))
-                console.log(data)
-                setjoblist(data.list)
-                setwaittoggle(false)
-
-            })).
-                catch(error => {
-                    if (error.status === 404) {
-                        console.log(error.status + error.statusText)
-                    } else if (error.status === 403) {
-                        console.log(error.status + error.statusText)
+            if(Object.keys(data.seekr).length!=0){
+                fetch('http://localhost:8000/job_match/list/' + data.account.id, {
+                    method: "get",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': "Token " + cookies.load("t")
                     }
-                })
+                }).then(res => res.json()).then((data => {
+                    console.log(data)
+                    data.list.sort((a,b)=> parseFloat( b.job.PercentageMatch) - parseFloat( a.job.PercentageMatch))
+                    console.log(data)
+                    setjoblist(data.list)
+                    setwaittoggle(false)
+    
+                })).
+                    catch(error => {
+                        if (error.status === 404) {
+                            console.log(error.status + error.statusText)
+                        } else if (error.status === 403) {
+                            console.log(error.status + error.statusText)
+                        }
+                    })
+            }else{
+                h.push("/account")
+            }
+            
         })).
             catch(error => {
                 if (error.status === 404) {
@@ -92,7 +97,7 @@ function Matchlist() {
                     'Authorization': "Token " + cookies.load("t")
                 }
             }).then(res => res.json()).then((data => {
-                data.list.sort((a,b)=> parseFloat( a.job.PercentageMatch) - parseFloat( b.job.PercentageMatch))
+                data.list.sort((a,b)=> parseFloat( b.job.PercentageMatch) - parseFloat( a.job.PercentageMatch))
                 setjoblist(data.list)
                 setwaittoggle(false)
 
