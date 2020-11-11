@@ -72,6 +72,29 @@ function Matchlist() {
 
     }, [])
 
+    function logout() {
+        fetch('http://127.0.0.1:8000/auth/logout', {
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Token " + cookies.load("t")
+            }
+
+        }).then(res => res.json()).then((data => {
+            console.log(data)
+
+        })).
+            catch(error => {
+                if (error.status === 404) {
+                    console.log(error.status + error.statusText)
+                } else if (error.status === 403) {
+                    console.log(error.status + error.statusText)
+                }
+            })
+        cookies.remove("t", { domain: "localhost", path: '/' })
+        h.push('/signin')
+    }
+
     function applyjob(item, status) {
         console.log(item)
         console.log(userdata)
@@ -319,6 +342,14 @@ function Matchlist() {
                         </li>
 
                     </ul>
+                    <div class="form-inline my-2 my-lg-0">
+
+                    <button class="btn btn-warning" onClick={logout}> Log out </button>
+
+
+
+
+                </div>
                 </div>
             </nav>
 
