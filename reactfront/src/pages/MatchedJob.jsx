@@ -1,4 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
+import Header from '../components/layout/Header-withoutBody';
+import Footer from '../components/layout/Footer-withoutLinks';
 import { render } from 'react-dom';
 import cookies from 'react-cookies'
 import { useHistory } from 'react-router-dom'
@@ -174,6 +176,11 @@ function Matchlist() {
             //console.log(table)
             return (<>
                 <table class="table table-hover">
+                 <div style={{
+                    backgroundColor: '#afcde3',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}>
                     <thead >
                         <tr>
                             <td>Job Name</td>
@@ -224,6 +231,7 @@ function Matchlist() {
                         })
                         }
                     </tbody>
+                    </div>
                 </table>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
                     <button onClick={() => setvisibleterm(visibleterm - 10)} type="button" class="btn btn-primary btn-lg" > previous </button>
@@ -300,32 +308,12 @@ function Matchlist() {
     return (<>
 
         <div>
-
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                <a class="navbar-brand" href="/">SEEKR</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarColor01">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item" >
-                            <a class="nav-link" href="/account">Account</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Job Dashboard
-          <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-            </nav>
-
+            <Header />
+              <br></br>
+              <br></br>
+              <br></br>
             {rendertable()}
-        </div>
-        <div>
-            <button onClick={() => h.push("/account")} class="btn btn-info">Back</button>
+             <Footer />
         </div>
 
     </>)

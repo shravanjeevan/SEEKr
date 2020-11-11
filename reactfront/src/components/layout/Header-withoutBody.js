@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
+//import { Divider } from 'react-native-elements';
 
 class Header extends Component {
   componentDidMount() {
@@ -20,6 +21,7 @@ class Header extends Component {
             </div>
         </div>
       </header>
+     
     )
   }
 }
