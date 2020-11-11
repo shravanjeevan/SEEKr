@@ -43,6 +43,8 @@ function Matchlist() {
                 }
             }).then(res => res.json()).then((data => {
                 console.log(data)
+                data.list.sort((a,b)=> parseFloat( b.job.PercentageMatch) - parseFloat( a.job.PercentageMatch))
+                console.log(data)
                 setjoblist(data.list)
                 setwaittoggle(false)
 
@@ -90,7 +92,7 @@ function Matchlist() {
                     'Authorization': "Token " + cookies.load("t")
                 }
             }).then(res => res.json()).then((data => {
-                console.log(data)
+                data.list.sort((a,b)=> parseFloat( a.job.PercentageMatch) - parseFloat( b.job.PercentageMatch))
                 setjoblist(data.list)
                 setwaittoggle(false)
 
