@@ -178,12 +178,12 @@ function Matchlist() {
             //console.log(table)
             return (<>
                  <div style={{
-                    backgroundColor: '#afcde3',
+                    backgroundColor: '#c4daf2',
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}>
                 <table class="table table-hover">
-                    <thead style={{background: "#74a6ca", fontWeight: 'bold', textDecorationLine: 'underline'}}>
+                    <thead style={{background: "#b3c7eb", fontWeight: 'bold', textDecorationLine: 'underline'}}>
                         <tr>
                             <td>Role</td>
                             <td>Company</td>
@@ -329,8 +329,6 @@ function Matchlist() {
             />
         </nav>
             {rendertable()}
-
-             <Footer />
 
     </>)
 }
