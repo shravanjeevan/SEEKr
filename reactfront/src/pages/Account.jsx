@@ -313,7 +313,9 @@ function Account() {
             </>)
         } else if (accountstatus == "Job Seeker") {
             return (<>
+                <div>
                 <button class="btn btn-primary" onClick={() => h.push('/matched-jobs')}> View all my Job Matches</button> 
+                </div>
                 <br></br>
                 <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
                     <div class="card-header">Seeking Job Information
@@ -321,14 +323,13 @@ function Account() {
                     <div class="card-body">
                              <div class="form-inline my-2 my-lg-0">
                         <div class="btn-group btn-group-toggle " data-toggle="buttons">
-                         <button class="btn btn-primary float-right" onClick={() => h.push('/matched-jobs')}> View all my Matches</button> <br></br>
                             <button class="btn btn-success" onClick={skill_mangement}>My Skills</button>
                             </div>
                            <br></br>
                         </div>
                     </div>
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Education:  </label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Education Experience:  </label>
                             <div class="col-sm-10">
                                 <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.seekr.Education}></input>
                             </div>
@@ -687,8 +688,8 @@ function Account() {
             "SalaryDown": salary,
             "Type": jobtype,
             "Education": edu,
-            "Latitude": latitude,
-            "Longitude": longtitude
+            "Latitude": null,
+            "Longitude": null
         }
         fetch('http://127.0.0.1:8000/job_list/add/', {
             method: "POST",
