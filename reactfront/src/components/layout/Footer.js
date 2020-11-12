@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="site-footer-inner">
           <NavLinks className="footer-links" />
           <SocialLinks className="footer-social-links" />
-          <div className="footer-copyright">&copy; 2020 SEEKr, all rights reserved</div>
+          <div className="footer-copyright" style={{color: '#6C63F1'}}>&copy; 2020 SEEKr, all rights reserved</div>
         </div>
       </div>
     </footer>
