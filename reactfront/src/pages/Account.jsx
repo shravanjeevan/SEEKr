@@ -227,7 +227,7 @@ function Account() {
             // show company infomation from data that recieved
             return (<>
                             <div>
-                            <button class="btn btn-success" onClick={jobmanagement}>View All Posted Jobs</button> 
+                            <button class="btn btn-primary" onClick={jobmanagement}>View All Posted Jobs</button> 
                             <button class="btn btn-success float-right" onClick={() => setnewjobtoggle(!newjobtoggle)} >Post New Job</button> 
                             </div>
                             <br></br>
@@ -266,11 +266,11 @@ function Account() {
                     <ModalBody>
                         <div class="form-group">
                             <label class="col-form-label" for="inputDefault">Job Name</label>
-                            <input onChange={(event) => setjobname(event.target.value)} type="text" class="form-control" placeholder="Job Name"  ></input>
+                            <input onChange={(event) => setjobname(event.target.value)} type="text" class="form-control"></input>
                         </div>
                         <div class="form-group">
                             <label class="col-form-label" for="exampleTextarea">Job Description</label>
-                            <textarea onChange={(event) => setjobdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3" spellcheck="false"></textarea>
+                            <textarea onChange={(event) => setjobdescription(event.target.value)} class="form-control" placeholder="Describe what the job entails so you can find better candidates"  id="exampleTextarea" rows="3" spellcheck="false"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -278,7 +278,7 @@ function Account() {
                             <input onChange={(event) => setjobtype(event.target.value)} type="text" class="form-control" placeholder="Full Time, Part Time, etc."  ></input>
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Education Experience</label>
+                            <label class="col-form-label" for="inputDefault">Education Required</label>
                             <input onChange={(event) => setedu(event.target.value)} type="text" class="form-control" placeholder="What is the minimum education experience required?"  ></input>
                         </div>
 
@@ -299,7 +299,7 @@ function Account() {
                     </ModalBody>
                     <div class="modal-footer">
 
-                        <button class="btn btn-info" onClick={() => setnewjobtoggle(!newjobtoggle)}> Back </button>
+                        <button class="btn btn-info" onClick={() => setnewjobtoggle(!newjobtoggle)}> Back To Account </button>
                     </div>
                 </Modal>
                 <Modal isOpen={viewjobstoggle}>
@@ -314,20 +314,13 @@ function Account() {
         } else if (accountstatus == "Job Seeker") {
             return (<>
                 <div>
-                <button class="btn btn-primary" onClick={() => h.push('/matched-jobs')}> View all my Job Matches</button> 
+                <button class="btn btn-primary" onClick={() => h.push('/matched-jobs')}> View all jobs you are matched for</button> 
                 </div>
                 <br></br>
                 <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
-                    <div class="card-header">Seeking Job Information
+                    <div class="card-header">Information we use to Generate Job Matches
                     </div>
-                    <div class="card-body">
-                             <div class="form-inline my-2 my-lg-0">
-                        <div class="btn-group btn-group-toggle " data-toggle="buttons">
-                            <button class="btn btn-success" onClick={skill_mangement}>My Skills</button>
-                            </div>
-                           <br></br>
-                        </div>
-                    </div>
+                        <div class="card-body">
                         <div class="form-group row">
                             <label for="staticEmail" class="col-sm-2 col-form-label">Education Experience:  </label>
                             <div class="col-sm-10">
@@ -341,16 +334,21 @@ function Account() {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Location - Longtitude: </label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Location (Longtitude): </label>
                             <div class="col-sm-10">
                                 <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.seekr.Longitude}></input>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Location - Latitude: </label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Location (Latitude): </label>
                             <div class="col-sm-10">
                                 <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.seekr.Latitude}></input>
                             </div>
+                        </div>
+                        </div>
+                        <br></br>
+                        <div>
+                        <button class="btn btn-success" onClick={skill_mangement}>Update Your Skills to Generate Better Job Matches</button>
                         </div>
 
                     </div>
@@ -379,7 +377,7 @@ function Account() {
 
             </>)
         } else {
-            return (<div><button class="btn btn-warning" onClick={submit}>set up account</button></div>)
+            return (<div><button class="btn btn-primary" onClick={submit}>Set Up Your Account</button><br></br></div>)      
         }
 
     }
@@ -772,15 +770,14 @@ function Account() {
     function accounttype() {
         if (type === "company") {
             return (<div>
-                <span class="badge badge-primary">Company Detail</span>
 
                 <div class="form-group">
                     <label class="col-form-label" for="inputDefault">Company Name</label>
-                    <input onChange={event => setcname(event.target.value)} type="text" class="form-control" placeholder="Company Name"  ></input>
+                    <input onChange={event => setcname(event.target.value)} type="text" class="form-control"  ></input>
                 </div>
                 <div class="form-group">
-                    <label for="exampleTextarea">Company Description</label>
-                    <textarea placeholder="Tell us more about what makes your company special so we can find candidates best suited" onChange={event => setdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3"></textarea>
+                    <label class="col-form-label" for="exampleTextarea">Company Description</label>
+                    <textarea placeholder="Tell us about what makes your company special so we can find candidates best suited" onChange={event => setdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="col-form-label" for="inputDefault">Industry</label>
@@ -793,14 +790,13 @@ function Account() {
             </div>)
         } else if (type === "seekr") {
             return (<div>
-                <span class="badge badge-primary">Seekr Detail</span>
                 <div class="form-group">
-                    <label class="col-form-label" for="inputDefault">Latitude</label>
+                    <label class="col-form-label" for="inputDefault">Location (Latitude)</label>
                     <input onChange={event => setlatitude(event.target.value)} type="text" class="form-control" placeholder="Optional"  ></input>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-form-label" for="inputDefault">Longitude</label>
+                    <label class="col-form-label" for="inputDefault">Location (Longitude)</label>
                     <input onChange={event => setlongtitude(event.target.value)} type="text" class="form-control" placeholder="Optional"  ></input>
                 </div>
 
@@ -810,8 +806,8 @@ function Account() {
                 </div>
 
                 <div class="form-group">
-                    <label for="exampleTextarea">Description</label>
-                    <textarea placeholder="Write more about yourself so we can find a match for you" onChange={event => setdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3"></textarea>
+                    <label class="col-form-label" for="exampleTextarea">Goals</label>
+                    <textarea placeholder="Write more about yourself so we can find best matches for you" onChange={event => setdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3"></textarea>
                 </div>
 
                 <div class="modal-footer">
@@ -972,6 +968,7 @@ function Account() {
         />
       </nav>
         {fancyfuntion()}
+        <br></br>
         <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
             <div class="card-header"> My Profile</div>
             <div class="card-body">
@@ -1013,8 +1010,8 @@ function Account() {
                 <div class="form-inline my-2 my-lg-0">
                     <Popup trigger={<button class="btn btn-danger"> Delete Account</button>} position="bottom">
                         <div>
-                        <p>This will delete everything in or link to this account.</p>
-                        <button class="btn btn-danger float-right" onClick={erase}>Delete everything I have </button>
+                        <p>Are you sure you would like to delete your account?</p>
+                        <button class="btn btn-danger float-right" onClick={erase}>Confirm </button>
                         </div>
                         </Popup>    &nbsp;  &nbsp;
                  </div>
@@ -1028,9 +1025,9 @@ function Account() {
             </a>
             </div>
             
-            <ModalHeader>Set Up Your Account Today</ModalHeader>
+            <ModalHeader><b>Set Up Your Account Today</b></ModalHeader>
             <ModalBody>
-                <div className="header"><strong>Proceed by clicking on what type of user you are</strong></div>
+                <div className="header">From the two options below choose what you would like to use SEEKr for</div>
                 <br></br>
                 <div className="modal">
                     <a className="close" onClick={closeModal}>
@@ -1038,20 +1035,21 @@ function Account() {
             </a>
                 </div>
                  <div>
-                <button onClick={submit} class="btn-sm" > Set up later</button>
+                <button onClick={submit} class="btn-sm" > Or click here to set up later</button>
                 </div>
                 <br></br>
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-primary">
-                        <input type='radio' name="account type" onChange={() => settype("company")} /> Company
+                        <input type='radio' name="account type" onChange={() => settype("company")} /> I am looking for employees
                 </label>
                     <label class="btn btn-primary">
-                        <input type='radio' name="account type" onChange={() => settype("seekr")} /> Job Seeker
+                        <input type='radio' name="account type" onChange={() => settype("seekr")} /> I am looking for a job
                 </label>
                 </div>
                 <br></br>
                 <div>
                 </div>
+                <br></br>
                                {accounttype()}
 
 
