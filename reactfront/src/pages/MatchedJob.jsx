@@ -186,12 +186,12 @@ function Matchlist() {
                 <table class="table table-hover">
                     <thead >
                         <tr>
-                            <td>Job Name</td>
+                            <td>Role</td>
                             <td>Company</td>
                             <td>Salary</td>
-                            <td>PercentageMatch</td>
-                            <td>Status</td>
-                            <td>Action</td>
+                            <td>How well suited are you for this job?</td>
+                            <td>Have you applied yet?</td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -209,11 +209,11 @@ function Matchlist() {
                                     {(table[element].job.Status != -1) &&
 
                                         <td onClick={() => renderfeedback(table[element])}>
-                                        <Progress color="success" value={table[element].job.PercentageMatch * 100}>{table[element].job.PercentageMatch * 100}</Progress>
+                                        <Progress color="success" value={table[element].job.PercentageMatch * 100}>{table[element].job.PercentageMatch * 100 + " %"}</Progress>
                                         </td>
                                     }
                                     {(table[element].job.Status == 0) &&
-                                        <td>Not Apply</td>
+                                        <td>Haven't Applied</td>
                                     }
                                     {(table[element].job.Status == 1) &&
                                         <td>Applied</td>

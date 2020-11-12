@@ -74,12 +74,12 @@ function Account() {
             setemail(data.account.email)
             setuid(data.account.id)
             if (Object.keys(data.company).length !== 0) {
-                setaccountstatus("Company account")
+                setaccountstatus("My Company")
                 setaccountsetup(false)
 
             }
             else if (Object.keys(data.seekr).length !== 0) {
-                setaccountstatus("Seeker account")
+                setaccountstatus("My Details")
                 setaccountsetup(false)
 
             } else {
@@ -223,7 +223,7 @@ function Account() {
 
     //Give different functions dependent on account type
     function fancyfuntion() {
-        if (accountstatus == "Company account") {
+        if (accountstatus == "My Company") {
             // if account is company return this
             // show company infomation from data that recieved
             return (<>
@@ -234,7 +234,7 @@ function Account() {
                         <span class="badge badge-success">Company</span>
 
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Company NAME: </label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Company Name: </label>
                             <div class="col-sm-10">
                                 <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.company.Name}></input>
                             </div>
@@ -283,7 +283,7 @@ function Account() {
                         </div>
                         <div class="form-group">
                             <label class="col-form-label" for="inputDefault">Education</label>
-                            <input onChange={(event) => setedu(event.target.value)} type="text" class="form-control" placeholder="e.g.  Primary, Secondary"  ></input>
+                            <input onChange={(event) => setedu(event.target.value)} type="text" class="form-control" placeholder="What have you studied?"  ></input>
                         </div>
 
                         <div class="form-group">
@@ -299,12 +299,12 @@ function Account() {
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Longitude</label>
-                            <input onChange={(event) => setlongtitude(event.target.value)} type="text" class="form-control" placeholder="Leave 1 if you do not know"  ></input>
+                            <label class="col-form-label" for="inputDefault">Location - Longitude</label>
+                            <input onChange={(event) => setlongtitude(event.target.value)} type="text" class="form-control" placeholder="Optional"  ></input>
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Latitude</label>
-                            <input onChange={(event) => setlatitude(event.target.value)} type="text" class="form-control" placeholder="Leave 1 if you do not know" id="Latitude"></input>
+                            <label class="col-form-label" for="inputDefault">Location - Latitude</label>
+                            <input onChange={(event) => setlatitude(event.target.value)} type="text" class="form-control" placeholder="Optional" id="Latitude"></input>
                         </div>
 
                         <button class="btn btn-primary" onClick={addjob}> Add Job </button>
@@ -324,7 +324,7 @@ function Account() {
                     </div>
                 </Modal>
             </>)
-        } else if (accountstatus == "Seeker account") {
+        } else if (accountstatus == "My Details") {
             return (<>
                 <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
                     <div class="card-header">{accountstatus}
@@ -340,19 +340,19 @@ function Account() {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Description:  </label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">My Goals  </label>
                             <div class="col-sm-10">
                                 <textarea type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.seekr.Description}></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Longtitude: </label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Location - Longtitude: </label>
                             <div class="col-sm-10">
                                 <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.seekr.Longitude}></input>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Latitude: </label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Location - Latitude: </label>
                             <div class="col-sm-10">
                                 <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.seekr.Latitude}></input>
                             </div>
@@ -798,7 +798,7 @@ function Account() {
                 </div>
                 <div class="form-group">
                     <label for="exampleTextarea">Company Description</label>
-                    <textarea placeholder="Describe your company" onChange={event => setdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3"></textarea>
+                    <textarea placeholder="Tell us more about what makes your company special so we can find candidates best suited" onChange={event => setdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="col-form-label" for="inputDefault">Industry</label>
@@ -814,22 +814,22 @@ function Account() {
                 <span class="badge badge-primary">Seekr Detail</span>
                 <div class="form-group">
                     <label class="col-form-label" for="inputDefault">Latitude</label>
-                    <input onChange={event => setlatitude(event.target.value)} type="text" class="form-control" placeholder="Leave 1 if your do not know"  ></input>
+                    <input onChange={event => setlatitude(event.target.value)} type="text" class="form-control" placeholder="Optional"  ></input>
                 </div>
 
                 <div class="form-group">
                     <label class="col-form-label" for="inputDefault">Longitude</label>
-                    <input onChange={event => setlongtitude(event.target.value)} type="text" class="form-control" placeholder="Leave 1 if your do not know"  ></input>
+                    <input onChange={event => setlongtitude(event.target.value)} type="text" class="form-control" placeholder="Optional"  ></input>
                 </div>
 
                 <div class="form-group">
                     <label class="col-form-label" for="inputDefault">Education</label>
-                    <input onChange={event => setedu(event.target.value)} type="text" class="form-control" placeholder="e.g.  Primary, Secondary, etc."  ></input>
+                    <input onChange={event => setedu(event.target.value)} type="text" class="form-control" placeholder="What have you studied?"  ></input>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleTextarea">Description</label>
-                    <textarea placeholder="CV style description. this will influence job recommendation results" onChange={event => setdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3"></textarea>
+                    <textarea placeholder="Write more about yourself so we can find a match for you" onChange={event => setdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3"></textarea>
                 </div>
 
                 <div class="modal-footer">
@@ -838,7 +838,7 @@ function Account() {
                 </div>
             </div>)
         } else {
-            return (<div>Select an account type to do next</div>)
+            return (<div></div>)
         }
     }
 
@@ -991,40 +991,40 @@ function Account() {
         />
       </nav>
         <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
-            <div class="card-header"> Accounts page</div>
+            <div class="card-header"> My Profile</div>
             <div class="card-body">
                 <span class="badge badge-primary">Detail</span>
 
                 <div class="form-group row">
-                    <label for="staticEmail" class="col-sm-2 col-form-label">USER NAME:</label>
+                    <label for="staticEmail" class="col-sm-2 col-form-label">Username:</label>
                     <div class="col-sm-10">
                         <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={username}></input>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="staticEmail" class="col-sm-2 col-form-label">FIRST NAME: </label>
+                    <label for="staticEmail" class="col-sm-2 col-form-label">First Name: </label>
                     <div class="col-sm-10">
                         <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={firstname}></input>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="staticEmail" class="col-sm-2 col-form-label">LAST NAME: </label>
+                    <label for="staticEmail" class="col-sm-2 col-form-label">Last Name: </label>
                     <div class="col-sm-10">
                         <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={lastname}></input>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="staticEmail" class="col-sm-2 col-form-label">EMAIL: </label>
+                    <label for="staticEmail" class="col-sm-2 col-form-label">Email Address: </label>
                     <div class="col-sm-10">
                         <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={email}></input>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="staticEmail" class="col-sm-2 col-form-label">Account status: </label>
+                    <label for="staticEmail" class="col-sm-2 col-form-label">Type of Account: </label>
                     <div class="col-sm-10">
                         <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={accountstatus}></input>
                     </div>
@@ -1041,24 +1041,32 @@ function Account() {
                     &times;
             </a>
             </div>
-            <button onClick={submit} class="btn btn-secondary" > Set up later</button>
-            <ModalHeader>Your account is not set up yet!</ModalHeader>
+            
+            <ModalHeader>Set Up Your Account Today</ModalHeader>
             <ModalBody>
-                <div className="header"><strong>Set your account now</strong></div>
+                <div className="header"><strong>Proceed by clicking on what type of user you are</strong></div>
+                <br></br>
                 <div className="modal">
                     <a className="close" onClick={closeModal}>
                         &times;
             </a>
                 </div>
+                 <div>
+                <button onClick={submit} class="btn-sm" > Set up later</button>
+                </div>
+                <br></br>
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-primary">
                         <input type='radio' name="account type" onChange={() => settype("company")} /> Company
                 </label>
                     <label class="btn btn-primary">
-                        <input type='radio' name="account type" onChange={() => settype("seekr")} /> Job Seekr
+                        <input type='radio' name="account type" onChange={() => settype("seekr")} /> Job Seeker
                 </label>
                 </div>
-                {accounttype()}
+                <br></br>
+                <div>
+                </div>
+                               {accounttype()}
 
 
             </ModalBody>
