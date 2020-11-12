@@ -100,13 +100,13 @@ jobs = []
 companies = []
 
 n = int(input("number to generate: "))
-
+# generate sample data
 for i in range(0, n):
     candidates.append(generate_candidate(i))
     jobs.append(generate_job(i))
     if (i % 10 == 0):
         companies.append(generate_company(i))
-
+# load job data
 job_df = pd.DataFrame(jobs, columns=['company', 'name', 'salary_top', 'salary_bottom', 'type', 'education','latitude', 'longitude', 'skills'])
 if n <= len(job_descriptions.index):
     jd = job_descriptions.sample(n, random_state=0)
@@ -114,6 +114,7 @@ if n <= len(job_descriptions.index):
 else:
     exit("Too many jobs requested. Unable to ensure unique descriptions. Please input smaller number")
 
+# load candidate data
 candidate_df = pd.DataFrame(candidates, columns=['first_name', 'last_name', 'email', 'password','education', 'latitude','longitude','skills'])
 if n <= len(candidate_descriptions.index):
     cd = candidate_descriptions.sample(n, random_state=0)
@@ -121,6 +122,11 @@ if n <= len(candidate_descriptions.index):
 else:
     exit("Too many candidates requested. Unable to ensure unique descriptions. Please input smaller number")
 
+# Add perfectly matched job and candidate for testing
+candidate_df.loc[candidate_df.index.max()+1] = ['perfectcandidate', 'match', 'test@perfect.com', 'password', 'tertiary', '1','1', '[\'Compliance & Risk\']', 'looking the perfect one']
+job_df.loc[job_df.index.max()+1] = ['company 0', 'perfectjobmatch', '100', '10', 'casual', 'tertiary', '1', '1', '[\'Compliance & Risk\']', 'looking for the perfect one']
+
+# Load company data
 company_df = pd.DataFrame(companies, columns=['username', 'password', 'email', 'first_name', 'last_name', 'name', 'industry'])
 
 job_df.to_csv('jobs.csv', index=False)
