@@ -170,11 +170,10 @@ function Account() {
             console.log(table)
             return (
                 <div>
-
+                <br></br>
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <td>my skills</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -182,7 +181,7 @@ function Account() {
                                 return (
                                     <tr key={element}>
                                         <td>{table[element].Name}</td>
-                                        <td><button class="btn btn-warning  btn-sm" onClick={() => deleteskill(table[element])}>remove</button></td>
+                                        <td><button class="btn btn-danger  btn-sm" onClick={() => deleteskill(table[element])}>remove</button></td>
                                     </tr>
                                 )
                             })
@@ -361,7 +360,7 @@ function Account() {
                     </div>
                     <div class="form-inline my-2 my-lg-0">
                         <div class="btn-group btn-group-toggle " data-toggle="buttons">
-                            <button class="btn btn-success" onClick={skill_mangement}>My skills</button>
+                            <button class="btn btn-success" onClick={skill_mangement}>My Skills</button>
                             </div>
                             <div class="form-inline my-2 my-lg-0">
                                 <Popup trigger={<button class="btn btn-danger"> Delete Account</button>} position="bottom">
@@ -377,21 +376,23 @@ function Account() {
 
                 <Modal isOpen={skills}
                 >
-                    <ModalHeader>My skill list</ModalHeader>
+                    <ModalHeader><b>My Skills</b></ModalHeader>
 
                     <ModalBody>
-                        {showskills()}
+                        
                         <SelectSearch onChange={setnewskills}
                             options={skilllist} search
-                            placeholder="Add a skill"
-                        />                        
-                        <button  class="btn btn-primary btn-sm"  onClick={addskill}>add </button>
+                            placeholder="Add a skill from this list"
+                        /> 
+                        <br></br>                    
+                        <button  class="btn btn-primary btn-sm"  onClick={addskill}>Add</button>
+                        <br></br>
+                        {showskills()}
 
                     </ModalBody>
 
                     <div class="modal-footer">
-
-                        <button class="btn btn-info" onClick={() => setskills(!skills)}> Back </button>
+                        <button class="btn btn-info" onClick={() => setskills(!skills)}> Back To Account Page </button>
                     </div>
                 </Modal>
 
