@@ -262,45 +262,36 @@ function Account() {
                 </div>
                 <Modal isOpen={newjobtoggle}
                 >
-                    <ModalHeader>Post a New Job</ModalHeader>
+                    <ModalHeader><b>Post a New Job</b></ModalHeader>
                     <ModalBody>
                         <div class="form-group">
                             <label class="col-form-label" for="inputDefault">Job Name</label>
                             <input onChange={(event) => setjobname(event.target.value)} type="text" class="form-control" placeholder="Job Name"  ></input>
                         </div>
                         <div class="form-group">
-                            <label for="exampleTextarea">Job Description</label>
+                            <label class="col-form-label" for="exampleTextarea">Job Description</label>
                             <textarea onChange={(event) => setjobdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3" spellcheck="false"></textarea>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Type</label>
-                            <input onChange={(event) => setjobtype(event.target.value)} type="text" class="form-control" placeholder="Type e.g. Full Time, Part Time, etc."  ></input>
+                            <label class="col-form-label" for="inputDefault">Employment Type</label>
+                            <input onChange={(event) => setjobtype(event.target.value)} type="text" class="form-control" placeholder="Full Time, Part Time, etc."  ></input>
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Education</label>
-                            <input onChange={(event) => setedu(event.target.value)} type="text" class="form-control" placeholder="What have you studied?"  ></input>
+                            <label class="col-form-label" for="inputDefault">Education Experience</label>
+                            <input onChange={(event) => setedu(event.target.value)} type="text" class="form-control" placeholder="Minimum amount required"  ></input>
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label">Salary</label>
+                            <label class="col-form-label">Salary</label>
                             <div class="form-group">
                                 <div class="input-group mb-3">
-
                                     <input placeholder="Salary" onChange={(event) => setsalary(event.target.value)} type="text" class="form-control" aria-label="Amount (to the nearest dollar)"></input>
                                     <div class="input-group-append">
-                                        <span class="input-group-text">$ per week</span>
+                                        <span class="input-group-text">$ per month</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Location - Longitude</label>
-                            <input onChange={(event) => setlongtitude(event.target.value)} type="text" class="form-control" placeholder="Optional"  ></input>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Location - Latitude</label>
-                            <input onChange={(event) => setlatitude(event.target.value)} type="text" class="form-control" placeholder="Optional" id="Latitude"></input>
                         </div>
 
                         <button class="btn btn-primary" onClick={addjob}> Add Job </button>
@@ -308,7 +299,7 @@ function Account() {
                     </ModalBody>
                     <div class="modal-footer">
 
-                        <button class="btn btn-info" onClick={() => setnewjobtoggle(!newjobtoggle)}> Back </button>
+                        <button class="btn btn-info" onClick={() => setnewjobtoggle(!newjobtoggle)}> Back to Account </button>
                     </div>
                 </Modal>
                 <Modal isOpen={viewjobstoggle}>
