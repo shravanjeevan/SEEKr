@@ -11,6 +11,8 @@ import MaterialTable from "material-table";
 import SelectSearch from 'react-select-search';
 import Select from 'react-select'
 import './skillcss.css'
+import { Link } from 'react-router-dom';
+import Logo from '../components/layout/Logo';
 
 import { ListGroup } from 'react-bootstrap';
 
@@ -359,12 +361,19 @@ function Account() {
                     </div>
                     <div class="form-inline my-2 my-lg-0">
                         <div class="btn-group btn-group-toggle " data-toggle="buttons">
-
-                            <button class="btn btn-primary" onClick={() => h.push('/matched-jobs')}> give me jobs</button> <br></br>
                             <button class="btn btn-success" onClick={skill_mangement}>My skills</button>
+                            </div>
+                            <div class="form-inline my-2 my-lg-0">
+                                <Popup trigger={<button class="btn btn-danger"> Delete Account</button>} position="bottom">
+                                    <div>
+                                    <p>This will delete everything in or link to this account.</p>
+                                    <button class="btn btn-danger" onClick={erase}>Delete everything I have </button>
+                                    </div>
+                                </Popup>    &nbsp;  &nbsp;
+                            </div>
+
                         </div>
                     </div>
-                </div>
 
                 <Modal isOpen={skills}
                 >
@@ -957,44 +966,30 @@ function Account() {
 
 
     return (<>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" href="/">SEEKR</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Account
-          <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    {(accountstatus == "Seeker account") &&
-                        <>
-                            <li class="nav-item" >
-                                <a class="nav-link" href="/matched-jobs">Job Dashboard </a>
-                            </li>
-                        </>
-
-                    }
-
-                </ul>
-                <div class="form-inline my-2 my-lg-0">
-                    <Popup trigger={<button class="btn btn-danger"> Erase All</button>} position="bottom">
-                        <div>
-                            <p>This will delete everything in or link to this account.</p>
-                            <button class="btn btn-danger" onClick={erase}>Delete everything I have </button>
-                        </div>
-                    </Popup> 	&nbsp;	&nbsp;
-                    <button class="btn btn-warning" onClick={logout}> Log out </button>
-
-
-
-
-                </div>
+       <nav>
+          <br></br>
+            <div className="brand header-brand">
+              <h1 className="m-0">
+                <Link to="/">
+                  <Logo /> 
+                  SEEKr
+                </Link>
+              </h1>
             </div>
-        </nav>
+            <div class="row">
+            <div class="col-lg-12">
+                <button class="btn btn-secondary float-right" onClick={logout}> Log out </button>
+                <button class="btn btn-primary float-right" onClick={() => h.push('/matched-jobs')}> View my Matches</button> <br></br>
+            </div>
+        </div>
+        <hr
+        style={{
+
+            height: 2
+        }}
+        />
+      </nav>
         <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
             <div class="card-header"> Accounts page</div>
             <div class="card-body">
@@ -1057,7 +1052,7 @@ function Account() {
                 </div>
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-primary">
-                        <input type='radio' name="account type" onChange={() => settype("company")} /> Comapny
+                        <input type='radio' name="account type" onChange={() => settype("company")} /> Company
                 </label>
                     <label class="btn btn-primary">
                         <input type='radio' name="account type" onChange={() => settype("seekr")} /> Job Seekr

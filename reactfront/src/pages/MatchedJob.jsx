@@ -13,6 +13,8 @@ import SelectSearch from 'react-select-search';
 import "./lumen.css"
 import { ClipLoader } from 'react-spinners';
 import { Progress } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import Logo from '../components/layout/Logo';
 
 function Matchlist() {
     const h = useHistory()
@@ -305,12 +307,31 @@ function Matchlist() {
     }
 
     return (<>
-
-        <div>
-            <Header />
-            {rendertable()}
-             <Footer />
+        <nav>
+          <br></br>
+            <div className="brand header-brand">
+              <h1 className="m-0">
+                <Link to="/">
+                  <Logo />
+                  SEEKr
+                </Link>
+              </h1>
+            </div>
+            <div class="row">
+            <div class="col-lg-12">
+                <button class="btn btn-secondary float-right" onClick={() => h.push("/account")}> My Account</button>
+            </div>
         </div>
+        <hr
+        style={{
+
+            height: 2
+        }}
+        />
+        </nav>
+            {rendertable()}
+
+             <Footer />
 
     </>)
 }
