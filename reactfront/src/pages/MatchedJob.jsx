@@ -175,12 +175,12 @@ function Matchlist() {
             var table = joblist.slice(visibleterm - 10, visibleterm)
             //console.log(table)
             return (<>
-                <table class="table table-hover">
                  <div style={{
                     backgroundColor: '#afcde3',
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}>
+                <table class="table table-hover">
                     <thead >
                         <tr>
                             <td>Job Name</td>
@@ -231,12 +231,12 @@ function Matchlist() {
                         })
                         }
                     </tbody>
-                    </div>
                 </table>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
-                    <button onClick={() => setvisibleterm(visibleterm - 10)} type="button" class="btn btn-primary btn-lg" > previous </button>
-                    <button onClick={() => setvisibleterm(visibleterm + 10)} type="button" class="btn btn-primary btn-lg" > next </button>
                 </div>
+                    <br></br>
+                    <button onClick={() => setvisibleterm(visibleterm - 10)} type="button" > Previous Page </button>
+
+                    <button onClick={() => setvisibleterm(visibleterm + 10)} type="button" > Next Page </button>
                 <Modal isOpen={detailtoggle}>
                     <ModalHeader>
                         Job Detail
@@ -309,9 +309,6 @@ function Matchlist() {
 
         <div>
             <Header />
-              <br></br>
-              <br></br>
-              <br></br>
             {rendertable()}
              <Footer />
         </div>
