@@ -318,7 +318,7 @@ function Account() {
                 </div>
                 <br></br>
                 <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
-                    <div class="card-header">Seeking Job Information
+                    <div class="card-header">Information to Generate Job Match
                     </div>
                         <div class="card-body">
                         <div class="form-group row">
@@ -806,7 +806,7 @@ function Account() {
                 </div>
 
                 <div class="form-group">
-                    <label class="col-form-label" for="exampleTextarea">Description</label>
+                    <label class="col-form-label" for="exampleTextarea">Goals</label>
                     <textarea placeholder="Write more about yourself so we can find best matches for you" onChange={event => setdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3"></textarea>
                 </div>
 
@@ -1010,8 +1010,9 @@ function Account() {
                 <div class="form-inline my-2 my-lg-0">
                     <Popup trigger={<button class="btn btn-danger"> Delete Account</button>} position="bottom">
                         <div>
-                        <p>This will delete everything in or link to this account.</p>
-                        <button class="btn btn-danger float-right" onClick={erase}>Delete everything I have </button>
+                        <p>Are you sure you would like to delete your account?</p>
+                        <button class="btn btn-primary float-right" onClick={() => h.push("/account")}>Cancel </button>
+                        <button class="btn btn-danger float-right" onClick={erase}>Confirm </button>
                         </div>
                         </Popup>    &nbsp;  &nbsp;
                  </div>
