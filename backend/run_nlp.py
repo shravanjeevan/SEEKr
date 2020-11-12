@@ -65,6 +65,7 @@ clusters = model.labels_
 df['cluster'] = clusters
 
 # Fill database models
+print('clusters selected filling Django models...')
 JobListingGroups.objects.all().delete()
 JobSeekerGroups.objects.all().delete()
 NLPClusters.objects.all().delete()
@@ -83,3 +84,4 @@ for index, row in df.iterrows():
         u = User.objects.get(id=row['id'])
         g = NLPClusters.objects.get(ClusterId=row['cluster'])
         JobSeekerGroups.objects.create(UserId=u, ClusterId=g).save()
+print('done')

@@ -9,8 +9,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 django.setup()
 from django.contrib.auth.models import User
 from seekr.models import *
-
-print("yo")
+print("loading Django models with sample data...")
 # Load Raw Data
 jobs = pd.read_csv('./jobs.csv')
 candidates = pd.read_csv('./candidates.csv')
@@ -36,16 +35,19 @@ Skills.objects.all().delete()
 NLPClusters.objects.all().delete()
 User.objects.all().delete()
 
+print('... loading skills ..')
 # Load Skills
 for s in skills:
     Skills(Name=s).save()
 
-# Load companies (link to industries)
+print ('... loading companies ...')
+# Load companies (link to users)
 for index, row in companies.iterrows():
     u = User.objects.create_user(username=row['username'], password=row['password'], email=row['email'], first_name=row['first_name'], last_name=row['last_name'])
     u.save()
     Company(UserId=u, Name=row['name'], Industry=row['industry']).save()
 
+print ('... loading jobs ...')
 # Load jobs (link to companies, skills)
 for index, row in jobs.iterrows():
     c_key = Company.objects.get(Name=row['company'])
@@ -57,6 +59,7 @@ for index, row in jobs.iterrows():
             if skill_key is not None:
                 JobListingSkills(JobListingId=j, SkillsId=skill_key).save()
 
+print('... loading candidates/JobSeekers ...')
 # Load candidates (link to skills and users)
 for index, row in candidates.iterrows():
     # Username cannot contain spaces
@@ -69,3 +72,4 @@ for index, row in candidates.iterrows():
         if skill_key is not None:
             JobSeekerSkills(UserId=u, SkillsId=skill_key).save()
 
+print('done')
