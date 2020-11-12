@@ -541,8 +541,10 @@ def JobMatchFeedback(request, jobmatchid):
         else:
             feedback_message += "Your description and the job description are not textually similar."
         
-        feedback_message += "So the match score is " + str(int(percentage*100)) + "%"
-        
+        feedback_message += "Hence we have calculated your match score to be " + str(int(percentage*100)) + "%*"
+        feedback_message += "* SEEKr calculates your score based on the skills you share with a job and on the similarity of your descriptions."
+        feedback_message += "To improve your score try changing the language of your description or add more skills"
+
         return Response(data={"message": feedback_message}, status=status.HTTP_200_OK)
 
     else:
