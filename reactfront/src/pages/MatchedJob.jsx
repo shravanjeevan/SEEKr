@@ -187,7 +187,7 @@ function Matchlist() {
                         <tr>
                             <td>Role</td>
                             <td>Company</td>
-                            <td>Salary</td>
+                            <td>Salary (PM)</td>
                             <td>How well suited are you for this job?</td>
                             <td>Have you applied yet?</td>
                             <td></td>
@@ -239,48 +239,43 @@ function Matchlist() {
                      
                 <Modal isOpen={detailtoggle}>
                     <ModalHeader>
-                        Job Detail
+                        <b>Job Details</b>
                     </ModalHeader>
                     <ModalBody>
                         {(detail) &&
                             <>
-                                <p>Company: {detail.company.Name}</p>
-                                <p>Company Description: {detail.company.Description}</p>
-                                <p>Industry: {detail.company.Industry}</p>
-                                <p>Job: {detail.detial.Name}</p>
-                                <p>Job Description: {detail.detial.Description}</p>
-                                <p>Job Type: {detail.detial.Type}</p>
-                                <p>Salary:  {detail.detial.SalaryUp}</p>
-                                <p>Education: {detail.detial.Education}</p>
-                                <p>Latitude: {detail.detial.Latitude}</p>
-                                <p>Longitude: {detail.detial.Longitude}</p>
-
-
-
+                                <p><b>Company:</b> {detail.company.Name}</p>
+                                <p><b>Role:</b> {detail.detial.Name}</p>
+                                <p><b>Job Description:</b> {detail.detial.Description}</p>
+                                <p><b>Employment Type: </b>{detail.detial.Type}</p>
+                                <p><b>Salary (PM): </b>{detail.detial.SalaryUp}</p>
+                                <p><b>Education Required: </b>{detail.detial.Education}</p>
                             </>
                         }
                     </ModalBody>
                     <div class="modal-footer">
 
-                    <button onClick={() => setdetailtoggle(!detailtoggle)} class="btn btn-info">back</button>
+                    <button onClick={() => setdetailtoggle(!detailtoggle)} class="btn btn-info">Back to Jobs</button>
                     </div>
                 </Modal>
 
                 <Modal isOpen={feedbacktoggle}>
                     <ModalHeader>
-                        Feedback
+                        <b>Feedback to improve your percentage match</b>
                     </ModalHeader>
+                    <ModalBody>
                     {(feedback) &&
                         <>
                             <p>{feedback.message.split(".")[0]}</p>
                             <p>{feedback.message.split(".")[1]}</p>
                             <p>{feedback.message.split(".")[2]}</p>
-                            <p>{feedback.message.split(".")[3]}<br />{feedback.message.split(".")[4]}</p>
+                            <b>{feedback.message.split(".")[3]}<br />{feedback.message.split(".")[4]}</b>
 
                         </>
                     }
+                    </ModalBody>
                     <div class="modal-footer">
-                    <button onClick={() => setfeedbacktoggle(!feedbacktoggle)} class="btn btn-info">back</button>
+                    <button onClick={() => setfeedbacktoggle(!feedbacktoggle)} class="btn btn-info">Back to Jobs</button>
                     </div>
                 </Modal>
                 <Modal isOpen={waittoggle}>
