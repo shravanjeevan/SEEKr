@@ -312,11 +312,11 @@ function Account() {
                     </div>
                 </Modal>
                 <Modal isOpen={viewjobstoggle}>
-                    <ModalHeader><b>Posted Jobs</b></ModalHeader>
+                    <ModalHeader><b>Jobs Posted</b></ModalHeader>
                     {showjobs()}
                     <div class="modal-footer">
 
-                        <button class="btn btn-info" onClick={() => setviewjobstoggle()}> Back </button> <br></br>
+                        <button class="btn btn-info" onClick={() => setviewjobstoggle()}> Back to Account </button> <br></br>
                     </div>
                 </Modal>
             </>)
@@ -463,9 +463,9 @@ function Account() {
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <td>Job Name</td>
-                                <td>Type</td>
-                                <td>Education</td>
+                                <td><b>Job Name</b></td>
+                                <td><b>Type</b></td>
+                                <td><b>Education Required</b></td>
 
                             </tr>
                         </thead>
@@ -476,7 +476,7 @@ function Account() {
                                         <td onClick={() => Job_detail(table[element])}>{table[element].Name}</td>
                                         <td>{table[element].Type}</td>
                                         <td>{table[element].Education}</td>
-                                        <td><button class="btn btn-warning  btn-sm" onClick={() => deletejobs(table[element])}>remove</button></td>
+                                        <td><button class="btn btn-danger  btn-sm" onClick={() => deletejobs(table[element])}>remove</button></td>
                                     </tr>
                                 )
                             })
