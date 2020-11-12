@@ -184,7 +184,7 @@ function Matchlist() {
                     justifyContent: 'center',
                 }}>
                 <table class="table table-hover">
-                    <thead >
+                    <thead style={{background: "#007bff", fontWeight: 'bold'}}>
                         <tr>
                             <td>Role</td>
                             <td>Company</td>
