@@ -322,12 +322,12 @@ function Matchlist() {
                 <button class="btn btn-secondary float-right" onClick={() => h.push("/account")}> My Account</button>
             </div>
         </div>
-        <hr
-        style={{
-
-            height: 2
-        }}
-        />
+           <hr 
+            style={{
+                backgroundColor: '#F5F9FC',
+                height: 3
+            }}
+            />
         </nav>
             {rendertable()}
 

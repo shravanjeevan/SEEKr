@@ -983,11 +983,11 @@ function Account() {
                 <button class="btn btn-primary float-right" onClick={() => h.push('/matched-jobs')}> View my Matches</button> <br></br>
             </div>
         </div>
-        <hr
-        style={{
-
-            height: 2
-        }}
+           <hr 
+            style={{
+                backgroundColor: '#F5F9FC',
+                height: 3
+            }}
         />
       </nav>
         <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>

@@ -20,16 +20,13 @@ class Header extends Component {
                 </Link>
               </h1>
             </div>
-        <hr
-        style={{
-
-            height: 2
-        }}
+            <hr 
+            style={{
+                backgroundColor: '#F5F9FC',
+                height: 3
+            }}
         />
-
-      </nav>
-      
-     
+      </nav>  
     )
   }
 }

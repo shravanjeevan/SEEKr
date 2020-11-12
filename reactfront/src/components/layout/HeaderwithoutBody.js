@@ -22,7 +22,7 @@ class Header extends Component {
         </div>
         <hr
         style={{
-
+           background-color: '#6C63F1',
             height: 2
         }}
         />
