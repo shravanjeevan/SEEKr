@@ -24,6 +24,7 @@ job_types = ['casual', 'full time', 'part time', 'internship', 'apprenticeship']
 
 ### Fill models ###
 # Clear current models
+print("... clearing models ...")
 JobListingGroups.objects.all().delete()
 JobSeekerGroups.objects.all().delete()
 JobSeekerSkills.objects.all().delete()
@@ -38,7 +39,10 @@ User.objects.all().delete()
 print('... loading skills ..')
 # Load Skills
 for s in skills:
-    Skills(Name=s).save()
+    if Skills.objects.filter(Name=s).exists():
+        continue
+    else:
+        Skills(Name=s).save()
 
 print ('... loading companies ...')
 # Load companies (link to users)
@@ -50,13 +54,13 @@ for index, row in companies.iterrows():
 print ('... loading jobs ...')
 # Load jobs (link to companies, skills)
 for index, row in jobs.iterrows():
-    c_key = Company.objects.get(Name=row['company'])
-    if c_key is not None:
+    if Company.objects.filter(Name=row['company']).exists():
+        c_key = Company.objects.get(Name=row['company'])
         j = JobListing.objects.create(Name=row['name'], SalaryUp=row['salary_top'], SalaryDown=row['salary_bottom'], Company=c_key, Type=row['type'], Education=row['education'], Latitude=row['latitude'], Longitude=row['longitude'], Description=row['description'])
         j.save()
         for skill in ast.literal_eval(row['skills']):
-            skill_key = Skills.objects.get(Name=skill)
-            if skill_key is not None:
+            if Skills.objects.filter(Name=skill).exists():
+                skill_key = Skills.objects.get(Name=skill)
                 JobListingSkills(JobListingId=j, SkillsId=skill_key).save()
 
 print('... loading candidates/JobSeekers ...')
@@ -68,8 +72,8 @@ for index, row in candidates.iterrows():
     u.save()
     JobSeekerDetails(UserId=u, Education=row['education'], Latitude=row['latitude'], Longitude=row['longitude'], Description=row['description']).save()
     for skill in ast.literal_eval(row['skills']):
-        skill_key = Skills.objects.get(Name=skill)
-        if skill_key is not None:
+        if Skills.objects.filter(Name=skill).exists():
+            skill_key = Skills.objects.get(Name=skill)
             JobSeekerSkills(UserId=u, SkillsId=skill_key).save()
 
 print('done')
