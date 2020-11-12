@@ -266,11 +266,11 @@ function Account() {
                     <ModalBody>
                         <div class="form-group">
                             <label class="col-form-label" for="inputDefault">Job Name</label>
-                            <input onChange={(event) => setjobname(event.target.value)} type="text" class="form-control" placeholder="Job Name"  ></input>
+                            <input onChange={(event) => setjobname(event.target.value)} type="text" class="form-control"></input>
                         </div>
                         <div class="form-group">
                             <label class="col-form-label" for="exampleTextarea">Job Description</label>
-                            <textarea onChange={(event) => setjobdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3" spellcheck="false"></textarea>
+                            <textarea onChange={(event) => setjobdescription(event.target.value)} class="form-control" placeholder="Describe what the job entails so you can find better candidates"  id="exampleTextarea" rows="3" spellcheck="false"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -318,7 +318,7 @@ function Account() {
                 </div>
                 <br></br>
                 <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
-                    <div class="card-header">Information to Generate Job Match
+                    <div class="card-header">Information we need to Generate Job Matches
                     </div>
                         <div class="card-body">
                         <div class="form-group row">
@@ -334,13 +334,13 @@ function Account() {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Location - Longtitude: </label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Location (Longtitude): </label>
                             <div class="col-sm-10">
                                 <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.seekr.Longitude}></input>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Location - Latitude: </label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Location (Latitude): </label>
                             <div class="col-sm-10">
                                 <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.seekr.Latitude}></input>
                             </div>
@@ -1011,7 +1011,6 @@ function Account() {
                     <Popup trigger={<button class="btn btn-danger"> Delete Account</button>} position="bottom">
                         <div>
                         <p>Are you sure you would like to delete your account?</p>
-                        <button class="btn btn-primary float-right" onClick={() => h.push("/account")}>Cancel </button>
                         <button class="btn btn-danger float-right" onClick={erase}>Confirm </button>
                         </div>
                         </Popup>    &nbsp;  &nbsp;
