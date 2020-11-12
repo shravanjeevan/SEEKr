@@ -38,7 +38,10 @@ User.objects.all().delete()
 print('... loading skills ..')
 # Load Skills
 for s in skills:
-    Skills(Name=s).save()
+    if Skills.objects.filter(Name=s).exists():
+        continue
+    else:
+        Skills(Name=s).save()
 
 print ('... loading companies ...')
 # Load companies (link to users)
