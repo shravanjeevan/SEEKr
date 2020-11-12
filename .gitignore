@@ -132,3 +132,7 @@ dmypy.json
 .idea/
 
 reactfront/node_modules/
+
+# MacOS filesystem
+reactfront/.DS_Store
+reactfront/src/.DS_Store
