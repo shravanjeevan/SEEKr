@@ -200,7 +200,7 @@ function Matchlist() {
                                 <tr key={element}>
                                     {(table[element].job.Status != -1) &&
                                         <>
-                                            <td onClick={() => renderdetail(table[element])}>{table[element].detial.Name}</td>
+                                            <td  onClick={() => renderdetail(table[element])} style={{background: "#007bff", textDecorationLine: 'underline'}}>{table[element].detial.Name}</td>
 
                                             <td onClick={() => renderdetail(table[element])}>{table[element].company.Name}</td>
                                             <td onClick={() => renderdetail(table[element])}>{table[element].detial.SalaryUp}</td>
