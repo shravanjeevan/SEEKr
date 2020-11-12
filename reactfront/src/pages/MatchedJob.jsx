@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import SelectSearch from 'react-select-search';
 import "./lumen.css"
 import { ClipLoader } from 'react-spinners';
+import { Progress } from 'reactstrap';
 
 function Matchlist() {
     const h = useHistory()
@@ -210,7 +211,9 @@ function Matchlist() {
                                     }
                                     {(table[element].job.Status != -1) &&
 
-                                        <td onClick={() => renderfeedback(table[element])}>{table[element].job.PercentageMatch * 100 + " %"}</td>
+                                        <td onClick={() => renderfeedback(table[element])}>
+                                        <Progress color="success" value={table[element].job.PercentageMatch * 100}>{table[element].job.PercentageMatch * 100}</Progress>
+                                        </td>
                                     }
                                     {(table[element].job.Status == 0) &&
                                         <td>Not Apply</td>
@@ -237,6 +240,7 @@ function Matchlist() {
                     <button onClick={() => setvisibleterm(visibleterm - 10)} type="button" > Previous Page </button>
 
                     <button onClick={() => setvisibleterm(visibleterm + 10)} type="button" > Next Page </button>
+                     
                 <Modal isOpen={detailtoggle}>
                     <ModalHeader>
                         Job Detail
