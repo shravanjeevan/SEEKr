@@ -312,7 +312,7 @@ function Account() {
                     </div>
                 </Modal>
                 <Modal isOpen={viewjobstoggle}>
-                    <ModalHeader>Job list</ModalHeader>
+                    <ModalHeader><b>Posted Jobs</b></ModalHeader>
                     {showjobs()}
                     <div class="modal-footer">
 
