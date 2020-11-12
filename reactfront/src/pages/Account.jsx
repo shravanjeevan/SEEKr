@@ -279,7 +279,7 @@ function Account() {
                         </div>
                         <div class="form-group">
                             <label class="col-form-label" for="inputDefault">Education Experience</label>
-                            <input onChange={(event) => setedu(event.target.value)} type="text" class="form-control" placeholder="Minimum amount required"  ></input>
+                            <input onChange={(event) => setedu(event.target.value)} type="text" class="form-control" placeholder="What is the minimum education experience required?"  ></input>
                         </div>
 
                         <div class="form-group">
@@ -299,7 +299,7 @@ function Account() {
                     </ModalBody>
                     <div class="modal-footer">
 
-                        <button class="btn btn-info" onClick={() => setnewjobtoggle(!newjobtoggle)}> Back to Account </button>
+                        <button class="btn btn-info" onClick={() => setnewjobtoggle(!newjobtoggle)}> Back </button>
                     </div>
                 </Modal>
                 <Modal isOpen={viewjobstoggle}>
@@ -313,8 +313,10 @@ function Account() {
             </>)
         } else if (accountstatus == "Job Seeker") {
             return (<>
+                <button class="btn btn-primary" onClick={() => h.push('/matched-jobs')}> View all my Job Matches</button> 
+                <br></br>
                 <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
-                    <div class="card-header">Job Related Information
+                    <div class="card-header">Seeking Job Information
                     </div>
                     <div class="card-body">
                              <div class="form-inline my-2 my-lg-0">
