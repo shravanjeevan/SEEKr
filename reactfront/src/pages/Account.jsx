@@ -74,12 +74,12 @@ function Account() {
             setemail(data.account.email)
             setuid(data.account.id)
             if (Object.keys(data.company).length !== 0) {
-                setaccountstatus("My Company")
+                setaccountstatus("Company")
                 setaccountsetup(false)
 
             }
             else if (Object.keys(data.seekr).length !== 0) {
-                setaccountstatus("My Details")
+                setaccountstatus("Job Seeker")
                 setaccountsetup(false)
 
             } else {
@@ -222,16 +222,22 @@ function Account() {
 
     //Give different functions dependent on account type
     function fancyfuntion() {
-        if (accountstatus == "My Company") {
+        if (accountstatus == "Company") {
             // if account is company return this
             // show company infomation from data that recieved
             return (<>
 
                 <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
-                    <div class="card-header">{accountstatus}</div>
+                    <div class="card-header">My Company Information</div>
                     <div class="card-body">
-                        <span class="badge badge-success">Company</span>
-
+                            <div>
+                            <button class="btn btn-success" onClick={() => setnewjobtoggle(!newjobtoggle)} >Post New Job</button> <br></br>
+                            </div>
+                            <br></br>
+                            <div>
+                            <button class="btn btn-success" onClick={jobmanagement}>View All Posted Jobs</button> 
+                            </div>
+                            <br></br>
                         <div class="form-group row">
                             <label for="staticEmail" class="col-sm-2 col-form-label">Company Name: </label>
                             <div class="col-sm-10">
@@ -251,13 +257,6 @@ function Account() {
                             <div class="col-sm-10">
                                 <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.company.Industry}></input>
                             </div>
-                        </div>
-
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-
-                            <button class="btn btn-success" onClick={() => setnewjobtoggle(!newjobtoggle)} > post new jobs</button> <br></br>
-
-                            <button class="btn btn-success" onClick={jobmanagement}> jobs</button> <br></br>
                         </div>
                     </div>
                     {/* toggle post new job medal out  */}
@@ -323,15 +322,20 @@ function Account() {
                     </div>
                 </Modal>
             </>)
-        } else if (accountstatus == "My Details") {
+        } else if (accountstatus == "Job Seeker") {
             return (<>
                 <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
-                    <div class="card-header">{accountstatus}
-
+                    <div class="card-header">Job Related Information
                     </div>
-
                     <div class="card-body">
-                        <span class="badge badge-success">Seekr</span>
+                             <div class="form-inline my-2 my-lg-0">
+                        <div class="btn-group btn-group-toggle " data-toggle="buttons">
+                         <button class="btn btn-primary float-right" onClick={() => h.push('/matched-jobs')}> View all my Matches</button> <br></br>
+                            <button class="btn btn-success" onClick={skill_mangement}>My Skills</button>
+                            </div>
+                           <br></br>
+                        </div>
+                    </div>
                         <div class="form-group row">
                             <label for="staticEmail" class="col-sm-2 col-form-label">Education:  </label>
                             <div class="col-sm-10">
@@ -357,21 +361,6 @@ function Account() {
                             </div>
                         </div>
 
-                    </div>
-                    <div class="form-inline my-2 my-lg-0">
-                        <div class="btn-group btn-group-toggle " data-toggle="buttons">
-                            <button class="btn btn-success" onClick={skill_mangement}>My Skills</button>
-                            </div>
-                            <div class="form-inline my-2 my-lg-0">
-                                <Popup trigger={<button class="btn btn-danger"> Delete Account</button>} position="bottom">
-                                    <div>
-                                    <p>This will delete everything in or link to this account.</p>
-                                    <button class="btn btn-danger" onClick={erase}>Delete everything I have </button>
-                                    </div>
-                                </Popup>    &nbsp;  &nbsp;
-                            </div>
-
-                        </div>
                     </div>
 
                 <Modal isOpen={skills}
@@ -981,7 +970,6 @@ function Account() {
             <div class="row">
             <div class="col-lg-12">
                 <button class="btn btn-secondary float-right" onClick={logout}> Log out </button>
-                <button class="btn btn-primary float-right" onClick={() => h.push('/matched-jobs')}> View my Matches</button> <br></br>
             </div>
         </div>
            <hr 
@@ -991,11 +979,10 @@ function Account() {
             }}
         />
       </nav>
+        {fancyfuntion()}
         <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
             <div class="card-header"> My Profile</div>
             <div class="card-body">
-                <span class="badge badge-primary">Detail</span>
-
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Username:</label>
                     <div class="col-sm-10">
@@ -1031,9 +1018,15 @@ function Account() {
                     </div>
                 </div>
             </div>
+                <div class="form-inline my-2 my-lg-0">
+                    <Popup trigger={<button class="btn btn-danger"> Delete Account</button>} position="bottom">
+                        <div>
+                        <p>This will delete everything in or link to this account.</p>
+                        <button class="btn btn-danger float-right" onClick={erase}>Delete everything I have </button>
+                        </div>
+                        </Popup>    &nbsp;  &nbsp;
+                 </div>
         </div>
-
-        {fancyfuntion()}
 
 
         <Modal isOpen={accountsetup} >
