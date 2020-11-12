@@ -19,7 +19,7 @@ const IndexPage = () => {
                 <div className="entry-body">
                   	<br></br>
 	                  <p>
-	                    SEEKr is for you if you are looking for the perfect job or if you are a company looking for the right candidate.
+	                    SEEKr is for you if you are looking for the perfect job or if you are a company looking for the perfect candidate.
 	                </p>
 	                	<br></br>
                 	<form>

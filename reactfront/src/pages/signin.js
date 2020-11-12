@@ -78,7 +78,9 @@ export default function SignIn() {
         cookies.remove("t", token, { path: "/" })
         cookies.save("t", data.token, { path: "/" })
         alert("Successful log in")
-        h.push("/account")
+        //changing page
+        //h.push("/account")
+        h.push('matched-jobs')
       } else {
         alert(data.non_field_errors[0])
       }

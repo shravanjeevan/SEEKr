@@ -11,6 +11,8 @@ import MaterialTable from "material-table";
 import SelectSearch from 'react-select-search';
 import Select from 'react-select'
 import './skillcss.css'
+import { Link } from 'react-router-dom';
+import Logo from '../components/layout/Logo';
 
 import { ListGroup } from 'react-bootstrap';
 
@@ -72,12 +74,12 @@ function Account() {
             setemail(data.account.email)
             setuid(data.account.id)
             if (Object.keys(data.company).length !== 0) {
-                setaccountstatus("Company account")
+                setaccountstatus("Company")
                 setaccountsetup(false)
 
             }
             else if (Object.keys(data.seekr).length !== 0) {
-                setaccountstatus("Seeker account")
+                setaccountstatus("Job Seeker")
                 setaccountsetup(false)
 
             } else {
@@ -168,11 +170,10 @@ function Account() {
             console.log(table)
             return (
                 <div>
-
+                <br></br>
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <td>my skills</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -180,7 +181,7 @@ function Account() {
                                 return (
                                     <tr key={element}>
                                         <td>{table[element].Name}</td>
-                                        <td><button class="btn btn-warning  btn-sm" onClick={() => deleteskill(table[element])}>remove</button></td>
+                                        <td><button class="btn btn-danger  btn-sm" onClick={() => deleteskill(table[element])}>remove</button></td>
                                     </tr>
                                 )
                             })
@@ -221,18 +222,22 @@ function Account() {
 
     //Give different functions dependent on account type
     function fancyfuntion() {
-        if (accountstatus == "Company account") {
+        if (accountstatus == "Company") {
             // if account is company return this
             // show company infomation from data that recieved
             return (<>
+                            <div>
+                            <button class="btn btn-success" onClick={jobmanagement}>View All Posted Jobs</button> 
+                            <button class="btn btn-success float-right" onClick={() => setnewjobtoggle(!newjobtoggle)} >Post New Job</button> 
+                            </div>
+                            <br></br>
 
                 <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
-                    <div class="card-header">{accountstatus}</div>
+                    <div class="card-header">My Company Information</div>
                     <div class="card-body">
-                        <span class="badge badge-success">Company</span>
 
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Company NAME: </label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Company Name: </label>
                             <div class="col-sm-10">
                                 <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.company.Name}></input>
                             </div>
@@ -251,58 +256,42 @@ function Account() {
                                 <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.company.Industry}></input>
                             </div>
                         </div>
-
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-
-                            <button class="btn btn-success" onClick={() => setnewjobtoggle(!newjobtoggle)} > post new jobs</button> <br></br>
-
-                            <button class="btn btn-success" onClick={jobmanagement}> jobs</button> <br></br>
-                        </div>
                     </div>
                     {/* toggle post new job medal out  */}
 
                 </div>
                 <Modal isOpen={newjobtoggle}
                 >
-                    <ModalHeader>Post a New Job</ModalHeader>
+                    <ModalHeader><b>Post a New Job</b></ModalHeader>
                     <ModalBody>
                         <div class="form-group">
                             <label class="col-form-label" for="inputDefault">Job Name</label>
                             <input onChange={(event) => setjobname(event.target.value)} type="text" class="form-control" placeholder="Job Name"  ></input>
                         </div>
                         <div class="form-group">
-                            <label for="exampleTextarea">Job Description</label>
+                            <label class="col-form-label" for="exampleTextarea">Job Description</label>
                             <textarea onChange={(event) => setjobdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3" spellcheck="false"></textarea>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Type</label>
-                            <input onChange={(event) => setjobtype(event.target.value)} type="text" class="form-control" placeholder="Type e.g. Full Time, Part Time, etc."  ></input>
+                            <label class="col-form-label" for="inputDefault">Employment Type</label>
+                            <input onChange={(event) => setjobtype(event.target.value)} type="text" class="form-control" placeholder="Full Time, Part Time, etc."  ></input>
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Education</label>
-                            <input onChange={(event) => setedu(event.target.value)} type="text" class="form-control" placeholder="e.g.  Primary, Secondary"  ></input>
+                            <label class="col-form-label" for="inputDefault">Education Experience</label>
+                            <input onChange={(event) => setedu(event.target.value)} type="text" class="form-control" placeholder="What is the minimum education experience required?"  ></input>
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label">Salary</label>
+                            <label class="col-form-label">Salary</label>
                             <div class="form-group">
                                 <div class="input-group mb-3">
-
                                     <input placeholder="Salary" onChange={(event) => setsalary(event.target.value)} type="text" class="form-control" aria-label="Amount (to the nearest dollar)"></input>
                                     <div class="input-group-append">
-                                        <span class="input-group-text">$ per week</span>
+                                        <span class="input-group-text">$ per month</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Longitude</label>
-                            <input onChange={(event) => setlongtitude(event.target.value)} type="text" class="form-control" placeholder="Leave 1 if you do not know"  ></input>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Latitude</label>
-                            <input onChange={(event) => setlatitude(event.target.value)} type="text" class="form-control" placeholder="Leave 1 if you do not know" id="Latitude"></input>
                         </div>
 
                         <button class="btn btn-primary" onClick={addjob}> Add Job </button>
@@ -314,75 +303,77 @@ function Account() {
                     </div>
                 </Modal>
                 <Modal isOpen={viewjobstoggle}>
-                    <ModalHeader>Job list</ModalHeader>
+                    <ModalHeader><b>Jobs Posted</b></ModalHeader>
                     {showjobs()}
                     <div class="modal-footer">
 
-                        <button class="btn btn-info" onClick={() => setviewjobstoggle()}> Back </button> <br></br>
+                        <button class="btn btn-info" onClick={() => setviewjobstoggle()}> Back to Account </button> <br></br>
                     </div>
                 </Modal>
             </>)
-        } else if (accountstatus == "Seeker account") {
+        } else if (accountstatus == "Job Seeker") {
             return (<>
+                <div>
+                <button class="btn btn-primary" onClick={() => h.push('/matched-jobs')}> View all my Job Matches</button> 
+                </div>
+                <br></br>
                 <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
-                    <div class="card-header">{accountstatus}
-
+                    <div class="card-header">Seeking Job Information
                     </div>
-
                     <div class="card-body">
-                        <span class="badge badge-success">Seekr</span>
+                             <div class="form-inline my-2 my-lg-0">
+                        <div class="btn-group btn-group-toggle " data-toggle="buttons">
+                            <button class="btn btn-success" onClick={skill_mangement}>My Skills</button>
+                            </div>
+                           <br></br>
+                        </div>
+                    </div>
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Education:  </label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Education Experience:  </label>
                             <div class="col-sm-10">
                                 <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.seekr.Education}></input>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Description:  </label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">My Goals  </label>
                             <div class="col-sm-10">
                                 <textarea type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.seekr.Description}></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Longtitude: </label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Location - Longtitude: </label>
                             <div class="col-sm-10">
                                 <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.seekr.Longitude}></input>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Latitude: </label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Location - Latitude: </label>
                             <div class="col-sm-10">
                                 <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={data.seekr.Latitude}></input>
                             </div>
                         </div>
 
                     </div>
-                    <div class="form-inline my-2 my-lg-0">
-                        <div class="btn-group btn-group-toggle " data-toggle="buttons">
-
-                            <button class="btn btn-primary" onClick={() => h.push('/matched-jobs')}> give me jobs</button> <br></br>
-                            <button class="btn btn-success" onClick={skill_mangement}>My skills</button>
-                        </div>
-                    </div>
-                </div>
 
                 <Modal isOpen={skills}
                 >
-                    <ModalHeader>My skill list</ModalHeader>
+                    <ModalHeader><b>My Skills</b></ModalHeader>
 
                     <ModalBody>
-                        {showskills()}
+                        
                         <SelectSearch onChange={setnewskills}
                             options={skilllist} search
-                            placeholder="Add a skill"
-                        />                        
-                        <button  class="btn btn-primary btn-sm"  onClick={addskill}>add </button>
+                            placeholder="Add a skill from this list"
+                        /> 
+                        <br></br>                    
+                        <button  class="btn btn-primary btn-sm"  onClick={addskill}>Add</button>
+                        <br></br>
+                        {showskills()}
 
                     </ModalBody>
 
                     <div class="modal-footer">
-
-                        <button class="btn btn-info" onClick={() => setskills(!skills)}> Back </button>
+                        <button class="btn btn-info" onClick={() => setskills(!skills)}> Back To Account Page </button>
                     </div>
                 </Modal>
 
@@ -466,9 +457,9 @@ function Account() {
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <td>Job Name</td>
-                                <td>Type</td>
-                                <td>Education</td>
+                                <td><b>Job Name</b></td>
+                                <td><b>Type</b></td>
+                                <td><b>Education Required</b></td>
 
                             </tr>
                         </thead>
@@ -479,7 +470,7 @@ function Account() {
                                         <td onClick={() => Job_detail(table[element])}>{table[element].Name}</td>
                                         <td>{table[element].Type}</td>
                                         <td>{table[element].Education}</td>
-                                        <td><button class="btn btn-warning  btn-sm" onClick={() => deletejobs(table[element])}>remove</button></td>
+                                        <td><button class="btn btn-danger  btn-sm" onClick={() => deletejobs(table[element])}>remove</button></td>
                                     </tr>
                                 )
                             })
@@ -697,8 +688,8 @@ function Account() {
             "SalaryDown": salary,
             "Type": jobtype,
             "Education": edu,
-            "Latitude": latitude,
-            "Longitude": longtitude
+            "Latitude": null,
+            "Longitude": null
         }
         fetch('http://127.0.0.1:8000/job_list/add/', {
             method: "POST",
@@ -789,7 +780,7 @@ function Account() {
                 </div>
                 <div class="form-group">
                     <label for="exampleTextarea">Company Description</label>
-                    <textarea placeholder="Describe your company" onChange={event => setdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3"></textarea>
+                    <textarea placeholder="Tell us more about what makes your company special so we can find candidates best suited" onChange={event => setdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="col-form-label" for="inputDefault">Industry</label>
@@ -805,22 +796,22 @@ function Account() {
                 <span class="badge badge-primary">Seekr Detail</span>
                 <div class="form-group">
                     <label class="col-form-label" for="inputDefault">Latitude</label>
-                    <input onChange={event => setlatitude(event.target.value)} type="text" class="form-control" placeholder="Leave 1 if your do not know"  ></input>
+                    <input onChange={event => setlatitude(event.target.value)} type="text" class="form-control" placeholder="Optional"  ></input>
                 </div>
 
                 <div class="form-group">
                     <label class="col-form-label" for="inputDefault">Longitude</label>
-                    <input onChange={event => setlongtitude(event.target.value)} type="text" class="form-control" placeholder="Leave 1 if your do not know"  ></input>
+                    <input onChange={event => setlongtitude(event.target.value)} type="text" class="form-control" placeholder="Optional"  ></input>
                 </div>
 
                 <div class="form-group">
                     <label class="col-form-label" for="inputDefault">Education</label>
-                    <input onChange={event => setedu(event.target.value)} type="text" class="form-control" placeholder="e.g.  Primary, Secondary, etc."  ></input>
+                    <input onChange={event => setedu(event.target.value)} type="text" class="form-control" placeholder="What have you studied?"  ></input>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleTextarea">Description</label>
-                    <textarea placeholder="CV style description. this will influence job recommendation results" onChange={event => setdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3"></textarea>
+                    <textarea placeholder="Write more about yourself so we can find a match for you" onChange={event => setdescription(event.target.value)} class="form-control" id="exampleTextarea" rows="3"></textarea>
                 </div>
 
                 <div class="modal-footer">
@@ -829,7 +820,7 @@ function Account() {
                 </div>
             </div>)
         } else {
-            return (<div>Select an account type to do next</div>)
+            return (<div></div>)
         }
     }
 
@@ -957,87 +948,77 @@ function Account() {
 
 
     return (<>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" href="/">SEEKR</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Account
-          <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    {(accountstatus == "Seeker account") &&
-                        <>
-                            <li class="nav-item" >
-                                <a class="nav-link" href="/matched-jobs">Job Dashboard </a>
-                            </li>
-                        </>
-
-                    }
-
-                </ul>
-                <div class="form-inline my-2 my-lg-0">
-                    <Popup trigger={<button class="btn btn-danger"> Erase All</button>} position="bottom">
-                        <div>
-                            <p>This will delete everything in or link to this account.</p>
-                            <button class="btn btn-danger" onClick={erase}>Delete everything I have </button>
-                        </div>
-                    </Popup> 	&nbsp;	&nbsp;
-                    <button class="btn btn-warning" onClick={logout}> Log out </button>
-
-
-
-
-                </div>
+       <nav>
+          <br></br>
+            <div className="brand header-brand">
+              <h1 className="m-0">
+                <Link to="/">
+                  <Logo /> 
+                  SEEKr
+                </Link>
+              </h1>
             </div>
-        </nav>
+            <div class="row">
+            <div class="col-lg-12">
+                <button class="btn btn-secondary float-right" onClick={logout}> Log out </button>
+            </div>
+        </div>
+           <hr 
+            style={{
+                backgroundColor: '#F5F9FC',
+                height: 3
+            }}
+        />
+      </nav>
+        {fancyfuntion()}
         <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
-            <div class="card-header"> Accounts page</div>
+            <div class="card-header"> My Profile</div>
             <div class="card-body">
-                <span class="badge badge-primary">Detail</span>
-
                 <div class="form-group row">
-                    <label for="staticEmail" class="col-sm-2 col-form-label">USER NAME:</label>
+                    <label for="staticEmail" class="col-sm-2 col-form-label">Username:</label>
                     <div class="col-sm-10">
                         <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={username}></input>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="staticEmail" class="col-sm-2 col-form-label">FIRST NAME: </label>
+                    <label for="staticEmail" class="col-sm-2 col-form-label">First Name: </label>
                     <div class="col-sm-10">
                         <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={firstname}></input>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="staticEmail" class="col-sm-2 col-form-label">LAST NAME: </label>
+                    <label for="staticEmail" class="col-sm-2 col-form-label">Last Name: </label>
                     <div class="col-sm-10">
                         <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={lastname}></input>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="staticEmail" class="col-sm-2 col-form-label">EMAIL: </label>
+                    <label for="staticEmail" class="col-sm-2 col-form-label">Email Address: </label>
                     <div class="col-sm-10">
                         <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={email}></input>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="staticEmail" class="col-sm-2 col-form-label">Account status: </label>
+                    <label for="staticEmail" class="col-sm-2 col-form-label">Type of Account: </label>
                     <div class="col-sm-10">
                         <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value={accountstatus}></input>
                     </div>
                 </div>
             </div>
+                <div class="form-inline my-2 my-lg-0">
+                    <Popup trigger={<button class="btn btn-danger"> Delete Account</button>} position="bottom">
+                        <div>
+                        <p>This will delete everything in or link to this account.</p>
+                        <button class="btn btn-danger float-right" onClick={erase}>Delete everything I have </button>
+                        </div>
+                        </Popup>    &nbsp;  &nbsp;
+                 </div>
         </div>
-
-        {fancyfuntion()}
 
 
         <Modal isOpen={accountsetup} >
@@ -1046,24 +1027,32 @@ function Account() {
                     &times;
             </a>
             </div>
-            <button onClick={submit} class="btn btn-secondary" > Set up later</button>
-            <ModalHeader>Your account is not set up yet!</ModalHeader>
+            
+            <ModalHeader>Set Up Your Account Today</ModalHeader>
             <ModalBody>
-                <div className="header"><strong>Set your account now</strong></div>
+                <div className="header"><strong>Proceed by clicking on what type of user you are</strong></div>
+                <br></br>
                 <div className="modal">
                     <a className="close" onClick={closeModal}>
                         &times;
             </a>
                 </div>
+                 <div>
+                <button onClick={submit} class="btn-sm" > Set up later</button>
+                </div>
+                <br></br>
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-primary">
-                        <input type='radio' name="account type" onChange={() => settype("company")} /> Comapny
+                        <input type='radio' name="account type" onChange={() => settype("company")} /> Company
                 </label>
                     <label class="btn btn-primary">
-                        <input type='radio' name="account type" onChange={() => settype("seekr")} /> Job Seekr
+                        <input type='radio' name="account type" onChange={() => settype("seekr")} /> Job Seeker
                 </label>
                 </div>
-                {accounttype()}
+                <br></br>
+                <div>
+                </div>
+                               {accounttype()}
 
 
             </ModalBody>

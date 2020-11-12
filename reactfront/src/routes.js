@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import SignUpJobPage from "./pages/signup-job";
-import SignUpCompanyPage from "./pages/signup-company";
 import SignInPage from "./pages/signin";
-import MatchingPage from "./pages/matched-jobs";
 import PostJobPage from "./pages/post-jobs";
 import AboutPage from "./pages/about";
 import FaqsPage from "./pages/faqs";
@@ -20,7 +18,6 @@ class App extends Component {
       <Router basename={process.env.PUBLIC_URL}>
         <Switch>
           <Route exact path="/signup-job" component={SignUpJobPage} />
-          <Route exact path="/signup-company" component={SignUpCompanyPage} />
           <Route exact path="/signin" component={SignInPage} />
           <Route exact path="/account" component={Account} />
           <Route exact path="/matched-jobs" component={Matchlist} />

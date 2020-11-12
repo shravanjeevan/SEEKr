@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
+import Dropdown from 'react-dropdown';
+import DropdownButton from 'react-dropdown';
 
 class Header extends Component {
   componentDidMount() {
@@ -8,8 +10,8 @@ class Header extends Component {
 
   render() {
     return (
-      <header className="site-header">
-        <div className="container">
+      <nav>
+          <br></br>
             <div className="brand header-brand">
               <h1 className="m-0">
                 <Link to="/">
@@ -18,8 +20,13 @@ class Header extends Component {
                 </Link>
               </h1>
             </div>
-        </div>
-      </header>
+            <hr 
+            style={{
+                backgroundColor: '#F5F9FC',
+                height: 3
+            }}
+        />
+      </nav>  
     )
   }
 }

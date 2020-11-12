@@ -1,4 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
+import Footer from '../components/layout/Footer-withoutLinks';
 import { render } from 'react-dom';
 import cookies from 'react-cookies'
 import { useHistory } from 'react-router-dom'
@@ -10,6 +11,9 @@ import TextField from '@material-ui/core/TextField';
 import SelectSearch from 'react-select-search';
 import "./lumen.css"
 import { ClipLoader } from 'react-spinners';
+import { Progress } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import Logo from '../components/layout/Logo';
 
 function Matchlist() {
     const h = useHistory()
@@ -196,18 +200,20 @@ function Matchlist() {
             var table = joblist.slice(visibleterm - 10, visibleterm)
             //console.log(table)
             return (<>
+                 <div style={{
+                    backgroundColor: '#c4daf2',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}>
                 <table class="table table-hover">
-                    <thead >
+                    <thead style={{background: "#b3c7eb", fontWeight: 'bold', textDecorationLine: 'underline'}}>
                         <tr>
-                            <td>Job Name</td>
+                            <td>Role</td>
                             <td>Company</td>
-
-                            <td>Salary</td>
-
-                            <td>JobListingId</td>
-                            <td>PercentageMatch</td>
-                            <td>Status</td>
-                            <td>Action</td>
+                            <td>Salary (PM)</td>
+                            <td>How well suited are you for this job?</td>
+                            <td>Have you applied yet?</td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -216,20 +222,20 @@ function Matchlist() {
                                 <tr key={element}>
                                     {(table[element].job.Status != -1) &&
                                         <>
-                                            <td onClick={() => renderdetail(table[element])}>{table[element].detial.Name}</td>
+                                            <td  onClick={() => renderdetail(table[element])} style={{textDecorationLine: 'underline'}}>{table[element].detial.Name}</td>
 
                                             <td onClick={() => renderdetail(table[element])}>{table[element].company.Name}</td>
                                             <td onClick={() => renderdetail(table[element])}>{table[element].detial.SalaryUp}</td>
-
-                                            <td onClick={() => renderdetail(table[element])}> {table[element].job.JobListingId}</td>
                                         </>
                                     }
                                     {(table[element].job.Status != -1) &&
 
-                                        <td onClick={() => renderfeedback(table[element])}>{table[element].job.PercentageMatch * 100 + " %"}</td>
+                                        <td onClick={() => renderfeedback(table[element])}>
+                                        <Progress color="success" value={table[element].job.PercentageMatch * 100}>{table[element].job.PercentageMatch * 100 + " %"}</Progress>
+                                        </td>
                                     }
                                     {(table[element].job.Status == 0) &&
-                                        <td>Not Apply</td>
+                                        <td>Haven't Applied</td>
                                     }
                                     {(table[element].job.Status == 1) &&
                                         <td>Applied</td>
@@ -248,54 +254,51 @@ function Matchlist() {
                         }
                     </tbody>
                 </table>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
-                    <button onClick={() => setvisibleterm(visibleterm - 10)} type="button" class="btn btn-primary btn-lg" > previous </button>
-                    <button onClick={() => setvisibleterm(visibleterm + 10)} type="button" class="btn btn-primary btn-lg" > next </button>
                 </div>
+                    <br></br>
+                    <button onClick={() => setvisibleterm(visibleterm - 10)} type="button" > Previous Page </button>
+
+                    <button onClick={() => setvisibleterm(visibleterm + 10)} type="button" > Next Page </button>
+                     
                 <Modal isOpen={detailtoggle}>
                     <ModalHeader>
-                        Job Detail
+                        <b>Job Details</b>
                     </ModalHeader>
                     <ModalBody>
                         {(detail) &&
                             <>
-                                <p>Company: {detail.company.Name}</p>
-                                <p>Company Description: {detail.company.Description}</p>
-                                <p>Industry: {detail.company.Industry}</p>
-                                <p>Job: {detail.detial.Name}</p>
-                                <p>Job Description: {detail.detial.Description}</p>
-                                <p>Job Type: {detail.detial.Type}</p>
-                                <p>Salary:  {detail.detial.SalaryUp}</p>
-                                <p>Education: {detail.detial.Education}</p>
-                                <p>Latitude: {detail.detial.Latitude}</p>
-                                <p>Longitude: {detail.detial.Longitude}</p>
-
-
-
+                                <p><b>Company:</b> {detail.company.Name}</p>
+                                <p><b>Role:</b> {detail.detial.Name}</p>
+                                <p><b>Job Description:</b> {detail.detial.Description}</p>
+                                <p><b>Employment Type: </b>{detail.detial.Type}</p>
+                                <p><b>Salary (PM): </b>{detail.detial.SalaryUp}</p>
+                                <p><b>Education Required: </b>{detail.detial.Education}</p>
                             </>
                         }
                     </ModalBody>
                     <div class="modal-footer">
 
-                    <button onClick={() => setdetailtoggle(!detailtoggle)} class="btn btn-info">back</button>
+                    <button onClick={() => setdetailtoggle(!detailtoggle)} class="btn btn-info">Back to Jobs</button>
                     </div>
                 </Modal>
 
                 <Modal isOpen={feedbacktoggle}>
                     <ModalHeader>
-                        Feedback
+                        <b>Feedback to improve your percentage match</b>
                     </ModalHeader>
+                    <ModalBody>
                     {(feedback) &&
                         <>
                             <p>{feedback.message.split(".")[0]}</p>
                             <p>{feedback.message.split(".")[1]}</p>
                             <p>{feedback.message.split(".")[2]}</p>
-                            <p>{feedback.message.split(".")[3]}<br />{feedback.message.split(".")[4]}</p>
+                            <b>{feedback.message.split(".")[3]}<br />{feedback.message.split(".")[4]}</b>
 
                         </>
                     }
+                    </ModalBody>
                     <div class="modal-footer">
-                    <button onClick={() => setfeedbacktoggle(!feedbacktoggle)} class="btn btn-info">back</button>
+                    <button onClick={() => setfeedbacktoggle(!feedbacktoggle)} class="btn btn-info">Back to Jobs</button>
                     </div>
                 </Modal>
                 <Modal isOpen={waittoggle}>
@@ -322,42 +325,29 @@ function Matchlist() {
 
     return (<>
 
-        <div>
-
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                <a class="navbar-brand" href="/">SEEKR</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarColor01">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item" >
-                            <a class="nav-link" href="/account">Account</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Job Dashboard
-          <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                    <div class="form-inline my-2 my-lg-0">
-
-                    <button class="btn btn-warning" onClick={logout}> Log out </button>
-
-
-
-
-                </div>
-                </div>
-            </nav>
-
+        <nav>
+          <br></br>
+            <div className="brand header-brand">
+              <h1 className="m-0">
+                <Link to="/">
+                  <Logo />
+                  SEEKr
+                </Link>
+              </h1>
+            </div>
+            <div class="row">
+            <div class="col-lg-12">
+                <button class="btn btn-secondary float-right" onClick={() => h.push("/account")}> My Account</button>
+            </div>
+        </div>
+           <hr 
+            style={{
+                backgroundColor: '#F5F9FC',
+                height: 3
+            }}
+            />
+        </nav>
             {rendertable()}
-        </div>
-        <div>
-            <button onClick={() => h.push("/account")} class="btn btn-info">Back</button>
-        </div>
 
     </>)
 }
