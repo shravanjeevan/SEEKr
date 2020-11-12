@@ -226,18 +226,16 @@ function Account() {
             // if account is company return this
             // show company infomation from data that recieved
             return (<>
+                            <div>
+                            <button class="btn btn-success" onClick={jobmanagement}>View All Posted Jobs</button> 
+                            <button class="btn btn-success float-right" onClick={() => setnewjobtoggle(!newjobtoggle)} >Post New Job</button> 
+                            </div>
+                            <br></br>
 
                 <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
                     <div class="card-header">My Company Information</div>
                     <div class="card-body">
-                            <div>
-                            <button class="btn btn-success" onClick={() => setnewjobtoggle(!newjobtoggle)} >Post New Job</button> <br></br>
-                            </div>
-                            <br></br>
-                            <div>
-                            <button class="btn btn-success" onClick={jobmanagement}>View All Posted Jobs</button> 
-                            </div>
-                            <br></br>
+
                         <div class="form-group row">
                             <label for="staticEmail" class="col-sm-2 col-form-label">Company Name: </label>
                             <div class="col-sm-10">
