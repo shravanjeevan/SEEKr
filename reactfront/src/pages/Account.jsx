@@ -278,7 +278,7 @@ function Account() {
                             <input onChange={(event) => setjobtype(event.target.value)} type="text" class="form-control" placeholder="Full Time, Part Time, etc."  ></input>
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Education Experience</label>
+                            <label class="col-form-label" for="inputDefault">Education Required</label>
                             <input onChange={(event) => setedu(event.target.value)} type="text" class="form-control" placeholder="What is the minimum education experience required?"  ></input>
                         </div>
 
@@ -299,7 +299,7 @@ function Account() {
                     </ModalBody>
                     <div class="modal-footer">
 
-                        <button class="btn btn-info" onClick={() => setnewjobtoggle(!newjobtoggle)}> Back </button>
+                        <button class="btn btn-info" onClick={() => setnewjobtoggle(!newjobtoggle)}> Back To Account </button>
                     </div>
                 </Modal>
                 <Modal isOpen={viewjobstoggle}>
@@ -318,7 +318,7 @@ function Account() {
                 </div>
                 <br></br>
                 <div class="card border-primary mb-3" style={{ maxWidth: "100rem" }, { padding: "20px" }}>
-                    <div class="card-header">Information we need to Generate Job Matches
+                    <div class="card-header">Information we use to Generate Job Matches
                     </div>
                         <div class="card-body">
                         <div class="form-group row">
