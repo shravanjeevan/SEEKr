@@ -26,6 +26,7 @@
     "react-cookie": "^4.0.3",
     "react-cookies": "^0.1.1",
     "react-dom": "^16.14.0",
+    "react-dropdown": "^1.9.0",
     "react-native-element": "^1.2.1",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-router": "^5.2.0",

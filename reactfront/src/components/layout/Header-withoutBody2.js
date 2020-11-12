@@ -20,18 +20,17 @@ class Header extends Component {
                 </Link>
               </h1>
             </div>
-             <div class="form-inline my-2 my-lg-0">
-                        <div>
-                            <button class="primary" >My Account </button>
-                        </div>
-                </div>
+            <div class="row">
+            <div class="col-lg-12">
+                <button class="btn btn-secondary float-right"> My Account</button>
+            </div>
+</div>
         <hr
         style={{
 
             height: 2
         }}
         />
-
       </nav>
       
      

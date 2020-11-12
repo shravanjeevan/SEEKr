@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import Header from '../components/layout/Header-withoutBody';
+import Header from '../components/layout/Header-withoutBody2';
 import Footer from '../components/layout/Footer-withoutLinks';
 import { render } from 'react-dom';
 import cookies from 'react-cookies'
@@ -186,10 +186,7 @@ function Matchlist() {
                         <tr>
                             <td>Job Name</td>
                             <td>Company</td>
-
                             <td>Salary</td>
-
-                            <td>JobListingId</td>
                             <td>PercentageMatch</td>
                             <td>Status</td>
                             <td>Action</td>
@@ -205,8 +202,6 @@ function Matchlist() {
 
                                             <td onClick={() => renderdetail(table[element])}>{table[element].company.Name}</td>
                                             <td onClick={() => renderdetail(table[element])}>{table[element].detial.SalaryUp}</td>
-
-                                            <td onClick={() => renderdetail(table[element])}> {table[element].job.JobListingId}</td>
                                         </>
                                     }
                                     {(table[element].job.Status != -1) &&
