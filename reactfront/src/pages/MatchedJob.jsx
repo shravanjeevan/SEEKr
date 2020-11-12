@@ -1,5 +1,4 @@
 import React, { Component, useState, useEffect } from 'react';
-import Header from '../components/layout/Header-withoutBody2';
 import Footer from '../components/layout/Footer-withoutLinks';
 import { render } from 'react-dom';
 import cookies from 'react-cookies'
@@ -184,7 +183,7 @@ function Matchlist() {
                     justifyContent: 'center',
                 }}>
                 <table class="table table-hover">
-                    <thead style={{background: "#007bff", fontWeight: 'bold', textDecorationLine: 'underline'}}>
+                    <thead style={{background: "#74a6ca", fontWeight: 'bold', textDecorationLine: 'underline'}}>
                         <tr>
                             <td>Role</td>
                             <td>Company</td>
@@ -200,7 +199,7 @@ function Matchlist() {
                                 <tr key={element}>
                                     {(table[element].job.Status != -1) &&
                                         <>
-                                            <td  onClick={() => renderdetail(table[element])} style={{background: "#007bff", textDecorationLine: 'underline'}}>{table[element].detial.Name}</td>
+                                            <td  onClick={() => renderdetail(table[element])} style={{textDecorationLine: 'underline'}}>{table[element].detial.Name}</td>
 
                                             <td onClick={() => renderdetail(table[element])}>{table[element].company.Name}</td>
                                             <td onClick={() => renderdetail(table[element])}>{table[element].detial.SalaryUp}</td>

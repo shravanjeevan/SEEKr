@@ -9,7 +9,7 @@ const Footer = () => {
     <footer className="site-footer text-light">
       <div className="container">
         <div className="site-footer-inner">
-          <div className="footer-copyright">&copy; 2020 SEEKr, all rights reserved</div>
+          <div className="footer-copyright" style={{color: '#6C63F1'}}>&copy; 2020 SEEKr, all rights reserved</div>
         </div>
       </div>
     </footer>
