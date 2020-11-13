@@ -528,10 +528,11 @@ def JobMatchFeedback(request, jobmatchid):
         
         # Build feedback message
         feedback_message = ""
-        feedback_message += "You have " + str(len(uskills)) + " skills: " + uskill_pretty + "."
-        feedback_message += "This job requires " + str(len(jskills)) + " skills: " + jskill_pretty + "."
-        feedback_message += "The " + str(len(shared_skills)) + " shared skills are: " + shared_skill_pretty + "."
-
+        feedback_message += "SEEKr calculates your score based on the skills you share with a job and on the similarity of your descriptions."
+        feedback_message += "You have " + str(len(uskills)) + " skill(s): " + uskill_pretty + "."
+        feedback_message += "This job requires " + str(len(jskills)) + " skill(s): " + jskill_pretty + "."
+        feedback_message += "You share " + str(len(shared_skills)) + " skill(s). These are: " + shared_skill_pretty + "."
+        feedback_message += "AND"
         if cluster_size > 0.75:
             feedback_message += "Your description and the job description are textually similar. The descriptions are also greatly dissimilar to other jobs and candidates."
         elif cluster_size > 0.25:
@@ -540,10 +541,9 @@ def JobMatchFeedback(request, jobmatchid):
             feedback_message += "Your description and the job description are textually similar. The descriptions are also slightly dissimilar to other jobs and candidates."
         else:
             feedback_message += "Your description and the job description are not textually similar."
-        
-        feedback_message += "Hence we have calculated your match score to be " + str(int(percentage*100)) + "%*"
-        feedback_message += "* SEEKr calculates your score based on the skills you share with a job and on the similarity of your descriptions."
-        feedback_message += "To improve your score try changing the language of your description or add more skills"
+        feedback_message += "THEREFORE"        
+        feedback_message += "We have calculated your score to be " + str(int(percentage*100)) + "%*"
+        feedback_message += "*To improve your score try changing the language of your description or adding skills"
 
         return Response(data={"message": feedback_message}, status=status.HTTP_200_OK)
 
