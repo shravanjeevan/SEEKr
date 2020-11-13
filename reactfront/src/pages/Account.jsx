@@ -492,18 +492,19 @@ function Account() {
 
             return (
                 <Modal isOpen={showjobdetail} >
-                    <ModalHeader>Job Detail: {jobdetail.Name}</ModalHeader>
+                    <ModalHeader>Job Details</ModalHeader>
                     <ModalBody>
-                        <strong>Company: </strong>{jobdetail.Company}<br></br>
-                        <strong>Job: </strong>{jobdetail.Name}<br></br>
+                        <strong>Name: </strong>{jobdetail.Name}<br></br>
+                        <br></br>
                         <strong>Description: </strong>{jobdetail.Description}<br></br>
-                        <strong>Working type: </strong>{jobdetail.Type}<br></br>
-                        <strong>Salary: </strong>{jobdetail.SalaryUp}<br></br>
+                        <br></br>
+                        <strong>Type: </strong>{jobdetail.Type}<br></br>
+                        <br></br>
+                        <strong>Salary: </strong>${jobdetail.SalaryUp} per month<br></br>
+                        <br></br>
+                        <center><strong>Skills Needed</strong><br></br></center>
                         <table class="table table-hover">
                             <thead>
-                                <tr>
-                                    <td>Skill needed</td>
-                                </tr>
                             </thead>
                             <tbody>
                                 {Object.keys(table2).map(function (element) {
@@ -523,13 +524,13 @@ function Account() {
                             placeholder="Add a skill"
                         />                        <button class="btn btn-primary btn-sm" onClick={jobaddskill}>add </button><br></br>
 
-                            who applied:<br></br>
+                            <center><strong>Applicants</strong><br></br></center>
                         <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <td>First Name</td>
                                     <td>Last Name</td>
-                                    <td>Match Perentage</td>
+                                    <td>Match %</td>
 
                                     <td>Email</td>
                                 </tr>
