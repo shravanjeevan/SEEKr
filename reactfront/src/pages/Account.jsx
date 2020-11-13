@@ -689,6 +689,14 @@ function Account() {
             "Latitude": null,
             "Longitude": null
         }
+        if(r.Name==undefined||r.Company==undefined||r.Description==undefined||r.Type==undefined||r.Education==undefined){
+            alert("Fields can not be empty")
+            return(1)
+        }
+        if(!isFinite(r.SalaryUp)){
+            alert("Salary need to be number")
+            return(1)
+        }
         fetch('http://127.0.0.1:8000/job_list/add/', {
             method: "POST",
             headers: {
@@ -833,6 +841,10 @@ function Account() {
                 "Industry": edu,
 
             }
+            if(r.Name==undefined||r.Description==undefined||r.Industry==undefined){
+                alert("fields can not be empty")
+                return(1)
+            }
             fetch('http://127.0.0.1:8000/company/register/', {
                 method: "post",
                 headers: {
@@ -862,7 +874,10 @@ function Account() {
                 "Longitude": longtitude,
                 "Latitude": latitude
             }
-
+            if(r.Description==undefined||r.Education==undefined){
+                alert("fields can not be empty")
+                return(1)
+            }
             fetch('http://127.0.0.1:8000/job_seeker/details/', {
                 method: "post",
                 headers: {

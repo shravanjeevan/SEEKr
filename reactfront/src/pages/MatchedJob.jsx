@@ -256,8 +256,11 @@ function Matchlist() {
                     </table>
                 </div>
                 <br></br>
-                <button class="btn btn-secondary" onClick={() => setvisibleterm(visibleterm - 10)} type="button" > Previous Page </button>
+                {(visibleterm>10) &&
+                    <button class="btn btn-secondary" onClick={() => setvisibleterm(visibleterm - 10)} type="button" > Previous Page </button>
 
+                }
+                        <strong>PAGE : {visibleterm/10}</strong>
                 <button class="btn btn-secondary" onClick={() => setvisibleterm(visibleterm + 10)} type="button" > Next Page </button>
 
                 <Modal isOpen={detailtoggle}>
@@ -284,7 +287,7 @@ function Matchlist() {
 
                 <Modal isOpen={feedbacktoggle}>
                     <ModalHeader>
-                        <b>Feedback to improve your percentage match</b>
+                        <b>Feedback to improve your score</b>
                     </ModalHeader>
                     <ModalBody>
                         {(feedback) &&
