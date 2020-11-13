@@ -16,7 +16,7 @@ $ source venv/bin/activate
 ```
 Install dependencies:
 ```shell
-$ pip install requirements.txt
+$ pip install -r requirements.txt
 ```
 
 ## Starting things up!
