@@ -292,6 +292,7 @@ function Matchlist() {
                     <ModalBody>
                         {(feedback) &&
                             <>
+                                <p>SEEKr calculates your score based on the skills you share with a job and the similarity of your descriptions</p>
                                 <p>{feedback.message.split(".")[0].split(":")[0].split("$")[0]}
                                     <strong> {feedback.message.split(".")[0].split(":")[0].split("$")[1]} </strong>
                                     {feedback.message.split(".")[0].split(":")[0].split("$")[2]} :
@@ -329,7 +330,11 @@ function Matchlist() {
                                     })
                                     }</p>
                                 <p> <strong>AND</strong><br></br> {feedback.message.split(".")[3]}</p>
-                                <p><strong>Therefore</strong><br></br>{feedback.message.split(".")[4]}</p>
+                            <p><strong>THEREFORE</strong><br></br>{feedback.message.split(".")[4].split("$")[0]}
+                                <strong> {feedback.message.split(".")[4].split("$")[1]} </strong>
+                                {feedback.message.split(".")[4].split("$")[2]}
+                                </p>
+                                <p>{feedback.message.split('.')[5]}</p>
 
                             </>
                         }
