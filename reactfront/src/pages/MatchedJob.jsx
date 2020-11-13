@@ -359,7 +359,9 @@ function Matchlist() {
 
     return (<>
 
-        <nav>
+        <nav                 style={{
+                    padding: '10px',
+                }}>
             <br></br>
             <div className="brand header-brand">
                 <h1 className="m-0">
