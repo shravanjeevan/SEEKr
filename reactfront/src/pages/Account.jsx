@@ -465,7 +465,7 @@ function Account() {
                             {Object.keys(table).map(function (element) {
                                 return (
                                     <tr key={element}>
-                                        <td onClick={() => Job_detail(table[element])}>{table[element].Name}</td>
+                                        <td onClick={() => Job_detail(table[element])} style={{ textDecorationLine: 'underline' }}>{table[element].Name}</td>
                                         <td>{table[element].Type}</td>
                                         <td>{table[element].Education}</td>
                                         <td><button class="btn btn-danger  btn-sm" onClick={() => deletejobs(table[element])}>remove</button></td>
@@ -492,15 +492,13 @@ function Account() {
 
             return (
                 <Modal isOpen={showjobdetail} >
-                    <ModalHeader>Job Detial: {jobdetail.Name}</ModalHeader>
+                    <ModalHeader>Job Detail: {jobdetail.Name}</ModalHeader>
                     <ModalBody>
-                        Unique ID: {jobdetail.id}<br></br>
-                            Company:{jobdetail.Company}<br></br>
-
-                            Job:{jobdetail.Name}<br></br>
-                            Description:{jobdetail.Description}<br></br>
-                            Working type:{jobdetail.Type}<br></br>
-                            Salary:{jobdetail.SalaryUp}<br></br>
+                        <strong>Company: </strong>{jobdetail.Company}<br></br>
+                        <strong>Job: </strong>{jobdetail.Name}<br></br>
+                        <strong>Description: </strong>{jobdetail.Description}<br></br>
+                        <strong>Working type: </strong>{jobdetail.Type}<br></br>
+                        <strong>Salary: </strong>{jobdetail.SalaryUp}<br></br>
                         <table class="table table-hover">
                             <thead>
                                 <tr>
