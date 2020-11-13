@@ -528,9 +528,9 @@ def JobMatchFeedback(request, jobmatchid):
         
         # Build feedback message
         feedback_message = ""
-        feedback_message += "You have " + str(len(uskills)) + " skills: " + uskill_pretty + "."
-        feedback_message += "This job requires " + str(len(jskills)) + " skills: " + jskill_pretty + "."
-        feedback_message += "The " + str(len(shared_skills)) + " shared skills are: " + shared_skill_pretty + "."
+        feedback_message += "You have $" + str(len(uskills)) + "$ skills: " + uskill_pretty + "."
+        feedback_message += "This job requires $" + str(len(jskills)) + "$ skills: " + jskill_pretty + "."
+        feedback_message += "The $" + str(len(shared_skills)) + "$ shared skills are: " + shared_skill_pretty + "."
 
         if cluster_size > 0.75:
             feedback_message += "Your description and the job description are textually similar. The descriptions are also greatly dissimilar to other jobs and candidates."
@@ -541,7 +541,7 @@ def JobMatchFeedback(request, jobmatchid):
         else:
             feedback_message += "Your description and the job description are not textually similar."
         
-        feedback_message += "Hence we have calculated your match score to be " + str(int(percentage*100)) + "%*"
+        feedback_message += "Hence we have calculated your match score to be $" + str(int(percentage*100)) + "$%*"
         feedback_message += "* SEEKr calculates your score based on the skills you share with a job and on the similarity of your descriptions."
         feedback_message += "To improve your score try changing the language of your description or add more skills"
 
